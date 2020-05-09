@@ -86,8 +86,9 @@ class HousesController extends Controller
 
     public function digit(){
         $query = DB::table('house_building')
-                    ->select(DB::raw("ST_AsGeoJSON(geom) AS geometry"))
-                    ->addSelect('house_building_id');
+                    ->select(DB::raw("ST_AsGeoJSON(building.geom) AS geometry"))
+                    ->addSelect('house_building.house_building_id')
+                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id');
         $sql = $query->get();
         $geojson = array(
             'type'      => 'FeatureCollection',

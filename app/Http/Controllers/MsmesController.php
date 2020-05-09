@@ -85,8 +85,9 @@ class MsmesController extends Controller
 
     public function digit(){
         $query = DB::table('msme_building')
-                    ->select(DB::raw("ST_AsGeoJSON(geom) AS geometry"))
-                    ->addSelect('msme_building_id', 'name_of_msme_building');
+                    ->select(DB::raw("ST_AsGeoJSON(building.geom) AS geometry"))
+                    ->addSelect('msme_building_id', 'name_of_msme_building')
+                    ->join('building', 'msme_building.msme_building_id', '=', 'building.building_id');
         $sql = $query->get();
         $geojson = array(
             'type'      => 'FeatureCollection',

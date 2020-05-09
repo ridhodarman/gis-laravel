@@ -158,7 +158,9 @@ function cariRadius_ibadah() { //menampilkan bang ibadah berdasarkan radius
     hapusRadius();
     clearroute2();
     hapusMarkerTerdekat();
-      
+    $('#hasilcari').empty();
+    $('#found').empty();
+    
     let circle = new google.maps.Circle({
       center: pos,
       radius: parseFloat(inputradiusibadah * 100),
