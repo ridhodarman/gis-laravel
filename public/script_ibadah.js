@@ -1,6 +1,6 @@
-function tampilsemuaibadah() {
+function datamesjid(url){
   $.ajax({
-    url: 'act/ibadah_cari.php',
+    url: url,
     data: "",
     dataType: 'json',
     success: function (rows) {
@@ -12,7 +12,6 @@ function tampilsemuaibadah() {
       $('#notifikasi').append(thrownError);
     }
   });
-
 }
 
 function cari_ibadah(rows) {
@@ -27,13 +26,13 @@ function cari_ibadah(rows) {
     $('#hasilcari').append('<td colspan="2">no result</td>');
   }
   else {
-    var a = 0;
-    for (var i in rows) {
-      var row = rows[i];
-      var id = row.id;
-      var name = row.name;
-      var latitude = row.latitude;
-      var longitude = row.longitude;
+    let a = 0;
+    for (let i in rows) {
+      let row = rows[i];
+      let id = row.id;
+      let name = row.name;
+      let latitude = row.latitude;
+      let longitude = row.longitude;
       centerBaru = new google.maps.LatLng(latitude, longitude);
       marker = new google.maps.Marker({
         position: centerBaru,
@@ -54,118 +53,55 @@ function cari_ibadah(rows) {
   }
 }
 
+function tampilsemuaibadah() {
+  let url = `${server}/ibadah_semua`;
+  datamesjid(url);
+}
+
 function carinamaibadah() { 
-  var namaibadah = document.getElementById("namaibadah").value;
-  $.ajax({
-    url: 'act/ibadah_cari-nama.php?cari_nama=' + namaibadah,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let namaibadah = document.getElementById("namaibadah").value;
+  let url = `${server}/ibadah_cari_nama/${namaibadah}`;
+  datamesjid(url);
 }
 
 function carijenis_ibadah() { 
-  var jenis = document.getElementById("jenisibadah").value;
-  console.log("cari ibadah dengan jenis: " + jenis);
-  $.ajax({
-    url: 'act/ibadah_cari-jenis.php?type=' + jenis,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let jenis = document.getElementById("jenisibadah").value;
+  let url = `${server}/ibadah_cari_jenis/${jenis}`;
+  datamesjid(url);
 }
 
 function carikons_ibadah() { 
-  var jenis_k = document.getElementById("jeniskons_ibadah").value;
-  console.log("cari ibadah dengan jenis konstruksi: " + jenis_k);
-  $.ajax({
-    url: 'act/ibadah_cari-jeniskonstruksi.php?k=' + jenis_k,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let konstruksi = document.getElementById("jeniskons_ibadah").value;
+  let url = `${server}/ibadah_cari_konstruksi/${konstruksi}`;
+  datamesjid(url);
 }
 
 function cariluasbang_ibadah() { 
-  var awal = document.getElementById("ibadah_awalbang").value;
-  var akhir = document.getElementById("ibadah_akhirbang").value;
-  console.log("cari ibadah dengan luas bangunan: " + awal + " - " +akhir);
-  $.ajax({
-    url: 'act/ibadah_cari-luasbang.php?awal=' + awal + '&akhir=' + akhir,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let luasbang = [];
+  luasbang[0] = document.getElementById("ibadah_awalbang").value;
+  luasbang[1] = document.getElementById("ibadah_akhirbang").value;
+  let url = `${server}/ibadah_cari_luasbang/${luasbang}`;
+  datamesjid(url);
 }
 
 function cariluastanah_ibadah() { 
-  var awal = document.getElementById("ibadah_awaltanah").value;
-  var akhir = document.getElementById("ibadah_akhirtanah").value;
-  console.log("cari ibadah dengan luas tanah: " + awal + " - " +akhir);
-  $.ajax({
-    url: 'act/ibadah_cari-luastanah.php?awal=' + awal + '&akhir=' + akhir,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let luastanah = [];
+  luastanah[0] = document.getElementById("ibadah_awaltanah").value;
+  luastanah[1] = document.getElementById("ibadah_akhirtanah").value;
+  let url = `${server}/ibadah_cari_luastanah/${luastanah}`;
+  datamesjid(url);
 }
 
 function caritahun_ibadah() { 
-  var awal = document.getElementById("ibadah_awaltahun").value;
-  var akhir = document.getElementById("ibadah_akhirtahun").value;
-  console.log("cari ibadah dengan tahun berdiri: " + awal + " - " +akhir);
-  $.ajax({
-    url: 'act/ibadah_cari-tahun.php?awal=' + awal + '&akhir=' + akhir,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let tahun = [];
+  tahun[0] = document.getElementById("ibadah_awaltahun").value;
+  tahun[1] = document.getElementById("ibadah_akhirtahun").value;
+  let url = `${server}/ibadah_cari_tahun/${tahun}`;
+  datamesjid(url);
 }
 
 function carijorong_ibadah() { 
-  var jorong = document.getElementById("jorong_ibadah").value;
+  let jorong = document.getElementById("jorong_ibadah").value;
   console.log("cari b ibadah dengan jorong: " + jorong);
   $.ajax({
     url: 'act/ibadah_cari-jorong.php?j=' + jorong,
@@ -199,18 +135,19 @@ function detailibadah_infow(id) { //menampilkan informas
     data: "",
     dataType: 'json',
     success: function (rows) {
-      for (var i in rows) {
-        var row = rows[i];
-        var id = row.id;
-        var nama = row.name;
-        if (row.image==null) {
-          var image = "There are no photos for this building";
+      for (let i in rows) {
+        let row = rows[i];
+        let id = row.id;
+        let nama = row.name;
+        let image = row.image;
+        if (image==null) {
+          image = "There are no photos for this building";
         }
         else {
-          var image = "<img src='foto/b-ibadah/"+row.image+"' alt='building photo' width='165'>";
+          image = "<img src='foto/b-ibadah/"+row.image+"' alt='building photo' width='165'>";
         }
-        var latitude = row.latitude;
-        var longitude = row.longitude;
+        let latitude = row.latitude;
+        let longitude = row.longitude;
         centerBaru = new google.maps.LatLng(row.latitude, row.longitude);
         marker = new google.maps.Marker({
           position: centerBaru,
@@ -247,8 +184,8 @@ function aktifkanRadiusibadah() { //fungsi radius
   } else {
     hapusRadius();
     clearroute2();
-    var inputradiusibadah = document.getElementById("inputradiusibadah").value;
-    var circle = new google.maps.Circle({
+    let inputradiusibadah = document.getElementById("inputradiusibadah").value;
+    let circle = new google.maps.Circle({
       center: pos,
       radius: parseFloat(inputradiusibadah * 100),
       map: map,
@@ -293,13 +230,13 @@ function tampilkanradiusibadah() { //menampilkan bang ibadah berdasarkan radius
     dataType: 'json',
     success: function (rows) {
       if (rows != null ){
-        var a = 0;
-        for (var i in rows) {
-          var row = rows[i];
-          var id = row.id;
-          var nama = row.name;
-          var latitude = row.latitude;
-          var longitude = row.longitude;
+        let a = 0;
+        for (let i in rows) {
+          let row = rows[i];
+          let id = row.id;
+          let nama = row.name;
+          let latitude = row.latitude;
+          let longitude = row.longitude;
           centerBaru = new google.maps.LatLng(latitude, longitude);
           marker = new google.maps.Marker({
             position: centerBaru,
@@ -333,7 +270,7 @@ function carifasilitas_ibadah(){
   clearroute2();
   hapusRadius();
   hapusMarkerTerdekat();
-  var arrayFas=[];
+  let arrayFas=[];
   for(i=0; i<$("input[name=fas_ibadah]:checked").length;i++){
     arrayFas.push($("input[name=fas_ibadah]:checked")[i].value);
   }
@@ -352,14 +289,14 @@ function carifasilitas_ibadah(){
               $('#hasilcari').append('<td colspan="2">no result</td>');
             }
       else {
-        var a = 0;
-        for (var i in rows) 
+        let a = 0;
+        for (let i in rows) 
             {   
-              var row     = rows[i];
-              var id   = row.id;
-              var nama   = row.name;
-              var latitude  = row.latitude ;
-              var longitude = row.longitude ;
+              let row     = rows[i];
+              let id   = row.id;
+              let nama   = row.name;
+              let latitude  = row.latitude ;
+              let longitude = row.longitude ;
               centerBaru = new google.maps.LatLng(latitude, longitude);
               marker = new google.maps.Marker
             ({

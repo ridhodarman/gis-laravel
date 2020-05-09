@@ -10,14 +10,13 @@
     <?php include('inc/head.php') ?>
 
     <script src="//maps.google.com/maps/api/js?key={{$api}}"></script>
-    
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript" src="script_rumah.js"></script>
-    <script type="text/javascript" src="script_umkm.js"></script>
-    <script type="text/javascript" src="script_ibadah.js"></script>
-    <script type="text/javascript" src="script_office.js"></script>
-    <script type="text/javascript" src="script_pendidikan.js"></script>
-    <script type="text/javascript" src="script_kesehatan.js"></script>
+    <script type="text/javascript" src="{{ asset('script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_rumah.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_umkm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_ibadah.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_office.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_pendidikan.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script_kesehatan.js') }}"></script>
     <script type="text/javascript">
         tunggu=true;
     </script>

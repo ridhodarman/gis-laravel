@@ -34,7 +34,7 @@ function loadpeta() {
 
 function digitasirumah() {
   $.ajax({
-    url: 'http://127.0.0.1:8000/buildings',
+    url: server+'/house_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {
@@ -97,7 +97,7 @@ function digitasirumah() {
 
 function digitasiumkm() {
   $.ajax({
-    url: server+'inc/dataumkm.php',
+    url: server+'/msme_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {
@@ -161,7 +161,7 @@ function digitasiumkm() {
 
 function digitasit4ibadah() {
   $.ajax({
-    url: server+'inc/datat4ibadah.php',
+    url: server+'/worship_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

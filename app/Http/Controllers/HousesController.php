@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Building;
+use App\House;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class BuildingsController extends Controller
+class HousesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,26 +15,7 @@ class BuildingsController extends Controller
      */
     public function index()
     {
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_AsGeoJSON(geom) AS geometry"))
-                    ->addSelect('house_building_id');
-        $sql = $query->get();
-        $geojson = array(
-            'type'      => 'FeatureCollection',
-            'features'  => array()
-        );
-        foreach ($sql as $data) {
-            $feature = array(
-                "type" => 'Feature',
-                'geometry' => json_decode($data->geometry, true),
-                'jenis' => "House",
-                'properties' => array(
-                    'id' => $data->house_building_id
-                )
-            );
-            array_push($geojson['features'], $feature);
-        }
-        return $geojson;
+        //
     }
 
     /**
@@ -101,5 +82,28 @@ class BuildingsController extends Controller
     public function destroy(Building $building)
     {
         //
+    }
+
+    public function digit(){
+        $query = DB::table('house_building')
+                    ->select(DB::raw("ST_AsGeoJSON(geom) AS geometry"))
+                    ->addSelect('house_building_id');
+        $sql = $query->get();
+        $geojson = array(
+            'type'      => 'FeatureCollection',
+            'features'  => array()
+        );
+        foreach ($sql as $data) {
+            $feature = array(
+                "type" => 'Feature',
+                'geometry' => json_decode($data->geometry, true),
+                'jenis' => "House",
+                'properties' => array(
+                    'id' => $data->house_building_id
+                )
+            );
+            array_push($geojson['features'], $feature);
+        }
+        return $geojson;
     }
 }

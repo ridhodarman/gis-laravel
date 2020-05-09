@@ -1,6 +1,7 @@
 <?php
 require '../inc/koneksi.php';
-
+header('content-type: application/json');
+header("access-control-allow-origin: *");
 $querysearch = " 	SELECT worship_building_id, name_of_worship_building ,ST_X(ST_Centroid(geom)) AS longitude, ST_Y(ST_CENTROID(geom)) AS latitude
 					FROM worship_building ORDER BY name_of_worship_building
 				";
