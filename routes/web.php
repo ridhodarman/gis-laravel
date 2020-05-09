@@ -27,8 +27,9 @@ Route::get('/ibadah_cari_konstruksi/{konstruksi}', 'WorshipsController@cari_kons
 Route::get('/ibadah_cari_luasbang/{luasbang}', 'WorshipsController@cari_luasbang');
 Route::get('/ibadah_cari_luastanah/{luastanah}', 'WorshipsController@cari_luastanah');
 Route::get('/ibadah_cari_tahun/{tahun}', 'WorshipsController@cari_tahun');
-Route::get('/ibadah_cari_radius/{radius}', 'WorshipsController@cari_radius');
+Route::get('/ibadah_cari_radius/{rad}', 'WorshipsController@cari_radius');
 Route::get('/ibadah_cari_jorong/{jorong}', 'WorshipsController@cari_jorong');
 Route::get('/ibadah_cari_fasilitas/{fasilitas}', 'WorshipsController@cari_fasilitas');
+Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
 
 Route::get('/msme_digit', 'MsmesController@digit');

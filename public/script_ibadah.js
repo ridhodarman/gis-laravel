@@ -4,6 +4,12 @@ function datamesjid(url){
     data: "",
     dataType: 'json',
     success: function (rows) {
+      hapusInfo();
+      hapusRadius();
+      clearroute2();
+      hapusMarkerTerdekat();
+      $('#hasilcari').empty();
+      $('#found').empty();
       cari_ibadah(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -15,12 +21,6 @@ function datamesjid(url){
 }
 
 function cari_ibadah(rows) {
-  hapusInfo();
-  hapusRadius();
-  clearroute2();
-  hapusMarkerTerdekat();
-  $('#hasilcari').empty();
-  $('#found').empty();
   if (rows == null) {
     $('#kosong').modal('show');
     $('#hasilcari').append('<td colspan="2">no result</td>');
@@ -29,8 +29,8 @@ function cari_ibadah(rows) {
     let a = 0;
     for (let i in rows) {
       let row = rows[i];
-      let id = row.id;
-      let name = row.name;
+      let id = row.worship_building_id
+      let name = row.name_of_worship_building;
       let latitude = row.latitude;
       let longitude = row.longitude;
       centerBaru = new google.maps.LatLng(latitude, longitude);
@@ -102,20 +102,78 @@ function caritahun_ibadah() {
 
 function carijorong_ibadah() { 
   let jorong = document.getElementById("jorong_ibadah").value;
-  console.log("cari b ibadah dengan jorong: " + jorong);
-  $.ajax({
-    url: 'act/ibadah_cari-jorong.php?j=' + jorong,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_ibadah(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let url = `${server}/ibadah_cari_jorong/${jorong}`;
+  datamesjid(url);
+}
+
+function carifasilitas_ibadah(){
+  let arrayFas=[];
+  for(i=0; i<$("input[name=fas_ibadah]:checked").length;i++){
+    arrayFas.push($("input[name=fas_ibadah]:checked")[i].value);
+  }
+  if (arrayFas==''){
+    $('#ket-p').empty();
+    $('#peringatan').modal('show');
+    $('#ket-p').append('Choose Facility !');
+  }else{
+    let url = `${server}/ibadah_cari_fasilitas/${arrayFas}`;
+    datamesjid(url);
+  }
+}
+
+function cariRadius_ibadah() { //menampilkan bang ibadah berdasarkan radius
+  if (pos == 'null') {
+    $('#atur-posisi').modal('show');
+  }
+  else {
+    radiusStatus = true;
+    $('#hasilcari1').show();
+    let inputradiusibadah = document.getElementById("inputradiusibadah").value;
+    let radiusibadah = inputradiusibadah * 100;
+    let lat = document.getElementById("lat").value;
+    let lng = document.getElementById("lng").value;
+    console.log("panggil radiusnyaa, b.ibadah sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiusibadah);
+    let rad = [];
+    rad[0] = pos.lat;
+    rad[1] = pos.lng;
+    rad[2] = radiusibadah;
+    let url = `${server}/ibadah_cari_radius/${rad}`;
+    
+    $.ajax({
+      url: url,
+      data: "",
+      dataType: 'json',
+      success: function (rows) {
+        cari_ibadah(rows);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#gagal').modal('show');
+        $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
+        $('#notifikasi').append(thrownError);
+      }
+    });
+
+    document.getElementById('m_ibadah').innerHTML = radiusibadah;
+    hapusInfo();
+    hapusRadius();
+    clearroute2();
+    hapusMarkerTerdekat();
+      
+    let circle = new google.maps.Circle({
+      center: pos,
+      radius: parseFloat(inputradiusibadah * 100),
+      map: map,
+      strokeColor: "blue",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "blue",
+      fillOpacity: 0.35
+    });
+    map.setZoom(15);
+    map.setCenter(pos);
+    circles.push(circle); 
+      
+  }
 }
 
 function klikInfoWindowibadah(id) {
@@ -123,7 +181,6 @@ function klikInfoWindowibadah(id) {
     console.log("marker dengan id=" + id + " diklik");
     detailibadah_infow(id);
   });
-
 }
 
 function detailibadah_infow(id) { //menampilkan informas
@@ -175,153 +232,4 @@ function detailibadah_infow(id) { //menampilkan informas
       $('#notifikasi').append(thrownError);
     }
   });
-}
-
-
-function aktifkanRadiusibadah() { //fungsi radius
-  if (pos == 'null') {
-    $('#atur-posisi').modal('show');
-  } else {
-    hapusRadius();
-    clearroute2();
-    let inputradiusibadah = document.getElementById("inputradiusibadah").value;
-    let circle = new google.maps.Circle({
-      center: pos,
-      radius: parseFloat(inputradiusibadah * 100),
-      map: map,
-      strokeColor: "blue",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "blue",
-      fillOpacity: 0.35
-    });
-    map.setZoom(15);
-    map.setCenter(pos);
-    circles.push(circle);
-    teksradiusibadah()
-  }
-  cekRadiusStatus = 'on';
-  tampilkanradiusibadah();
-}
-
-function teksradiusibadah() {
-  document.getElementById('m_ibadah').innerHTML = document.getElementById('inputradiusibadah').value * 100
-}
-
-function cekRadiusibadah() {
-  radiusibadah = inputradiusibadah.value * 100;
-  lat = document.getElementById("lat").value;
-  lng = document.getElementById("lng").value;
-}
-
-function tampilkanradiusibadah() { //menampilkan bang ibadah berdasarkan radius
-  $('#hasilcari1').show();
-  $('#hasilcari').empty();
-  $('#found').empty();
-  hapusInfo();
-  hapusMarkerTerdekat();
-  cekRadiusibadah();
-  clearroute2();
-  console.log("panggil radiusnyaa, b.ibadah sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiusibadah);
-
-  $.ajax({
-    url: 'act/ibadah_radius.php?lat=' + pos.lat + '&lng=' + pos.lng + '&rad=' + radiusibadah,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      if (rows != null ){
-        let a = 0;
-        for (let i in rows) {
-          let row = rows[i];
-          let id = row.id;
-          let nama = row.name;
-          let latitude = row.latitude;
-          let longitude = row.longitude;
-          centerBaru = new google.maps.LatLng(latitude, longitude);
-          marker = new google.maps.Marker({
-            position: centerBaru,
-            icon: 'assets/ico/musajik.png',
-            map: map,
-            animation: google.maps.Animation.DROP,
-          });
-          markersDua.push(marker);
-          map.setCenter(centerBaru);
-          klikInfoWindowibadah(id);
-          map.setZoom(15);
-          tampilkanhasilcari();
-          $('#hasilcari').append("<tr><td>" + nama + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailibadah_infow(\"" + id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>");
-          a = a + 1;
-        }
-        $('#found').append("Found: " + a)
-        $('#hidecari').show();
-      }
-      else {
-        $('#hasilcari').append('<td colspan="2">no result</td>');
-      }
-    }
-  });
-}
-
-function carifasilitas_ibadah(){
-
-  $('#hasilcari1').show();
-  $('#hasilcari').empty();
-  hapusInfo();
-  clearroute2();
-  hapusRadius();
-  hapusMarkerTerdekat();
-  let arrayFas=[];
-  for(i=0; i<$("input[name=fas_ibadah]:checked").length;i++){
-    arrayFas.push($("input[name=fas_ibadah]:checked")[i].value);
-  }
-  if (arrayFas==''){
-    $('#ket-p').empty();
-    $('#peringatan').modal('show');
-    $('#ket-p').append('Choose Facility !');
-  }else{
-    $.ajax({ url: server+'act/ibadah_cari-fasilitas.php?fas='+arrayFas, data: "", dataType: 'json', success: function(rows){
-      console.log(server+'act/ibadah_cari-fasilitas.php?fas='+arrayFas);
-      $('#found').empty();
-      $('#hasilcari').empty();
-      if(rows==null)
-            {
-              $('#kosong').modal('show');
-              $('#hasilcari').append('<td colspan="2">no result</td>');
-            }
-      else {
-        let a = 0;
-        for (let i in rows) 
-            {   
-              let row     = rows[i];
-              let id   = row.id;
-              let nama   = row.name;
-              let latitude  = row.latitude ;
-              let longitude = row.longitude ;
-              centerBaru = new google.maps.LatLng(latitude, longitude);
-              marker = new google.maps.Marker
-            ({
-              position: centerBaru,
-              icon:'assets/ico/musajik.png',
-              map: map,
-              animation: google.maps.Animation.DROP,
-            });
-              markersDua.push(marker);
-              map.setCenter(centerBaru);
-              klikInfoWindowibadah(id)
-              map.setZoom(15);
-              tampilkanhasilcari();
-              $('#hasilcari').append("<tr><td>" + nama + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailibadah_infow(\"" + id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>");
-              a = a + 1;
-          }
-          $('#found').append("Found: " + a)
-          $('#hidecari').show();
-      }
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
-  }
 }
