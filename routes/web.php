@@ -30,6 +30,7 @@ Route::get('/ibadah_cari_tahun/{tahun}', 'WorshipsController@cari_tahun');
 Route::get('/ibadah_cari_radius/{rad}', 'WorshipsController@cari_radius');
 Route::get('/ibadah_cari_jorong/{jorong}', 'WorshipsController@cari_jorong');
 Route::get('/ibadah_cari_fasilitas/{fasilitas}', 'WorshipsController@cari_fasilitas');
+Route::get('/ibadah_info/{id}', 'WorshipsController@info');
 Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
 
 Route::get('/msme_digit', 'MsmesController@digit');

@@ -190,23 +190,21 @@ function detailibadah_infow(id) { //menampilkan informas
   clearroute2();
   console.log("fungsi info marker id=" + id);
     $.ajax({
-    url: 'act/ibadah_detail.php?cari=' + id,
+    url: `${server}/ibadah_info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
       for (let i in rows) {
         let row = rows[i];
-        let id = row.id;
-        let nama = row.name;
-        let image = row.image;
+        let id = row.worship_building_id;
+        let nama = row.name_of_worship_building;
+        let image = row.photo_url;
         if (image==null) {
           image = "There are no photos for this building";
         }
         else {
-          image = "<img src='foto/b-ibadah/"+row.image+"' alt='building photo' width='165'>";
+          image = `<img src='/foto/bangunan/${row.photo_url}' alt='building photo' width='165'>`;
         }
-        let latitude = row.latitude;
-        let longitude = row.longitude;
         centerBaru = new google.maps.LatLng(row.latitude, row.longitude);
         marker = new google.maps.Marker({
           position: centerBaru,

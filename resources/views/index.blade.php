@@ -10,13 +10,13 @@
     <?php include('inc/head.php') ?>
 
     <script src="//maps.google.com/maps/api/js?key={{$api}}"></script>
-    <script type="text/javascript" src="{{ asset('script.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_rumah.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_umkm.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_ibadah.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_office.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_pendidikan.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script_kesehatan.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_rumah.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_umkm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_ibadah.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_office.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_pendidikan.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_kesehatan.js') }}"></script>
     <script type="text/javascript">
         tunggu=true;
     </script>
@@ -470,7 +470,8 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-mosque'></i> Worship Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load("info-ibadah.php?id="+id);
+        //$('#konten-bang').load("inc/detail-ibadah.php?id="+id);
+        $('#konten-bang').load(`${server}/ibadah_detail/${id}`);
     }
 
     function detailpendidikan(id) {
