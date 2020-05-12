@@ -33,6 +33,7 @@ Route::get('/ibadah_cari_fasilitas/{fasilitas}', 'WorshipsController@cari_fasili
 Route::get('/ibadah_info/{id}', 'WorshipsController@info');
 Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
 
+Route::get('/msme_digit', 'MsmesController@digit');
 Route::get('/umkm_semua', 'MsmesController@semua');
 Route::get('/umkm_cari_nama/{nama}', 'MsmesController@cari_nama');
 Route::get('/umkm_cari_jenis/{jenis}', 'MsmesController@cari_jenis');
@@ -45,5 +46,19 @@ Route::get('/umkm_cari_jorong/{jorong}', 'MsmesController@cari_jorong');
 Route::get('/umkm_cari_fasilitas/{fasilitas}', 'MsmesController@cari_fasilitas');
 Route::get('/umkm_info/{id}', 'MsmesController@info');
 Route::get('/umkm_detail/{id}', 'MsmesController@detail');
+
+Route::get('/office_digit', 'OfficesController@digit');
+Route::get('/kantor_semua', 'OfficesController@semua');
+Route::get('/kantor_cari_nama/{nama}', 'OfficesController@cari_nama');
+Route::get('/kantor_cari_jenis/{jenis}', 'OfficesController@cari_jenis');
+Route::get('/kantor_cari_konstruksi/{konstruksi}', 'OfficesController@cari_konstruksi');
+Route::get('/kantor_cari_luasbang/{luasbang}', 'OfficesController@cari_luasbang');
+Route::get('/kantor_cari_luastanah/{luastanah}', 'OfficesController@cari_luastanah');
+Route::get('/kantor_cari_tahun/{tahun}', 'OfficesController@cari_tahun');
+Route::get('/kantor_cari_radius/{rad}', 'OfficesController@cari_radius');
+Route::get('/kantor_cari_jorong/{jorong}', 'OfficesController@cari_jorong');
+Route::get('/kantor_cari_fasilitas/{fasilitas}', 'OfficesController@cari_fasilitas');
+Route::get('/kantor_info/{id}', 'OfficesController@info');
+Route::get('/kantor_detail/{id}', 'OfficesController@detail');
 
 Route::get('/msme_digit', 'MsmesController@digit');

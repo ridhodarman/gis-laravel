@@ -14,7 +14,7 @@
     <script type="text/javascript" src="{{ asset('script/script_rumah.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_umkm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_ibadah.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('script/script_office.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/script_kantor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_pendidikan.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_kesehatan.js') }}"></script>
     <script type="text/javascript">
@@ -28,7 +28,6 @@
     padding: 10px;
     margin: 5px;
     font-size: 12px;
-    font-color: blue;
     font-family: Arial, sans-serif;
     opacity: 1;
   }
@@ -468,7 +467,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-store-alt'></i> Micro, Small, Medium, Enterprise Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load(`${server}/umkm_detail/${id}`);
+        $('#konten-bang').load(`umkm_detail/${id}`);
     }
 
     function detailibadah(id) {
@@ -477,7 +476,7 @@
         $("#jenis-bang").append("<i class='fas fa-mosque'></i> Worship Building Info")
         $('#info-bang').modal('show');
         //$('#konten-bang').load("inc/detail-ibadah.php?id="+id);
-        $('#konten-bang').load(`${server}/ibadah_detail/${id}`);
+        $('#konten-bang').load(`ibadah_detail/${id}`);
     }
 
     function detailpendidikan(id) {
@@ -501,7 +500,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fa fa-bank'></i> Office Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load("info-kantor.php?id="+id);
+        $('#konten-bang').load(`kantor_detail/${id}`);
     }
 
     function detailrumah(id) {

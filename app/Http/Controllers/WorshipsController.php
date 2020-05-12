@@ -165,9 +165,8 @@ class WorshipsController extends Controller
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
                     ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->whereBetween('building_area', '?')
+                    ->whereBetween('building_area', $luasbang2)
                     ->orderBy('name_of_worship_building')
-                    ->setBindings($luasbang2)
                     ->get();
         return $luasbang2;
     }
@@ -179,9 +178,8 @@ class WorshipsController extends Controller
                             ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
                     ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->whereBetween('land_area', '?')
+                    ->whereBetween('land_area', $luastanah2)
                     ->orderBy('name_of_worship_building')
-                    ->setBindings($luastanah2)
                     ->get();
         return $query;
     }
@@ -193,9 +191,8 @@ class WorshipsController extends Controller
                             ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
                     ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->whereBetween('standing_year', '?')
+                    ->whereBetween('standing_year', $tahun2)
                     ->orderBy('name_of_worship_building')
-                    ->setBindings($tahun2)
                     ->get();
         return $query;
     }
