@@ -259,7 +259,7 @@ class WorshipsController extends Controller
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building', 
                                 'building_gallery.photo_url')
-                    ->join('building_gallery', 'worship_building.worship_building_id', 
+                    ->leftJoin('building_gallery', 'worship_building.worship_building_id', 
                             '=', 'building_gallery.building_id')
                     ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
                     ->where('worship_building.worship_building_id', '=', '?')
@@ -278,8 +278,8 @@ class WorshipsController extends Controller
                                 'type_of_construction.name_of_type AS constr')
                     ->leftJoin('type_of_construction', 'worship_building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('type_of_worship', 'worship_building.type_of_worship', '=', 'type_of_worship.type_id')
-                    ->leftJoin('building_model', 'worship_building.model_id', '=', 'building_model.model_id')
                     ->leftJoin('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+                    ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
                     ->where('worship_building.worship_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();

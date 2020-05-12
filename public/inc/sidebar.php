@@ -293,7 +293,7 @@ select {
                                 <ul class="collapse">
                                     <li>
                                     <div style="color: lightgray"><b>Radius: <font id="km_umkm">0</font> m<br></b></div>
-                                    <input  type="range" onchange="aktifkanRadiusumkm();" id="inputradiusumkm" name="inputradius" data-highlight="true" min="1" max="10" value="1"/>
+                                    <input  type="range" onchange="cariRadius_umkm();" id="inputradiusumkm" name="inputradius" data-highlight="true" min="1" max="10" value="1"/>
                                     </li>
                                 </ul>
                             </li>
