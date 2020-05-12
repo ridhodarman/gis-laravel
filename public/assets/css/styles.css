@@ -90,7 +90,7 @@
 
 .main-content {
     width: 100%;
-    background: #F3F8FB;
+    background: #f0f0f0;
 }
 
 .main-content-inner {
@@ -110,7 +110,8 @@
     height: 100vh;
     width: 280px;
     overflow: hidden;
-    background: #303641;
+    /*background: #393E47;*/
+    background-image: linear-gradient(#393E47, #303640, #2d3645, #1b2536, #1b2940);
     box-shadow: 2px 0 32px rgba(0, 0, 0, 0.05);
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
@@ -140,7 +141,7 @@
 
 .sidebar-header {
     padding: 19px 32px 20px;
-    background: #303641;
+    background: #333942;
     border-bottom: 1px solid #343e50;
 }
 .sidebar-menu .logo{
@@ -166,7 +167,7 @@
 }
 
 .metismenu li a i {
-    color: #6a56a5;
+    color: #888c94;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
@@ -209,7 +210,14 @@
 .metismenu >li:hover>a,
 .metismenu >li.active>a {
     color: #fff;
-    background: #343942;
+ text-shadow:
+   -1px -1px 1px #7b7be5,
+   -1px -1px 3px #7b7be5,
+   1px 1px 1px #16163f,
+   1px 1px 3px #16163f,
+   1px -1px 1px #3a404c,
+   -1px 1px 1px #3a404c;
+ },
 }
 
 .metismenu li:hover>a{

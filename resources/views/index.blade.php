@@ -22,7 +22,8 @@
     </script>
 </head>
 <style type="text/css">
-      #legend {
+  #legend {
+    color: black;
     background-color: white;
     padding: 10px;
     margin: 5px;
@@ -77,6 +78,16 @@
   .kesehatan {
     background: #FB7B62;
   }
+  #map {
+    height: 71vh;
+    width: 99%;
+    background-color: #222;
+    color: #eee;
+    font-family: monospace;
+    padding: 2rem;
+    margin: 5px;
+}
+
 </style>
 <body>
     <div id="legend" class="panel panel-primary">
@@ -214,45 +225,39 @@
                 <input type="hidden" name="" id="jr">
                 <input type="hidden" name="" id="lat">
                 <input type="hidden" name="" id="lng">
-                <!-- sales report area start -->
-                <br />
-                <button class="btn btn-default" title="current position" onclick="aktifkanGeolocation()"><i class="fas fa-map-marker-alt"></i></button>
-                <button class="btn btn-default" title="manual position" onclick="manualLocation()"><i class="fas fa-map-marked-alt"></i></button>
-
-                <a id="legenda">
-                    <button class="btn btn-default" title="show legend" onclick="legenda()"><i class="fa fa-globe"></i></button>
-                </a>
-
-                <?php include('inc/aturlayer.php') ?>
-
-                <button class="btn btn-default" title="refresh" onclick="refresh()"><i class="fa fa-refresh"></i></button>
-
-                <p/>
-
+                <br/>
                 <div class="row">
-                    <div id="peta" style="width: 100%">
-                        <br />
-                        <div style="width:100%; height: 450px;" id="map"></div>
+                    <div id="peta" style="width:100%; overflow: auto; background-color: white; border-radius: 6px;">
+                        <button class="btn btn-default" title="current position" onclick="aktifkanGeolocation()" style="margin-top: 5px; margin-left: 15px; margin-bottom: 5px"><i class="fas fa-map-marker-alt"></i></button>
+                        <button class="btn btn-default" title="manual position" onclick="manualLocation()"><i class="fas fa-map-marked-alt"></i></button>
+                        <a id="legenda">
+                            <button class="btn btn-default" title="show legend" onclick="legenda()"><i class="fa fa-globe"></i></button>
+                        </a>
+                        <button class="btn btn-default" title="refresh" onclick="refresh()"><i class="fa fa-refresh"></i></button>
+                        <?php include('inc/aturlayer.php') ?>
+                        <div id="map"></div>
                     </div>
 
-                    <div class="col-md-3" id="detail-informasi-pencarian">
-                        <button class="btn btn-default btn-xs" onclick="sembunyikancari()" id="hidecari" style="float: right;"><i
+                    <div class="col-md-3" id="detail-informasi-pencarian" style="padding-left: 1%; width: 99%;">
+                        <div style="background-color: white; border-radius: 5px">
+                            <div class="panel-body table-responsive card" id="rute">
+                                <!-- <div id="detailrute"></div> -->
+                            </div>
+                            <font id="found" style="padding-left: 5px"></font> &emsp;&emsp;&emsp;&emsp;&emsp;
+                            <button class="btn btn-default btn-xs" onclick="sembunyikancari()" id="hidecari"><i
                                 class="fa fa-times-circle"></i> Close Result</button>
-                        <div class="panel-body table-responsive card" id="rute">
-                            <!-- <div id="detailrute"></div> -->
-                        </div>
-                        <font id="found"></font>
-                        <div class="panel-body table-responsive" id="panjangtabel">
-                            <table class="table table-striped table-bordered table-hover" id="tampilanpencarian" style="background-color: white; border-radius: 7%">
-                                <thead>
-                                    <tr style="background-color: #4336FB; color: white">
-                                        <th colspan="2" style="text-align: center;">Result</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="hasilcari">
+                            <div class="panel-body table-responsive" id="panjangtabel">
+                                <table class="table table-striped table-bordered table-hover" id="tampilanpencarian">
+                                    <thead>
+                                        <tr style="background-color: #4336FB; color: white">
+                                            <th colspan="2" style="text-align: center;">Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="hasilcari">
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -265,7 +270,7 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Ridho Darman | Jurusan Sistem Informasi Universitas Andalas - Copyright 2018. All right reserved. Template by Colorlib. </p>
+                <p>© Ridho Darman | Jurusan Sistem Informasi Universitas Andalas 2018-2019. </p>
             </div>
         </footer>
         <!-- footer area end-->
@@ -457,6 +462,7 @@
 </div>
 
 <script type="text/javascript">
+    $('#detail-informasi-pencarian').hide();
     function detailumkm(id) {
         load_popup();
         $("#jenis-bang").empty()

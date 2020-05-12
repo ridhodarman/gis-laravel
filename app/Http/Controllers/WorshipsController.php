@@ -273,12 +273,13 @@ class WorshipsController extends Controller
     public function detail($id){
         $query = DB::table('worship_building')
                     ->addSelect('worship_building.*', 'name_of_worship_building', 'building_area', 'land_area',
-                                'parking_area', 'standing_year', 'electricity_capacity', 'name_of_model', 
-                                'type_of_worship.name_of_type AS jenis', 'type_of_construction.name_of_type AS constr')
-                    ->join('type_of_construction', 'worship_building.type_of_construction', '=', 'type_of_construction.type_id')
-                    ->join('type_of_worship', 'worship_building.type_of_worship', '=', 'type_of_worship.type_id')
-                    ->join('building_model', 'worship_building.model_id', '=', 'building_model.model_id')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+                                'parking_area', 'standing_year', 'electricity_capacity', 
+                                'name_of_model', 'address', 'type_of_worship.name_of_type AS jenis', 
+                                'type_of_construction.name_of_type AS constr')
+                    ->leftJoin('type_of_construction', 'worship_building.type_of_construction', '=', 'type_of_construction.type_id')
+                    ->leftJoin('type_of_worship', 'worship_building.type_of_worship', '=', 'type_of_worship.type_id')
+                    ->leftJoin('building_model', 'worship_building.model_id', '=', 'building_model.model_id')
+                    ->leftJoin('building', 'worship_building.worship_building_id', '=', 'building.building_id')
                     ->where('worship_building.worship_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();
@@ -298,42 +299,6 @@ class WorshipsController extends Controller
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 
-        $data = array(
-            'atribut'  => array(),
-            'foto'  => array(),
-            'fasilitas'  => array()
-        );
-        foreach ($sql as $row) {
-            $atribut = array(
-                'id' => $row->worship_building_id,
-                'nama' => $row->name_of_worship_building,
-                'luasbang' => $row->building_area,
-                'luastanah' => $row->land_area,
-                'luasparkir' => $row->parking_area,
-                'tahun' => $row->standing_year,
-                'listrik' => $row->electricity_capacity,
-                'jenis' => $row->jenis,
-                'konstruksi' => $row->constr,
-                'model' => $row->name_of_model
-            );
-            array_push($data['atribut'], $atribut);
-        }
-
-        foreach ($sql2 as $row2) {
-            $foto = array(
-                'url' => $row2->photo_url
-            );
-            array_push($data['foto'], $foto);
-        }
-
-        foreach ($sql3 as $row3) {
-            $fasilitas = array(
-                'nama-fas' => $row3->name_of_facility,
-                'jumlah' => $row3->quantity_of_facilities
-            );
-            array_push($data['fasilitas'], $fasilitas);
-        }
-        
-        return $data;
+        return view('popup.ibadah', ['info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
     }
 }

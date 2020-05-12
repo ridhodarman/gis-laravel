@@ -25,9 +25,9 @@ function loadpeta() {
        mapTypeControlOptions: {
          mapTypeIds: ['mystyle', google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN]
        },
-       center: new google.maps.LatLng(-0.323489, 100.349190),
-       zoom: 14.5,
-       mapTypeId: 'satellite'
+       center: new google.maps.LatLng(-0.322189, 100.349190),
+       zoom: 14,
+       mapTypeId: 'mystyle'
      });
      map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'Styled Map' }));
 }
@@ -43,8 +43,8 @@ function digitasirumah() {
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailrumah("+'"'+data.properties.id+'"'+")'></button>";
-        var p1 = ' ID: ' + data.properties.id;
-        var p3 = link + p1 + '('+jenis+') ';
+        var p1 = `ID:  ${data.properties.id}`;
+        var p3 = `${link} <font color='black'>${p1} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -108,7 +108,7 @@ function digitasiumkm() {
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailumkm("+'"'+data.properties.id+'"'+")'></button>";
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
-        var p3 = link + p1 + p2 +'('+jenis+') ';
+        var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -173,7 +173,7 @@ function digitasit4ibadah() {
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailibadah("+'"'+data.properties.id+'"'+")'></button>";
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
-        var p3 = link + p1 + p2 +'('+jenis+') ';
+        var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -236,7 +236,7 @@ function digitasikantor() {
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailkantor("+'"'+data.properties.id+'"'+")'></button>";
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
-        var p3 = link + p1 + p2 +'('+jenis+') ';
+        var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -299,7 +299,7 @@ function digitasipendidikan() {
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailpendidikan("+'"'+data.properties.id+'"'+")'></button>";
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
-        var p3 = link + p1 + p2 +'('+jenis+') ';
+        var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -362,7 +362,7 @@ function digitasikesehatan() {
         var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailkesehatan("+'"'+data.properties.id+'"'+")'></button>";
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
-        var p3 = link + p1 + p2 +'('+jenis+') ';
+        var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
 
         var idTitik = 0;
         var hitungTitik = [];
@@ -464,7 +464,7 @@ function digitasijorong() {
           strokeOpacity: 0.5,
           strokeWeight: 1.5,
           fillColor: warna,
-          fillOpacity: 0.2,
+          fillOpacity: 0.1,
           zIndex: 0,
           clickable: false
         });
@@ -794,7 +794,7 @@ function aktifkanGeolocation() { //posisi saat ini
     markers.push(marker);
     infowindow = new google.maps.InfoWindow({
       position: pos,
-      content: "<a style='color:black;'>You Are Here</a> "
+      content: "<font style='color:black;'>You Are Here</font> "
     });
     infowindow.open(map, marker);
     map.setCenter(pos);
@@ -843,7 +843,7 @@ function addMarker(location) {
   centerLokasi = new google.maps.LatLng(pos.lat, pos.lng);
   markers.push(marker);
   infowindow = new google.maps.InfoWindow();
-  infowindow.setContent('Current Position');
+  infowindow.setContent('<font color="black">Current Position</black>');
   infowindow.open(map, marker);
   marker.addListener('drag', function(e){
     handleEvent(e);
@@ -922,7 +922,7 @@ function tampilkanhasilcari() {
   $("#peta").addClass("col-md-9");
   $('#tampilanpencarian').show();
   $('#detail-informasi-pencarian').show();
-  document.getElementById('panjangtabel').style.height = "460px";
+  document.getElementById('panjangtabel').style.height = "76vh";
 }
 
 function sembunyikancari() {
