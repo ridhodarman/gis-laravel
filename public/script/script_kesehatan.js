@@ -1,9 +1,15 @@
-function tampilsemuakesehatan() {
+function datakesehatan(url){
   $.ajax({
-    url: 'act/kesehatan_cari.php',
+    url: url,
     data: "",
     dataType: 'json',
     success: function (rows) {
+      hapusInfo();
+      hapusRadius();
+      clearroute2();
+      hapusMarkerTerdekat();
+      $('#hasilcari').empty();
+      $('#found').empty();
       cari_kesehatan(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -12,28 +18,21 @@ function tampilsemuakesehatan() {
       $('#notifikasi').append(thrownError);
     }
   });
-
 }
 
 function cari_kesehatan(rows) {
-  hapusInfo();
-  hapusRadius();
-  clearroute2();
-  hapusMarkerTerdekat();
-  $('#hasilcari').empty();
-  $('#found').empty();
-  if (rows == null) {
+  if (rows.length == 0) {
     $('#kosong').modal('show');
     $('#hasilcari').append('<td colspan="2">no result</td>');
   }
   else {
-    var a = 0;
-    for (var i in rows) {
-      var row = rows[i];
-      var id = row.id;
-      var name = row.name;
-      var latitude = row.latitude;
-      var longitude = row.longitude;
+    let a = 0;
+    for (let i in rows) {
+      let row = rows[i];
+      let id = row.health_building_id;
+      let name = row.name_of_health_building;
+      let latitude = row.latitude;
+      let longitude = row.longitude;
       centerBaru = new google.maps.LatLng(latitude, longitude);
       marker = new google.maps.Marker({
         position: centerBaru,
@@ -54,10 +53,9 @@ function cari_kesehatan(rows) {
   }
 }
 
-function carinamakesehatan() { 
-  var namakesehatan = document.getElementById("namakesehatan").value;
+function tampilsemuakesehatan() {
   $.ajax({
-    url: 'act/kesehatan_cari-nama.php?cari_nama=' + namakesehatan,
+    url: 'kesehatan_semua',
     data: "",
     dataType: 'json',
     success: function (rows) {
@@ -69,42 +67,81 @@ function carinamakesehatan() {
       $('#notifikasi').append(thrownError);
     }
   });
+}
+
+function carinamakesehatan() { 
+  let namakesehatan = document.getElementById("namakesehatan").value;
+  let url = `kesehatan_cari_nama/${namakesehatan}`  
+  datakesehatan(url);
 }
 
 function carijenis_kesehatan() { 
-  var jenis = document.getElementById("jeniskesehatan").value;
-  console.log("cari kesehatan dengan jenis: " + jenis);
-  $.ajax({
-    url: 'act/kesehatan_cari-jenis.php?type=' + jenis,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_kesehatan(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let jenis = document.getElementById("jeniskesehatan").value;
+  let url = `kesehatan_cari_jenis/${jenis}`;
+  datakesehatan(url);
 }
 
 function carijorong_kesehatan() { 
-  var jorong = document.getElementById("jorong_kesehatan").value;
-  console.log("cari b kesehatan dengan jorong: " + jorong);
-  $.ajax({
-    url: 'act/kesehatan_cari-jorong.php?j=' + jorong,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_kesehatan(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let jorong = document.getElementById("jorong_kesehatan").value;
+  let url = `kesehatan_cari_jorong/${jorong}`;
+  datakesehatan(url);
+}
+
+function cariRadius_kesehatan() { //menampilkan bang kesehatan berdasarkan radius
+  if (pos == 'null') {
+    $('#atur-posisi').modal('show');
+  }
+  else {
+    radiusStatus = true;
+    $('#hasilcari1').show();
+    let inputradiuskesehatan = document.getElementById("inputradiuskesehatan").value;
+    let radiuskesehatan = inputradiuskesehatan * 100;
+    let lat = document.getElementById("lat").value;
+    let lng = document.getElementById("lng").value;
+    console.log("panggil radiusnyaa, b.kesehatan sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiuskesehatan);
+    let rad = [];
+    rad[0] = pos.lat;
+    rad[1] = pos.lng;
+    rad[2] = radiuskesehatan;
+    let url = `kesehatan_cari_radius/${rad}`;
+    
+    $.ajax({
+      url: url,
+      data: "",
+      dataType: 'json',
+      success: function (rows) {
+        cari_kesehatan(rows);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#gagal').modal('show');
+        $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
+        $('#notifikasi').append(thrownError);
+      }
+    });
+
+    document.getElementById('m_kesehatan').innerHTML = radiuskesehatan;
+    hapusInfo();
+    hapusRadius();
+    clearroute2();
+    hapusMarkerTerdekat();
+    $('#hasilcari').empty();
+    $('#found').empty();
+    
+    let circle = new google.maps.Circle({
+      center: pos,
+      radius: parseFloat(inputradiuskesehatan * 100),
+      map: map,
+      strokeColor: "blue",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "blue",
+      fillOpacity: 0.35
+    });
+    map.setZoom(15);
+    map.setCenter(pos);
+    circles.push(circle); 
+      
+  }
 }
 
 function klikInfoWindowkesehatan(id) {
@@ -119,23 +156,23 @@ function detailkesehatan_infow(id) { //menampilkan informas
   hapusInfo();
   clearroute2();
   console.log("fungsi info marker id=" + id);
+  console.log(`kesehatan_info/${id}`)
     $.ajax({
-    url: 'act/kesehatan_detail.php?cari=' + id,
+    url: `kesehatan_info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
-      for (var i in rows) {
-        var row = rows[i];
-        var id = row.id;
-        var nama = row.name;
-        if (row.image==null) {
-          var image = "There are no photos for this building";
+      for (let i in rows) {
+        let row = rows[i];
+        let id = row.health_building_id;
+        let nama = row.name_of_health_building;
+        let image = row.photo_url;
+        if (image==null) {
+          image = "There are no photos for this building";
         }
         else {
-          var image = "<img src='foto/b-kesehatan/"+row.image+"' alt='there are no photos of this building' width='165'>";
+          image = `<img src='/foto/bangunan/${row.photo_url}' alt='building photo' width='165'>`;
         }
-        var latitude = row.latitude;
-        var longitude = row.longitude;
         centerBaru = new google.maps.LatLng(row.latitude, row.longitude);
         marker = new google.maps.Marker({
           position: centerBaru,
@@ -165,91 +202,6 @@ function detailkesehatan_infow(id) { //menampilkan informas
   });
 }
 
-
-function aktifkanRadiuskesehatan() { //fungsi radius
-  if (pos == 'null') {
-    $('#atur-posisi').modal('show');
-  } else {
-    hapusRadius();
-    clearroute2();
-    var inputradiuskesehatan = document.getElementById("inputradiuskesehatan").value;
-    var circle = new google.maps.Circle({
-      center: pos,
-      radius: parseFloat(inputradiuskesehatan * 100),
-      map: map,
-      strokeColor: "blue",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "blue",
-      fillOpacity: 0.35
-    });
-    map.setZoom(15);
-    map.setCenter(pos);
-    circles.push(circle);
-    teksradiuskesehatan()
-  }
-  cekRadiusStatus = 'on';
-  tampilkanradiuskesehatan();
-}
-
-function teksradiuskesehatan() {
-  document.getElementById('m_kesehatan').innerHTML = document.getElementById('inputradiuskesehatan').value * 100
-}
-
-function cekRadiuskesehatan() {
-  radiuskesehatan = inputradiuskesehatan.value * 100;
-  lat = document.getElementById("lat").value;
-  lng = document.getElementById("lng").value;
-}
-
-function tampilkanradiuskesehatan() { //menampilkan bang kesehatan berdasarkan radius
-  $('#hasilcari1').show();
-  $('#hasilcari').empty();
-  $('#found').empty();
-  hapusInfo();
-  hapusMarkerTerdekat();
-  cekRadiuskesehatan();
-  clearroute2();
-  console.log("panggil radiusnyaa, b.kesehatan sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiuskesehatan);
-
-  $.ajax({
-    url: 'act/kesehatan_radius.php?lat=' + pos.lat + '&lng=' + pos.lng + '&rad=' + radiuskesehatan,
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      if (rows != null ){
-        var a = 0;
-        for (var i in rows) {
-          var row = rows[i];
-          var id = row.id;
-          var nama = row.name;
-          var latitude = row.latitude;
-          var longitude = row.longitude;
-          centerBaru = new google.maps.LatLng(latitude, longitude);
-          marker = new google.maps.Marker({
-            position: centerBaru,
-            icon: 'assets/ico/kesehatan.png',
-            map: map,
-            animation: google.maps.Animation.DROP,
-          });
-          markersDua.push(marker);
-          map.setCenter(centerBaru);
-          klikInfoWindowkesehatan(id);
-          map.setZoom(15);
-          tampilkanhasilcari();
-          $('#hasilcari').append("<tr><td>" + nama + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkesehatan_infow(\"" + id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>");
-          a = a + 1;
-        }
-        $('#found').append("Found: " + a)
-        $('#hidecari').show();
-      }
-      else {
-        $('#hasilcari').append('<td colspan="2">no result</td>');
-      }
-    }
-  });
-}
-
 function carifasilitas_kesehatan(){
 
   $('#hasilcari1').show();
@@ -258,7 +210,7 @@ function carifasilitas_kesehatan(){
   clearroute2();
   hapusRadius();
   hapusMarkerTerdekat();
-  var arrayFas=[];
+  let arrayFas=[];
   for(i=0; i<$("input[name=fas_kesehatan]:checked").length;i++){
     arrayFas.push($("input[name=fas_kesehatan]:checked")[i].value);
   }
@@ -277,14 +229,14 @@ function carifasilitas_kesehatan(){
               $('#hasilcari').append('<td colspan="2">no result</td>');
             }
       else {
-        var a = 0;
-        for (var i in rows) 
+        let a = 0;
+        for (let i in rows) 
             {   
-              var row     = rows[i];
-              var id   = row.id;
-              var nama   = row.name;
-              var latitude  = row.latitude ;
-              var longitude = row.longitude ;
+              let row     = rows[i];
+              let id   = row.id;
+              let nama   = row.name;
+              let latitude  = row.latitude ;
+              let longitude = row.longitude ;
               centerBaru = new google.maps.LatLng(latitude, longitude);
               marker = new google.maps.Marker
             ({

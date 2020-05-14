@@ -26,7 +26,7 @@ function tampilsemuaumkm() { //menampilkan semua umkm
 }
 
 function cari_umkm(rows) {
-  if (rows.length == null) {
+  if (rows.length == 0) {
     $('#kosong').modal('show');
     $('#hasilcari').append('<td colspan="2">no result</td>');
   }
@@ -110,8 +110,6 @@ function detailumkm_infow(id) { //menampilkan informas
         else {
           image = `<img src='/foto/bangunan/${row.photo_url}' alt='building photo' width='165'>`;
         }
-        let latitude = row.latitude;
-        let longitude = row.longitude;
         centerBaru = new google.maps.LatLng(row.latitude, row.longitude);
         marker = new google.maps.Marker({
           position: centerBaru,

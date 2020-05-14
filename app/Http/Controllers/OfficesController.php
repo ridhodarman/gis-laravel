@@ -97,7 +97,7 @@ class officesController extends Controller
             $feature = array(
                 "type" => 'Feature',
                 'geometry' => json_decode($data->geometry, true),
-                'jenis' => "office Building",
+                'jenis' => "Office Building",
                 'properties' => array(
                     'id' => $data->office_building_id,
                     'nama' => $data->name_of_office_building

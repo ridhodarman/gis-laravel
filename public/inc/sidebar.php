@@ -604,7 +604,7 @@ select {
                                 <ul class="collapse">
                                     <li>
                                     <div class="input-group mb-3">
-                                        <select aria-label="Text input with dropdown button" id="jenispendidikan">
+                                        <select aria-label="Text input with dropdown button" id="tingkatpendidikan">
                                             <?php                
                                                 $sql_j=pg_query("SELECT * FROM level_of_education ORDER BY name_of_level");
                                                 while($row = pg_fetch_assoc($sql_j))
@@ -614,7 +614,7 @@ select {
                                             ?>
                                         </select>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="carijenis_pendidikan()"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="caritingkat_pendidikan()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                     </li>
@@ -624,12 +624,12 @@ select {
                                 <ul class="collapse">
                                     <li>
                                     <div class="input-group mb-3">
-                                        <select aria-label="Text input with dropdown button" id="tipependidikan">
+                                        <select aria-label="Text input with dropdown button" id="jenispendidikan">
                                             <option value="0">Public School</option>
                                             <option value="1">Private School</option>
                                         </select>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="caritipe_pendidikan()"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="carijenis_pendidikan()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                     </li>
@@ -780,7 +780,7 @@ select {
                                 <ul class="collapse">
                                     <li>
                                     <div style="color: lightgray"><b>Radius: <font id="m_kesehatan">0</font> m<br></b></div>
-                                    <input  type="range" onchange="aktifkanRadiuskesehatan();" id="inputradiuskesehatan" data-highlight="true" min="1" max="10" value="0"/>
+                                    <input  type="range" onchange="cariRadius_kesehatan();" id="inputradiuskesehatan" data-highlight="true" min="1" max="10" value="0"/>
                                     </li>
                                 </ul>
                             </li>

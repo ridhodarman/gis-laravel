@@ -351,7 +351,7 @@ function digitasipendidikan() {
 
 function digitasikesehatan() {
   $.ajax({
-    url: server+'inc/datakesehatan.php',
+    url: server+'health_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

@@ -97,7 +97,7 @@ class educationalsController extends Controller
             $feature = array(
                 "type" => 'Feature',
                 'geometry' => json_decode($data->geometry, true),
-                'jenis' => "educational Building",
+                'jenis' => "Educational Building",
                 'properties' => array(
                     'id' => $data->educational_building_id,
                     'nama' => $data->name_of_educational_building
@@ -128,6 +128,19 @@ class educationalsController extends Controller
                     ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
                     ->whereRaw('LOWER(educational_building.name_of_educational_building) LIKE (?)',array("%{$nama2}%"))  
                     ->orderBy('educational_building.name_of_educational_building')
+                    ->get();
+        return $query;
+    }
+
+    public function cari_tingkat($tingkat){
+        $query = DB::table('educational_building')
+                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
+                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
+                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+                    ->where('educational_building.id_level_of_education', '=', '?')
+                    ->orderBy('educational_building.name_of_educational_building')
+                    ->setBindings([$tingkat])
                     ->get();
         return $query;
     }

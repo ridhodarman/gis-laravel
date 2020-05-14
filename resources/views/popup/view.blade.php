@@ -204,6 +204,50 @@ $server='foto/bangunan/';
                                         </td>
                                     </tr>
                             @endforeach
+                            <?php } 
+                            if($type=="health") { ?>
+                            @foreach ($info as $i)
+                            <h6>ID:
+                                {{$i->health_building_id}}
+                            </h6>
+                            <br />
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>Nama </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{$i->name_of_health_building}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type of Health Building </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{$i->jenis}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Name of Head</td>
+                                    <td>:</td>
+                                    <td>
+                                        {{$i->name_of_head}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>All Medical Personnel</td>
+                                    <td>:</td>
+                                    <td>
+                                        {{$i->all_medical_personnel}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>All Non-Medical Personnel</td>
+                                    <td>:</td>
+                                    <td>
+                                        {{$i->all_non_medical_personnel}}
+                                    </td>
+                                </tr>
+                            @endforeach
                             <?php } ?>
                             @foreach ($info as $i)
                                 <tr>

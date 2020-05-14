@@ -492,7 +492,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-hospital-alt'></i> Health Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load("info-kesehatan.php?id="+id);
+        $('#konten-bang').load(`kesehatan_detail/${id}`);
     }
 
     function detailkantor(id) {

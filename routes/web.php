@@ -64,6 +64,7 @@ Route::get('/kantor_detail/{id}', 'OfficesController@detail');
 Route::get('/educational_digit', 'EducationalsController@digit');
 Route::get('/pendidikan_semua', 'EducationalsController@semua');
 Route::get('/pendidikan_cari_nama/{nama}', 'EducationalsController@cari_nama');
+Route::get('/pendidikan_cari_tingkat/{tingkat}', 'EducationalsController@cari_tingkat');
 Route::get('/pendidikan_cari_jenis/{jenis}', 'EducationalsController@cari_jenis');
 Route::get('/pendidikan_cari_konstruksi/{konstruksi}', 'EducationalsController@cari_konstruksi');
 Route::get('/pendidikan_cari_luasbang/{luasbang}', 'EducationalsController@cari_luasbang');
@@ -74,3 +75,13 @@ Route::get('/pendidikan_cari_jorong/{jorong}', 'EducationalsController@cari_joro
 Route::get('/pendidikan_cari_fasilitas/{fasilitas}', 'EducationalsController@cari_fasilitas');
 Route::get('/pendidikan_info/{id}', 'EducationalsController@info');
 Route::get('/pendidikan_detail/{id}', 'EducationalsController@detail');
+
+Route::get('/health_digit', 'HealthsController@digit');
+Route::get('/kesehatan_semua', 'HealthsController@semua');
+Route::get('/kesehatan_cari_nama/{nama}', 'HealthsController@cari_nama');
+Route::get('/kesehatan_cari_jenis/{jenis}', 'HealthsController@cari_jenis');
+Route::get('/kesehatan_cari_radius/{rad}', 'HealthsController@cari_radius');
+Route::get('/kesehatan_cari_jorong/{jorong}', 'HealthsController@cari_jorong');
+Route::get('/kesehatan_cari_fasilitas/{fasilitas}', 'HealthsController@cari_fasilitas');
+Route::get('/kesehatan_info/{id}', 'HealthsController@info');
+Route::get('/kesehatan_detail/{id}', 'HealthsController@detail');
