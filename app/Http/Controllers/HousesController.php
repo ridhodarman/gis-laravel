@@ -120,4 +120,20 @@ class HousesController extends Controller
                     ->get();
         return $query;
     }
+
+    public function info($id){
+        $query = DB::table('house_building')
+                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
+                    ->addSelect('house_building.house_building_id', 'building_gallery.photo_url')
+                    ->leftJoin('building_gallery', 'house_building.house_building_id', 
+                            '=', 'building_gallery.building_id')
+                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
+                    ->where('house_building.house_building_id', '=', '?')
+                    ->orderBy('building_gallery.upload_date', 'DESC')
+                    ->limit(1)
+                    ->setBindings([$id])
+                    ->get();
+        return $query;
+    }
 }

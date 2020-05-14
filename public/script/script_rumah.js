@@ -77,18 +77,21 @@ function detailrumah_infow(id){  //menampilkan informasi rumah
   hapusInfo();
   clearroute2();
   console.log("fungsi info marker id="+id);
-    $.ajax({url: 'act/rumah_detail.php?cari='+id, data: "", dataType: 'json', success: function(rows)
+    $.ajax({
+      url: `rumah_info/${id}`,
+      data: "", dataType: 'json', success: function(rows)
       {
          for (var i in rows) 
           { 
             var row = rows[i];
-            var id = row.id;
+            var id = row.house_building_id;
+            var image = row.photo_url;
             //var nama = row.name;
-            if (row.image==null) {
-              var image = "There are no photos for this building";
+            if (image==null) {
+              image = "There are no photos for this building";
             }
             else {
-              var image = "<img src='foto/rumah/"+row.image+"' alt='building photo' width='165'>";
+              image = `<img src='/foto/bangunan/${row.photo_url}' alt='building photo' width='165'>`;
             }
             var latitude  = row.latitude; 
             var longitude = row.longitude ;

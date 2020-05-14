@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Route::get('/house_digit', 'HousesController@digit');
 Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
+Route::get('/rumah_info/{id}', 'HousesController@info');
 
 Route::get('/worship_digit', 'WorshipsController@digit');
 Route::get('/ibadah_semua', 'WorshipsController@semua');
