@@ -1102,7 +1102,8 @@ function model_ibadah(rows) {
       var row = rows[i];
       var name = `<i class='fas fa-mosque'></i> ${row.name}`;
       let icon = 'assets/ico/musajik.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailibadah_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
     }
   }
 }
@@ -1117,7 +1118,8 @@ function model_rumah(rows)
       var row     = rows[i];
       var name = `<i class='ti-home'></i> ${row.name}`;
       let icon = 'assets/ico/home.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailrumah_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
       } 
     }
 }
@@ -1131,7 +1133,8 @@ function model_kantor(rows) {
       var row = rows[i];
       var name = `<i class='fa fa-bank'></i> ${row.name}`;
       let icon = 'assets/ico/kantor.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkantor_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
     }
   }
 }
@@ -1145,7 +1148,8 @@ function model_pendidikan(rows) {
       var row = rows[i];
       var name = `<i class='fas fa-school'></i> ${row.name}`;
       let icon = 'assets/ico/sekolah.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailpendidikan_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
     }
   }
 }
@@ -1159,7 +1163,8 @@ function model_kesehatan(rows) {
       var row = rows[i];
       var name = `<i class='fas fa-hospital-alt'></i> ${row.name}`;
       let icon = 'assets/ico/kesehatan.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkesehatan_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
     }
   }
 }
@@ -1173,12 +1178,13 @@ function model_umkm(rows) {
       var row = rows[i];
       var name = `<i class='fas fa-store-alt'></i> ${row.name}`;
       let icon = 'assets/ico/kadai.png';
-      data_model(row.id, name, row.latitude, row.longitude, icon);
+      let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailumkm_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
+      data_model(row.id, name, row.latitude, row.longitude, icon, info);
     }
   }
 }
 
-function data_model(id, name, latitude, longitude, icon){
+function data_model(id, name, latitude, longitude, icon, info){
   centerBaru = new google.maps.LatLng(latitude, longitude);
   marker = new google.maps.Marker({
     position: centerBaru,
@@ -1191,7 +1197,7 @@ function data_model(id, name, latitude, longitude, icon){
   klikInfoWindowumkm(id);
   map.setZoom(14);
   tampilkanhasilcari();
-  $('#hasilcari').append("<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailumkm_infow(\"" + id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>");
+  $('#hasilcari').append(info);
   a=a+1;
   $('#found').empty();
   $('#found').append("Found: " + a);
