@@ -224,6 +224,19 @@ class officesController extends Controller
         return $query;
     }
 
+    public function cari_model($model){
+        $query = DB::table('office_building')
+                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
+                    ->addSelect('office_building.office_building_id AS id', 'office_building.name_of_office_building AS name')
+                    ->join('building', 'office_building.office_building_id', '=', 'building.building_id')
+                    ->where('building.model_id', '=', '?')
+                    ->orderBy('office_building.name_of_office_building')
+                    ->setBindings([$model])
+                    ->get();
+        return $query;
+    }
+
     public function info($id){
         $query = DB::table('office_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 

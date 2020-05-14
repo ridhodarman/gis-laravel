@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/house_digit', 'HousesController@digit');
+Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
 
 Route::get('/worship_digit', 'WorshipsController@digit');
 Route::get('/ibadah_semua', 'WorshipsController@semua');
@@ -30,6 +31,7 @@ Route::get('/ibadah_cari_tahun/{tahun}', 'WorshipsController@cari_tahun');
 Route::get('/ibadah_cari_radius/{rad}', 'WorshipsController@cari_radius');
 Route::get('/ibadah_cari_jorong/{jorong}', 'WorshipsController@cari_jorong');
 Route::get('/ibadah_cari_fasilitas/{fasilitas}', 'WorshipsController@cari_fasilitas');
+Route::get('/ibadah_cari_model/{model}', 'WorshipsController@cari_model');
 Route::get('/ibadah_info/{id}', 'WorshipsController@info');
 Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
 
@@ -44,6 +46,7 @@ Route::get('/umkm_cari_tahun/{tahun}', 'MsmesController@cari_tahun');
 Route::get('/umkm_cari_radius/{rad}', 'MsmesController@cari_radius');
 Route::get('/umkm_cari_jorong/{jorong}', 'MsmesController@cari_jorong');
 Route::get('/umkm_cari_fasilitas/{fasilitas}', 'MsmesController@cari_fasilitas');
+Route::get('/umkm_cari_model/{model}', 'MsmesController@cari_model');
 Route::get('/umkm_info/{id}', 'MsmesController@info');
 Route::get('/umkm_detail/{id}', 'MsmesController@detail');
 
@@ -58,6 +61,7 @@ Route::get('/kantor_cari_tahun/{tahun}', 'OfficesController@cari_tahun');
 Route::get('/kantor_cari_radius/{rad}', 'OfficesController@cari_radius');
 Route::get('/kantor_cari_jorong/{jorong}', 'OfficesController@cari_jorong');
 Route::get('/kantor_cari_fasilitas/{fasilitas}', 'OfficesController@cari_fasilitas');
+Route::get('/kantor_cari_model/{model}', 'OfficesController@cari_model');
 Route::get('/kantor_info/{id}', 'OfficesController@info');
 Route::get('/kantor_detail/{id}', 'OfficesController@detail');
 
@@ -73,6 +77,7 @@ Route::get('/pendidikan_cari_tahun/{tahun}', 'EducationalsController@cari_tahun'
 Route::get('/pendidikan_cari_radius/{rad}', 'EducationalsController@cari_radius');
 Route::get('/pendidikan_cari_jorong/{jorong}', 'EducationalsController@cari_jorong');
 Route::get('/pendidikan_cari_fasilitas/{fasilitas}', 'EducationalsController@cari_fasilitas');
+Route::get('/pendidikan_cari_model/{model}', 'EducationalsController@cari_model');
 Route::get('/pendidikan_info/{id}', 'EducationalsController@info');
 Route::get('/pendidikan_detail/{id}', 'EducationalsController@detail');
 
@@ -83,5 +88,6 @@ Route::get('/kesehatan_cari_jenis/{jenis}', 'HealthsController@cari_jenis');
 Route::get('/kesehatan_cari_radius/{rad}', 'HealthsController@cari_radius');
 Route::get('/kesehatan_cari_jorong/{jorong}', 'HealthsController@cari_jorong');
 Route::get('/kesehatan_cari_fasilitas/{fasilitas}', 'HealthsController@cari_fasilitas');
+Route::get('/kesehatan_cari_model/{model}', 'HealthsController@cari_model');
 Route::get('/kesehatan_info/{id}', 'HealthsController@info');
 Route::get('/kesehatan_detail/{id}', 'HealthsController@detail');

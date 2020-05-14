@@ -250,6 +250,19 @@ class WorshipsController extends Controller
         return $query;
     }
 
+    public function cari_model($model){
+        $query = DB::table('worship_building')
+                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
+                    ->addSelect('worship_building.worship_building_id AS id', 'worship_building.name_of_worship_building AS name')
+                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+                    ->where('building.model_id', '=', '?')
+                    ->orderBy('worship_building.name_of_worship_building')
+                    ->setBindings([$model])
+                    ->get();
+        return $query;
+    }
+
     public function info($id){
         $query = DB::table('worship_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
