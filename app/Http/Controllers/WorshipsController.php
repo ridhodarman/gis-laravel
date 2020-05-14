@@ -168,7 +168,7 @@ class WorshipsController extends Controller
                     ->whereBetween('building_area', $luasbang2)
                     ->orderBy('name_of_worship_building')
                     ->get();
-        return $luasbang2;
+        return $query;
     }
 
     public function cari_luastanah($luastanah){
@@ -273,9 +273,9 @@ class WorshipsController extends Controller
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_worship.name_of_type AS jenis', 
                                 'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('type_of_construction', 'worship_building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('type_of_worship', 'worship_building.type_of_worship', '=', 'type_of_worship.type_id')
                     ->leftJoin('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+                    ->leftJoin('type_of_construction', 'building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
                     ->where('worship_building.worship_building_id', '=', '?')
                     ->setBindings([$id]);
@@ -296,6 +296,6 @@ class WorshipsController extends Controller
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 
-        return view('popup.ibadah', ['info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
+        return view('popup.view', ['type'=>'worship', 'info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
     }
 }

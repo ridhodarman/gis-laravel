@@ -97,7 +97,7 @@ function digitasirumah() {
 
 function digitasiumkm() {
   $.ajax({
-    url: 'msme_digit',
+    url: server+'msme_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {
@@ -225,7 +225,7 @@ function digitasit4ibadah() {
 
 function digitasikantor() {
   $.ajax({
-    url: 'office_digit',
+    url: server+'office_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {
@@ -288,7 +288,7 @@ function digitasikantor() {
 
 function digitasipendidikan() {
   $.ajax({
-    url: server+'inc/datapendidikan.php',
+    url: server+'educational_digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

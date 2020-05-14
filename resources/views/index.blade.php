@@ -269,7 +269,7 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Ridho Darman | Jurusan Sistem Informasi Universitas Andalas 2018-2019. </p>
+                <p>© Ridho Darman | Jurusan Sistem Informasi Universitas Andalas 2019. </p>
             </div>
         </footer>
         <!-- footer area end-->
@@ -484,7 +484,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-school'></i> Educational Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load("info-pendidikan.php?id="+id);
+        $('#konten-bang').load(`pendidikan_detail/${id}`);
     }
 
     function detailkesehatan(id) {

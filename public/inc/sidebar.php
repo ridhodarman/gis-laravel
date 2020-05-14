@@ -691,7 +691,7 @@ select {
                                 <ul class="collapse">
                                     <li>
                                     <div style="color: lightgray"><b>Radius: <font id="m_pendidikan">0</font> m<br></b></div>
-                                    <input  type="range" onchange="aktifkanRadiuspendidikan();" id="inputradiuspendidikan" data-highlight="true" min="1" max="10" value="0"/>
+                                    <input  type="range" onchange="cariRadius_pendidikan();" id="inputradiuspendidikan" data-highlight="true" min="1" max="10" value="0"/>
                                     </li>
                                 </ul>
                             </li>

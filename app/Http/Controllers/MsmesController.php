@@ -235,9 +235,9 @@ class MsmesController extends Controller
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_msme.name_of_type AS jenis', 
                                 'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('type_of_construction', 'msme_building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('type_of_msme', 'msme_building.type_of_msme', '=', 'type_of_msme.type_id')
                     ->leftJoin('building', 'msme_building.msme_building_id', '=', 'building.building_id')
+                    ->leftJoin('type_of_construction', 'building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
                     ->where('msme_building.msme_building_id', '=', '?')
                     ->setBindings([$id]);
@@ -258,7 +258,7 @@ class MsmesController extends Controller
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 
-        return view('popup.umkm', ['info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
+        return view('popup.view', ['type'=>'msme', 'info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
         //return $sql;
     }
 }

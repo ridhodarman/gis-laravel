@@ -60,7 +60,7 @@ $server='foto/bangunan/';
         $img=$img. "Total Photo: ".$jumlah;
 
 ?>
- 
+
 <div class="main-content-inner">
     <div class="row">
         <div class="col-lg-4">
@@ -68,9 +68,10 @@ $server='foto/bangunan/';
                 <div class="card-body">
                     <div class="media">
                         <div class="media-body">
+                        <?php if($type=="worship") {?>
                         @foreach ($info as $i)
                             <h6>ID:
-                                {{$i->office_building_id}}
+                                {{$i->worship_building_id}}
                             </h6>
                             <br />
                             <table style="width: 100%;">
@@ -78,16 +79,133 @@ $server='foto/bangunan/';
                                     <td>Nama </td>
                                     <td>:</td>
                                     <td>
-                                        {{$i->name_of_office_building}}
+                                        {{$i->name_of_worship_building}}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Type of Office </td>
+                                    <td>Worship Type </td>
                                     <td>:</td>
                                     <td>
                                         {{$i->jenis}}
                                     </td>
                                 </tr>
+                        @endforeach
+                        <?php } 
+                            if($type=="msme") { ?>
+                            @foreach ($info as $i)
+                            <h6>ID:
+                                    {{$i->msme_building_id}}
+                                </h6>
+                                <br />
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>Nama </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->name_of_msme_building}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type of MSME </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->jenis}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Owner Name</td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->owner_name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Person</td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->contact_person}}
+                                        </td>
+                                    </tr>
+                            @endforeach
+                            <?php } 
+                            if($type=="office") { ?>
+                            @foreach ($info as $i)
+                            <h6>ID:
+                                    {{$i->office_building_id}}
+                                </h6>
+                                <br />
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>Nama </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->name_of_office_building}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type of Office </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->jenis}}
+                                        </td>
+                                    </tr>
+                            @endforeach
+                            <?php } 
+                            if($type=="educational") { ?>
+                            @foreach ($info as $i)
+                            <h6>ID:
+                                    {{$i->educational_building_id}}
+                                </h6>
+                                <br />
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>Nama </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->name_of_educational_building}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level of Education </td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->level}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>School Type</td>
+                                        <td>:</td>
+                                        <td>
+                                            <?php 
+                                                if($i->school_type==0){echo "Public School";}
+                                                else if($i->school_type==1){echo "Private School";}
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Headmaster Name</td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->headmaster_name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>All Students</td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->all_students}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>All Teachers</td>
+                                        <td>:</td>
+                                        <td>
+                                            {{$i->all_teachers}}
+                                        </td>
+                                    </tr>
+                            @endforeach
+                            <?php } ?>
+                            @foreach ($info as $i)
                                 <tr>
                                     <td>Building Size </td>
                                     <td>:</td>

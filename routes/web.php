@@ -61,4 +61,16 @@ Route::get('/kantor_cari_fasilitas/{fasilitas}', 'OfficesController@cari_fasilit
 Route::get('/kantor_info/{id}', 'OfficesController@info');
 Route::get('/kantor_detail/{id}', 'OfficesController@detail');
 
-Route::get('/msme_digit', 'MsmesController@digit');
+Route::get('/educational_digit', 'EducationalsController@digit');
+Route::get('/pendidikan_semua', 'EducationalsController@semua');
+Route::get('/pendidikan_cari_nama/{nama}', 'EducationalsController@cari_nama');
+Route::get('/pendidikan_cari_jenis/{jenis}', 'EducationalsController@cari_jenis');
+Route::get('/pendidikan_cari_konstruksi/{konstruksi}', 'EducationalsController@cari_konstruksi');
+Route::get('/pendidikan_cari_luasbang/{luasbang}', 'EducationalsController@cari_luasbang');
+Route::get('/pendidikan_cari_luastanah/{luastanah}', 'EducationalsController@cari_luastanah');
+Route::get('/pendidikan_cari_tahun/{tahun}', 'EducationalsController@cari_tahun');
+Route::get('/pendidikan_cari_radius/{rad}', 'EducationalsController@cari_radius');
+Route::get('/pendidikan_cari_jorong/{jorong}', 'EducationalsController@cari_jorong');
+Route::get('/pendidikan_cari_fasilitas/{fasilitas}', 'EducationalsController@cari_fasilitas');
+Route::get('/pendidikan_info/{id}', 'EducationalsController@info');
+Route::get('/pendidikan_detail/{id}', 'EducationalsController@detail');

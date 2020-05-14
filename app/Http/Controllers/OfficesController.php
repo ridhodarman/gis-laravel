@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use App\Office;
+use App\office;
 use Illuminate\Http\Request;
 
-class OfficesController extends Controller
+class officesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class OfficesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Office  $office
+     * @param  \App\office  $office
      * @return \Illuminate\Http\Response
      */
-    public function show(Office $office)
+    public function show(office $office)
     {
         //
     }
@@ -52,10 +52,10 @@ class OfficesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Office  $office
+     * @param  \App\office  $office
      * @return \Illuminate\Http\Response
      */
-    public function edit(Office $office)
+    public function edit(office $office)
     {
         //
     }
@@ -64,10 +64,10 @@ class OfficesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Office  $office
+     * @param  \App\office  $office
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Office $office)
+    public function update(Request $request, office $office)
     {
         //
     }
@@ -75,10 +75,10 @@ class OfficesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Office  $office
+     * @param  \App\office  $office
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Office $office)
+    public function destroy(office $office)
     {
         //
     }
@@ -97,7 +97,7 @@ class OfficesController extends Controller
             $feature = array(
                 "type" => 'Feature',
                 'geometry' => json_decode($data->geometry, true),
-                'jenis' => "Office Building",
+                'jenis' => "office Building",
                 'properties' => array(
                     'id' => $data->office_building_id,
                     'nama' => $data->name_of_office_building
@@ -247,9 +247,9 @@ class OfficesController extends Controller
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_office.name_of_type AS jenis', 
                                 'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('type_of_construction', 'office_building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('type_of_office', 'office_building.type_of_office', '=', 'type_of_office.type_id')
                     ->leftJoin('building', 'office_building.office_building_id', '=', 'building.building_id')
+                    ->leftJoin('type_of_construction', 'building.type_of_construction', '=', 'type_of_construction.type_id')
                     ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
                     ->where('office_building.office_building_id', '=', '?')
                     ->setBindings([$id]);
@@ -270,7 +270,7 @@ class OfficesController extends Controller
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 
-        return view('popup.kantor', ['info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
+        return view('popup.view', ['type'=>'office', 'info' => $sql, 'photo' => $sql2, 'fasilitas' => $sql3]);
         //return $sql;
     }
 }
