@@ -20,8 +20,8 @@
 
 <link rel="stylesheet" href="assets/fontawesome-free-5.6.3-web/css/all.css">
 <link rel="stylesheet" href="assets/fontawesome-free-5.6.3-web/css/all.min.css">
-<link rel="stylesheet" href="assets/fontawesome-free-5.6.3-web/js/all.js">
-<link rel="stylesheet" href="assets/fontawesome-free-5.6.3-web/js/all.min.js">
+<script type="text/javascript" src="assets/fontawesome-free-5.6.3-web/js/all.js"></script>
+<script type="text/javascript" src="assets/fontawesome-free-5.6.3-web/js/all.min.js"></script>
 
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 

@@ -19,7 +19,7 @@ select {
             <nav>
                 <ul class="metismenu" id="menu">
                     <li>
-                        <a href="javascript:void(0)" aria-expanded="true" name="terbatas"><i class="ti-home"></i><span>House</span></a>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-home"></i><span>House</span></a>
                         <ul class="collapse">
                             <li><a href="javascript:void(0)" aria-expanded="true">Search By Survey ID</a>
                                 <ul class="collapse">
@@ -33,7 +33,7 @@ select {
                                     </li>
                                 </ul>
                             </li>
-                            <li name="terbatas"><a href="javascript:void(0)" aria-expanded="true">Search By Owner Name</a>
+                            <li name="terbatas"><a href="javascript:void(0)" aria-expanded="true" name="terbatas">Search By Owner Name</a>
                                 <ul class="collapse">
                                     <li>
                                     <div class="input-group mb-3">
@@ -481,7 +481,7 @@ select {
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-bank"></i><span>Office Building</span></a>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="fa fa-university"></i><span>Office Building</span></a>
                         <ul class="collapse">
                             <li><a href="javascript:void(0)" onclick="tampilsemuakantor()">Show All Office Buildings</a></li>
                             <li><a href="javascript:void(0)" aria-expanded="true">Search By Name</a>
@@ -810,7 +810,7 @@ select {
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline">
 						                <input type="checkbox" class="custom-control-input" id="model_rumah" name="model">
-						                <label class="custom-control-label" for="model_rumah" style="color: lightgray">House &emsp;</label>
+						                <label class="custom-control-label" for="model_rumah" style="color: lightgray">House/ residence</label>
 						            </div>
 
 						            <div class="custom-control custom-checkbox custom-control-inline">

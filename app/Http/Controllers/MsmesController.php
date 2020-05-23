@@ -120,13 +120,12 @@ class MsmesController extends Controller
     }
 
     public function cari_nama($nama){
-        $nama2 = strtolower($nama);
         $query = DB::table('msme_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('msme_building.msme_building_id', 'msme_building.name_of_msme_building')
                     ->join('building', 'msme_building.msme_building_id', '=', 'building.building_id')
-                    ->whereRaw('LOWER(msme_building.name_of_msme_building) LIKE (?)',array("%{$nama2}%"))  
+                    ->orWhere('msme_building.name_of_msme_building', 'ilike', array("%".$nama."%"))
                     ->orderBy('msme_building.name_of_msme_building')
                     ->get();
         return $query;

@@ -217,7 +217,7 @@ function detailibadah_infow(id) { //menampilkan informas
         map.setZoom(18);
         infowindow = new google.maps.InfoWindow({
           position: centerBaru,
-          content: "<span style=color:black><center><b>Information</b><br>"+image+"<p><i class='fas fa-mosque'></i><b> "+ nama + "</b><br><a role='button' class='btn btn-default fa fa-car' onclick='callRoute(centerLokasi, centerBaru);rutetampil();'> Show Route</a>&nbsp<a role='button' class='btn btn-default fa fa-info-circle' id='detail-bang' onclick='detailibadah("+'"'+id+'"'+")'> View Details</a></center></span>",
+          content: "<span style=color:black><center><b>Information</b><br>"+image+"<p><i class='fas fa-mosque'></i><b> "+ nama + "</b><br><button class='btn btn-default' onclick='callRoute(centerLokasi, centerBaru);rutetampil();'><i class='fa fa-car'></i> Show Route</button>&nbsp<button class='btn btn-default' id='detail-bang' onclick='detailibadah("+'"'+id+'"'+")'><i class='fa fa-info-circle'></i> View Details<button></center></span>",
           pixelOffset: new google.maps.Size(0, -33)
         });
         infoDua.push(infowindow);

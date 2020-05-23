@@ -177,6 +177,11 @@
                 .tombol-kensyel {
                     background: rgba(0, 12, 26, 0.68)
                 }
+                .ket {
+                    text-shadow: gray 0 0 20px;
+                    color: white;
+                    float: right;
+                }
             </style>
             <div class="modal fade" id="login">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -185,7 +190,9 @@
                             <h5 class="modal-title tulisan">L o g i n</h5>
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                         </div>
-                        <form method="post" action="act/login.php" style="width: 90%">
+                        <form method="post" action="/login" style="width: 90%">
+                        {{csrf_field()}}
+                        <div class="ket">*village employee login form</div>
                         <div class="modal-body">
                             <font class="tulisan">Username:</font>
                             <input type="text" class="form-control form-transparan" name="username" placeholder="username..." required>
@@ -232,7 +239,7 @@
                         <a id="legenda">
                             <button class="btn btn-default" title="show legend" onclick="legenda()"><i class="fa fa-globe"></i></button>
                         </a>
-                        <button class="btn btn-default" title="refresh" onclick="refresh()"><i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-default" title="refresh" onclick="refresh()"><i class="fa fa-sync"></i></button>
                         <?php include('inc/aturlayer.php') ?>
                         <div id="map"></div>
                     </div>

@@ -120,13 +120,12 @@ class WorshipsController extends Controller
     }
 
     public function cari_nama($nama){
-        $nama2 = strtolower($nama);
         $query = DB::table('worship_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
                     ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->whereRaw('LOWER(worship_building.name_of_worship_building) LIKE (?)',array("%{$nama2}%"))  
+                    ->orWhere('worship_building.name_of_worship_building', 'ilike', array("%".$nama."%"))  
                     ->orderBy('worship_building.name_of_worship_building')
                     ->get();
         return $query;

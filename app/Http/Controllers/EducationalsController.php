@@ -120,13 +120,12 @@ class educationalsController extends Controller
     }
 
     public function cari_nama($nama){
-        $nama2 = strtolower($nama);
         $query = DB::table('educational_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
                     ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->whereRaw('LOWER(educational_building.name_of_educational_building) LIKE (?)',array("%{$nama2}%"))  
+                    ->orWhere('educational_building.name_of_educational_building', 'ilike', array("%".$nama."%"))
                     ->orderBy('educational_building.name_of_educational_building')
                     ->get();
         return $query;

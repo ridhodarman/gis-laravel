@@ -108,6 +108,17 @@ class HousesController extends Controller
         return $geojson;
     }
 
+    public function cari_id($id){
+        $query = DB::table('house_building')
+                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
+                    ->addSelect('house_building.house_building_id AS id', 'house_building.house_building_id AS name')
+                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
+                    ->orWhere('house_building.house_building_id', 'ilike', array("%".$id."%"))
+                    ->get();
+        return $query;
+    }
+
     public function cari_model($model){
         $query = DB::table('house_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 

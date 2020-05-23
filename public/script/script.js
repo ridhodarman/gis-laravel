@@ -1094,7 +1094,7 @@ function carimodel() {
 }
 
 function model_ibadah(rows) {
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No worship building data</td></tr>");
   }
   else{
@@ -1110,7 +1110,7 @@ function model_ibadah(rows) {
 
 function model_rumah(rows)
 {   
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No house data</td></tr>");
   }
   else { 
@@ -1120,27 +1120,29 @@ function model_rumah(rows)
       let icon = 'assets/ico/home.png';
       let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailrumah_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
       data_model(row.id, name, row.latitude, row.longitude, icon, info);
+      klikInfoWindow(row.id);
       } 
     }
 }
 
 function model_kantor(rows) {
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No office building data</td></tr>");
   }
   else{
     for (var i in rows) {
       var row = rows[i];
-      var name = `<i class='fa fa-bank'></i> ${row.name}`;
+      var name = `<i class='fa fa-university'></i> ${row.name}`;
       let icon = 'assets/ico/kantor.png';
       let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkantor_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
       data_model(row.id, name, row.latitude, row.longitude, icon, info);
+      klikInfoWindowkantor(row.id);
     }
   }
 }
 
 function model_pendidikan(rows) {
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No educational building data</td></tr>");
   }
   else {
@@ -1150,12 +1152,13 @@ function model_pendidikan(rows) {
       let icon = 'assets/ico/sekolah.png';
       let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailpendidikan_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
       data_model(row.id, name, row.latitude, row.longitude, icon, info);
+      klikInfoWindowpendidikan(row.id);
     }
   }
 }
 
 function model_kesehatan(rows) {
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No health building data</td></tr>");
   }
   else{
@@ -1165,12 +1168,13 @@ function model_kesehatan(rows) {
       let icon = 'assets/ico/kesehatan.png';
       let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkesehatan_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
       data_model(row.id, name, row.latitude, row.longitude, icon, info);
+      klikInfoWindowkesehatan(row.id);
     }
   }
 }
 
 function model_umkm(rows) {
-  if (rows==null) {
+  if (rows.length==0) {
     $('#hasilcari').append("<tr><td colspan='2'>No MSME building data</td></tr>");
   }
   else{
@@ -1180,6 +1184,7 @@ function model_umkm(rows) {
       let icon = 'assets/ico/kadai.png';
       let info = "<tr><td>" + name + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailumkm_infow(\"" + row.id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>";
       data_model(row.id, name, row.latitude, row.longitude, icon, info);
+      klikInfoWindowumkm(row.id);
     }
   }
 }
@@ -1194,7 +1199,6 @@ function data_model(id, name, latitude, longitude, icon, info){
   });
   markersDua.push(marker);
   map.setCenter(centerBaru);
-  klikInfoWindowumkm(id);
   map.setZoom(14);
   tampilkanhasilcari();
   $('#hasilcari').append(info);

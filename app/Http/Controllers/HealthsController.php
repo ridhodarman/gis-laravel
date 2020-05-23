@@ -120,13 +120,12 @@ class healthsController extends Controller
     }
 
     public function cari_nama($nama){
-        $nama2 = strtolower($nama);
         $query = DB::table('health_building')
                     ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
                                         ST_Y(ST_CENTROID(building.geom)) AS latitude"))
                     ->addSelect('health_building.health_building_id', 'health_building.name_of_health_building')
                     ->join('building', 'health_building.health_building_id', '=', 'building.building_id')
-                    ->whereRaw('LOWER(health_building.name_of_health_building) LIKE (?)',array("%{$nama2}%"))  
+                    ->orWhere('health_building.name_of_health_building', 'ilike', array("%".$nama."%"))
                     ->orderBy('health_building.name_of_health_building')
                     ->get();
         return $query;
