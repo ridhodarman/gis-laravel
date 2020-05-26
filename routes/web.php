@@ -17,10 +17,29 @@ Route::get('/', function () {
     return view ('index', ['api' => 'AIzaSyBNnzxae2AewMUN0Tt_fC3gN38goeLVdVE']);
 });
 
+Route::get('/welcome', function () {
+    return view ('welcome');
+});
+
+
+Route::get('/stop', function () {
+    return abort(403);
+});
+
 Route::get('/house_digit', 'HousesController@digit');
 Route::get('/rumah_cari_id/{id}', 'HousesController@cari_id');
 Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
 Route::get('/rumah_info/{id}', 'HousesController@info');
+Route::get('/rumah_cari_namapemilik/{nama}', 'HousesController@cari_namapemilik')->middleware('auth');
+Route::get('/rumah_cari_nikpemilik/{nik}', 'HousesController@cari_nikpemilik')->middleware('auth');
+Route::get('/rumah_cari_namapenghuni/{nama}', 'HousesController@cari_namapenghuni')->middleware('auth');
+Route::get('/rumah_cari_nikpenghuni/{nik}', 'HousesController@cari_nikpenghuni')->middleware('auth');
+Route::get('/rumah_cari_kkpenghuni/{kk}', 'HousesController@cari_kkpenghuni')->middleware('auth');
+Route::get('/rumah_cari_sukupenghuni/{suku}', 'HousesController@cari_sukupenghuni')->middleware('auth');
+Route::get('/rumah_cari_konstruksi/{k}', 'HousesController@cari_konstruksi')->middleware('auth');
+Route::get('/rumah_cari_tahun/{tahun}', 'HousesController@cari_tahun')->middleware('auth');
+Route::get('/rumah_cari_listrik/{listrik}', 'HousesController@cari_listrik')->middleware('auth');
+Route::get('/rumah_cari_status/{s}', 'HousesController@cari_status')->middleware('auth');
 
 Route::get('/worship_digit', 'WorshipsController@digit');
 Route::get('/ibadah_semua', 'WorshipsController@semua');
@@ -93,3 +112,6 @@ Route::get('/kesehatan_cari_fasilitas/{fasilitas}', 'HealthsController@cari_fasi
 Route::get('/kesehatan_cari_model/{model}', 'HealthsController@cari_model');
 Route::get('/kesehatan_info/{id}', 'HealthsController@info');
 Route::get('/kesehatan_detail/{id}', 'HealthsController@detail');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

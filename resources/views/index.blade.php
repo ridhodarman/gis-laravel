@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -112,7 +111,7 @@
     <!-- page container area start -->
     <div class="page-container">
         <!-- sidebar menu area start -->
-        <?php include('inc/sidebar.php') ?>
+        @include('layouts.sidebar')
         <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
@@ -127,8 +126,6 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <div name="akses-admin" style="font-size: 120%; padding-left: 10%; padding-top: 2%"><label>Welcome <?php //echo $_SESSION['username']; ?> !</label>
-                            </div>
                             <ridho id='ajax-wait2' style="z-index: 999; position: fixed;">
                                   <font color="#5186db" size="3pt" style="text-shadow: #ffffff 0 0 30px;"><b> Loading...</b></font>
                             </ridho>
@@ -137,13 +134,28 @@
                         <div class="col-md-8 col-sm-4 clearfix">
                             <ul class="notification-area pull-right" style="padding-right: 32%">
                                 <li id="tombol-login"><button class="btn btn-outline btn-primary" data-toggle="modal" data-target="#login"><i class="fas fa-sign-in-alt"></i> Login</button></li>
-                                <li name="akses-admin"><button class="btn btn-outline btn-primary" onclick="search()"><i class="fab fa-searchengin"></i> Search Request</button></li>
-                                <li name="akses-admin"><button class="btn btn-outline btn-primary" onclick="keloladata()"><i class="ti-settings"></i> Manage Data</button></li>
-                                <li name="akses-admin" class="user-name dropdown-toggle" data-toggle="dropdown">
+                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="search()"><i class="fab fa-searchengin"></i> Search Request</button></li>
+                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="keloladata()"><i class="ti-settings"></i> Manage Data</button></li>
+                                <li name="terbatas" class="user-name dropdown-toggle" data-toggle="dropdown">
                                     <i class="ti-settings"></i>
                                     <div class="dropdown-menu">
+                                        <div style="text-align: center; background-color:ivory">Hi,
+                                            @if (Auth::user()) 
+                                            {{Auth::user()->name}}
+                                            @endif
+                                        !</div>
                                         <div class="icon-container" onclick="pengaturan()" style="font-size: 90%"><span class="icon-name">&emsp;<i class="fas fa-wrench"></i> Account Setting</span></div>
-                                        <div class="icon-container" onclick="logout()" style="font-size: 90%"><span class="icon-name">&emsp;<i class="fas fa-sign-out-alt"></i> Log Out</span></div>
+                                        <div class="icon-container" style="font-size: 90%; font-weight: normal"><span class="icon-name">
+                                            <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                &emsp;<i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </span></div>
                                     </div>
                                 </li>
                             </ul>
@@ -213,10 +225,6 @@
 
                 function pengaturan () {
                      window.location.href="pages/setting/akun.php";
-                }
-
-                function logout () {
-                     window.location.href="act/logout.php";
                 }
 
                 function keloladata () {
@@ -375,7 +383,7 @@
                             <div>
                                 <p style="font-size: 400%; color: red"><i class="far fa-times-circle"></i></p>
                                 <p>Oopss..,  Something went wrong!</p>
-                                <div id="notifikasi"><?php  ?></div>
+                                <div id="notifikasi"></div>
                             </div>
                             <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
                         </center>
@@ -424,24 +432,17 @@
     $('#legend').hide();
     $("#rute").hide();
 </script>
-<?php
-    if ($akses==true) {
-        echo '
-            <script>
-                $("[name='."'".'akses-admin'."'".']").show();
-                $("#tombol-login").hide();
-            </script>
-        ';
-    }
-    else {
-        echo '
-            <script>
-                $("[name='."'".'akses-admin'."'".']").hide();
-                $("#tombol-login").show();
-            </script>
-        ';
-    } 
-?>
+@if (Auth::user()) 
+    <script>
+        $(`[name="terbatas"]`).show();
+        $("#tombol-login").hide();
+    </script>
+@else 
+    <script>
+        $(`[name="terbatas"]`).hide();
+        $("#tombol-login").show();
+    </script>
+@endif
 </html>
 <div class="modal fade bd-example-modal-lg modal-xl" id="info-bang">
     <div class="modal-dialog modal-lg modal-xl">

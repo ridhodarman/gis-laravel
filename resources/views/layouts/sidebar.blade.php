@@ -228,8 +228,12 @@ select {
                                     </li>
                                 </ul>
                             </li>
-                            <li name="terbatas"><a href="javascript:void(0)" onclick="rumahberpenghuni()">Show inhabited houses</a></li>
-                            <li name="terbatas"><a href="javascript:void(0)" onclick="rumahkosong()">Show uninhabited houses</a></li>
+                            <li name="terbatas"><a href="javascript:void(0)" aria-expanded="true">Search By Building Status</a>
+                                <ul class="collapse">
+                                    <li><a href="javascript:void(0)" onclick="rumahberpenghuni()">Show inhabited houses</a></li>
+                                    <li><a href="javascript:void(0)" onclick="rumahkosong()">Show uninhabited houses</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -1091,20 +1095,3 @@ select {
         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
     }
 </script>
-
-<?php
-    if ($akses==true) {
-        echo '
-            <script>
-                $("[name='."'".'terbatas'."'".']").show()
-            </script>
-        ';
-    }
-    else {
-        echo '
-            <script>
-                $("[name='."'".'terbatas'."'".']").hide()
-            </script>
-        ';  
-    }
-?>

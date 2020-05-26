@@ -122,7 +122,18 @@ function detailumkm_infow(id) { //menampilkan informas
         map.setZoom(18);
         infowindow = new google.maps.InfoWindow({
           position: centerBaru,
-          content: "<span style=color:black><center><b>Information</b><br>"+image+"<p><i class='fas fa-store-alt'></i><b>" + nama + "</b><br><button class='btn btn-default' onclick='callRoute(centerLokasi, centerBaru);rutetampil();'><i class='fa fa-car'></i> Show Route</button>&nbsp;<button class='btn btn-default' onclick='detailumkm("+'"'+id+'"'+")'><i class='fa fa-info-circle'></i> View Details</button></center></span>",
+          content: `<div style="text-align: center; color: black; padding-bottom: 2px">
+                        Information
+                        <div>${image}</div>
+                        <div style="padding-top: 2px;"><i class="fas fa-store-alt"></i> ${nama}</div>
+                        <div style="padding-left: 2px; padding-right: 2px; padding-bottom: 2px">
+                          <button class="btn btn-sm btn-default" onclick="callRoute(centerLokasi, centerBaru);rutetampil();">
+                              <i class="fa fa-car"></i> Show Route</button> 
+                          <button class="btn btn-sm btn-default" onclick="detailumkm('${id}')">
+                              <i class="fa fa-info-circle"></i> View Details</button>
+                        </div>
+                      </div>
+                    `,
           pixelOffset: new google.maps.Size(0, -33)
         });
         infoDua.push(infowindow);
