@@ -42,7 +42,7 @@ function digitasirumah() {
         var data = arrays.features[i];
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailrumah("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailrumah('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
         var p1 = `ID:  ${data.properties.id}`;
         var p3 = `${link} <font color='black'>${p1} (${jenis})</font>`;
 
@@ -105,7 +105,7 @@ function digitasiumkm() {
         var data = arrays.features[i];
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailumkm("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailumkm('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
         var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
@@ -170,7 +170,7 @@ function digitasit4ibadah() {
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailibadah("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailibadah('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
         var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
@@ -233,7 +233,7 @@ function digitasikantor() {
         var data = arrays.features[i];
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailkantor("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailkantor('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
         var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
@@ -296,7 +296,12 @@ function digitasipendidikan() {
         var data = arrays.features[i];
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailpendidikan("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button 
+                      class="btn btn-info btn-xs" 
+                      title="View Details" 
+                      onclick="detailpendidikan('${data.properties.id}')">
+                      <i class="fa fa-info-circle"></i>
+                    </button>`;
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
         var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
@@ -359,7 +364,7 @@ function digitasikesehatan() {
         var data = arrays.features[i];
         var arrayGeometries = data.geometry.coordinates;
         var jenis = data.jenis;
-        var link = "<button class='btn btn-info btn-xs fa fa-info-circle' title='View Details' onclick='detailkesehatan("+'"'+data.properties.id+'"'+")'></button>";
+        var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailkesehatan('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
         var p1 = ' ID: ' + data.properties.id;
         var p2 = '<p>' + data.properties.nama + '</p>';
         var p3 = `${link} <font color='black'>${p1} ${p2} (${jenis})</font>`;
@@ -871,6 +876,8 @@ function hapusposisi() {
     markers[i].setMap(null);
   }
   markers = [];
+  document.getElementById("lat").value = "";
+  document.getElementById("lng").value = "";
 }
 
 
@@ -884,7 +891,14 @@ function hapusRadius() {
 
 
 function callRoute(start, end, nama) {
-  if (pos == 'null' || typeof (pos) == "undefined") {
+  // if (pos == 'null' || typeof (pos) == "undefined") {
+  //   $('#atur-posisi').modal('show');
+  // } (-0.31797334829389784, 100.35448575452672)
+  let lat = document.getElementById("lat").value;
+  let lng = document.getElementById("lng").value;
+  let posisi = new google.maps.LatLng(lat, lng)
+  alert(posisi)
+  if (lat == '' || lng == '') {
     $('#atur-posisi').modal('show');
   } 
   else {
@@ -894,7 +908,7 @@ function callRoute(start, end, nama) {
 
 
     directionsService.route({
-        origin: start,
+        origin: posisi,
         destination: end,
         travelMode: google.maps.TravelMode.DRIVING
       },

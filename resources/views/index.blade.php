@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>srtdash - ICO Dashboard</title>
+    <title>GIS Koto Gadang</title>
     
-    <?php include('inc/head.php') ?>
+    @include('inc.head')
 
     <script src="//maps.google.com/maps/api/js?key={{$api}}"></script>
     <script type="text/javascript" src="{{ asset('script/script.js') }}"></script>
@@ -115,6 +115,9 @@
         <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
+            <ridho id='ajax-wait2' style="z-index: 999; position: fixed;">
+                <font color="#5186db" size="3pt" style="text-shadow: #ffffff 0 0 30px;"><b> Loading...</b></font>
+            </ridho>
             <!-- header area start -->
             <div style="position: fixed; z-index: 1; width: 100%">
                 <div class="header-area" id="tampilan-header">
@@ -126,9 +129,6 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <ridho id='ajax-wait2' style="z-index: 999; position: fixed;">
-                                  <font color="#5186db" size="3pt" style="text-shadow: #ffffff 0 0 30px;"><b> Loading...</b></font>
-                            </ridho>
                         </div>
                         <!-- profile info & task notification -->
                         <div class="col-md-8 col-sm-4 clearfix">
@@ -139,7 +139,7 @@
                                 <li name="terbatas" class="user-name dropdown-toggle" data-toggle="dropdown">
                                     <i class="ti-settings"></i>
                                     <div class="dropdown-menu">
-                                        <div style="text-align: center; background-color:ivory">Hi,
+                                        <div style="text-align: center; font-weight: bold">Hi,
                                             @if (Auth::user()) 
                                             {{Auth::user()->name}}
                                             @endif
@@ -257,9 +257,11 @@
                             <div class="panel-body table-responsive card" id="rute">
                                 <!-- <div id="detailrute"></div> -->
                             </div>
-                            <font id="found" style="padding-left: 5px"></font> &emsp;&emsp;&emsp;&emsp;&emsp;
-                            <button class="btn btn-default btn-xs" onclick="sembunyikancari()" id="hidecari"><i
-                                class="fa fa-times-circle"></i> Close Result</button>
+                            <font id="found" style="padding-left: 5px"></font>
+                            <div style="float: right">
+                                <button class="btn btn-default btn-xs" onclick="sembunyikancari()" id="hidecari"><i
+                                    class="fa fa-times-circle"></i> Close Result</button>
+                            </div>
                             <div class="panel-body table-responsive" id="panjangtabel">
                                 <table class="table table-striped table-bordered table-hover" id="tampilanpencarian">
                                     <thead>
@@ -282,11 +284,7 @@
 
         <!-- main content area end -->
         <!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>© Ridho Darman | Jurusan Sistem Informasi Universitas Andalas 2019. </p>
-            </div>
-        </footer>
+        @include('layouts.foot')
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
@@ -393,15 +391,7 @@
         </div>
     </div>
 
-    <!-- jquery latest version -->
-    <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-    <!-- bootstrap 4 js -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/metisMenu.min.js"></script>
-    <script src="assets/js/jquery.slimscroll.min.js"></script>
-    <script src="assets/js/jquery.slicknav.min.js"></script>
+    
 
     <!-- start chart js -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> -->
@@ -414,12 +404,11 @@
     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
     </script> -->
     <!-- all line chart activation -->
-    <script src="assets/js/line-chart.js"></script>
+    <!-- <script src="assets/js/line-chart.js"></script> -->
     <!-- all pie chart -->
-    <script src="assets/js/pie-chart.js"></script>
+    <!-- <script src="assets/js/pie-chart.js"></script> -->
     <!-- others plugins -->
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/scripts.js"></script>
+    
 </body>
 <script type="text/javascript">
     // $(document).ready(function() {

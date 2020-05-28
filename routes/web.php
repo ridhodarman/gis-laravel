@@ -21,11 +21,6 @@ Route::get('/welcome', function () {
     return view ('welcome');
 });
 
-
-Route::get('/stop', function () {
-    return abort(403);
-});
-
 Route::get('/house_digit', 'HousesController@digit');
 Route::get('/rumah_cari_id/{id}', 'HousesController@cari_id');
 Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
@@ -115,3 +110,7 @@ Route::get('/kesehatan_detail/{id}', 'HealthsController@detail');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/pages', function () { return view ('admin.building.index');})->middleware('auth');
+Route::get('/identitas', function () { return view ('admin.kependudukan.identitas');})->middleware('auth');
+Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');})->middleware('auth');

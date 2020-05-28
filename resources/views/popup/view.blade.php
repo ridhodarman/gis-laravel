@@ -3,7 +3,7 @@
 <script src="{{ asset('pages/inc/slideshow/modernizr.js') }}"></script>
 <script src="{{ asset('pages/inc/slideshow/jquery.carousel-3d.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('pages/inc/slideshow/jquery.carousel-3d.default.css') }}">
-<?php
+@php
 $n=1;$foto;$tglfoto;
 foreach ($photo as $p){
     $foto[$n]=$p->photo_url;
@@ -59,7 +59,7 @@ $server='foto/bangunan/';
         $jumlah=$n-1;
         $img=$img. "Total Photo: ".$jumlah;
 
-?>
+@endphp
 
 <div class="main-content-inner">
     <div class="row">
@@ -68,8 +68,8 @@ $server='foto/bangunan/';
                 <div class="card-body">
                     <div class="media">
                         <div class="media-body">
-                        <?php if($type=="worship") {?>
-                        @foreach ($info as $i)
+                        @if($type=="worship")
+                            @foreach ($info as $i)
                             <h6>ID:
                                 {{$i->worship_building_id}}
                             </h6>
@@ -89,9 +89,8 @@ $server='foto/bangunan/';
                                         {{$i->jenis}}
                                     </td>
                                 </tr>
-                        @endforeach
-                        <?php } 
-                            if($type=="msme") { ?>
+                            @endforeach
+                        @elseif($type=="msme")
                             @foreach ($info as $i)
                             <h6>ID:
                                     {{$i->msme_building_id}}
@@ -127,8 +126,7 @@ $server='foto/bangunan/';
                                         </td>
                                     </tr>
                             @endforeach
-                            <?php } 
-                            if($type=="office") { ?>
+                        @elseif($type=="office")
                             @foreach ($info as $i)
                             <h6>ID:
                                     {{$i->office_building_id}}
@@ -150,8 +148,7 @@ $server='foto/bangunan/';
                                         </td>
                                     </tr>
                             @endforeach
-                            <?php } 
-                            if($type=="educational") { ?>
+                        @elseif($type=="educational")
                             @foreach ($info as $i)
                             <h6>ID:
                                     {{$i->educational_building_id}}
@@ -176,10 +173,10 @@ $server='foto/bangunan/';
                                         <td>School Type</td>
                                         <td>:</td>
                                         <td>
-                                            <?php 
-                                                if($i->school_type==0){echo "Public School";}
-                                                else if($i->school_type==1){echo "Private School";}
-                                            ?>
+                                            @if($i->school_type==0) Public School
+                                            @elseif($i->school_type==1) Private School
+                                            @endif
+                                            
                                         </td>
                                     </tr>
                                     <tr>
@@ -204,8 +201,7 @@ $server='foto/bangunan/';
                                         </td>
                                     </tr>
                             @endforeach
-                            <?php } 
-                            if($type=="health") { ?>
+                        @elseif($type=="health")
                             @foreach ($info as $i)
                             <h6>ID:
                                 {{$i->health_building_id}}
@@ -248,7 +244,7 @@ $server='foto/bangunan/';
                                     </td>
                                 </tr>
                             @endforeach
-                            <?php } ?>
+                        @endif
                             @foreach ($info as $i)
                                 <tr>
                                     <td>Building Size </td>
@@ -323,7 +319,7 @@ $server='foto/bangunan/';
                                     <i class="ti-fullscreen"></i>
                                 </button> -->
                             </h5><br/>
-                            <?php echo $img; ?>
+                            @php echo $img @endphp
                         </div>
                     </div>
                 </div>
@@ -348,13 +344,11 @@ $server='foto/bangunan/';
                                     <td>{{$f->quantity_of_facilities}}</td>
                                     </tr>
                                 @endforeach
-                                
-                            <?php
-                            if (count($fasilitas)<1) {
-                            	echo '<td colspan="2"><center>no facility data</center></td>';
-                            }
-                            ?>
-                                
+                            
+                            @if (count($fasilitas)<1) 
+                            	<td colspan="2"><center>no facility data</center></td>
+                            @endif
+
                             </tbody>
                         </table>
                         </div>

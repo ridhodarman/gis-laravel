@@ -1,15 +1,12 @@
-@if (Auth::user()) 
-    @if (Auth::user()->role!=1) 
-    <script type="text/javascript">
-        window.location.href="/stop";
-    </script>
-    @endif
-@endif
-
 @extends('layouts.app')
 
-@section('content')
+@if (Auth::user()) 
+    @if (Auth::user()->role!=1) 
+        <!-- <img src="{{ asset('inc/gozilla_403.gif') }}" id="bg" alt="" style="position:fixed; top:0; left:0; min-width:100%; height:90%;"> -->
+        @include('layouts.403')
+    @else
 
+@section('content')        
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -98,3 +95,6 @@
     </div>
 </div>
 @endsection
+
+    @endif
+@endif
