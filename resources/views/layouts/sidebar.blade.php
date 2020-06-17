@@ -1,3 +1,4 @@
+<?php include('inc/koneksi.php'); ?>
 <style type="text/css">
     input,
 select {
@@ -181,13 +182,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskons_rumah">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($konstruksi as $k)
+                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carikons_rumah()"><i class="fa fa-search"></i></button>
@@ -278,13 +275,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskons_umkm">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($konstruksi as $k)
+                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carikons_umkm()"><i class="fa fa-search"></i></button>
@@ -389,13 +382,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskons_ibadah">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($konstruksi as $k)
+                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carikons_ibadah()"><i class="fa fa-search"></i></button>
@@ -525,13 +514,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskons_kantor">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($konstruksi as $k)
+                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carikons_kantor()"><i class="fa fa-search"></i></button>
@@ -676,13 +661,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskons_pendidikan">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($konstruksi as $k)
+                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carikons_pendidikan()"><i class="fa fa-search"></i></button>
@@ -800,13 +781,9 @@ select {
                             <li>
                                 <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="model">
-                                            <?php                
-                                                $sql_m=pg_query("SELECT * FROM building_model ORDER BY name_of_model");
-                                                while($row = pg_fetch_assoc($sql_m))
-                                                {
-                                                    echo"<option value=".$row['model_id'].">".$row['name_of_model']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($model as $m)
+                                            <option value="{{$m->id}}">{{$m->name_of_model}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carimodel()"><i class="fa fa-search"></i></button>

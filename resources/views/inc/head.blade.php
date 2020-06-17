@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/themify-icons.css">
 <link rel="stylesheet" href="assets/css/metisMenu.css">
-<!-- <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/slicknav.min.css"> -->
+<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/css/slicknav.min.css">
 <!-- amchart css -->
 <!-- <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> -->
 <!-- others css -->
@@ -25,17 +25,34 @@
 
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
+<!-- untuk keperluan slideshow -->
+<script src="{{ asset('js/slideshow/jquery.resize.js') }}"></script>
+<script src="{{ asset('js/slideshow/jquery.waitforimages.min.js') }}"></script>
+<script src="{{ asset('js/slideshow/modernizr.js') }}"></script>
+<script src="{{ asset('js/slideshow/jquery.carousel-3d.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('js/slideshow/jquery.carousel-3d.default.css') }}">
+
+<!-- untuk select cari -->
+<link rel="stylesheet" href="{{ asset( 'assets/dist/css/bootstrap-select.css') }}">
+<meta name="viewport" content="width=device-width">
+
 
 <script type="text/javascript">
 	function hanyaAngka(event, id) {
-	  var charCode = (event.which) ? event.which : event.keyCode
-	  if (charCode > 31 && (charCode < 48 || charCode > 57)){
-	    $(id).css('color', 'red');
-	    $(id).html("Only Numbers!").show().fadeOut("slow");
-	    return false;
-	  }
-	  else {
-	    return true
-	  }
+		var charCode = (event.which) ? event.which : event.keyCode
+		if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+			$(id).css('color', 'red');
+			$(id).html("Only Numbers!").show().fadeOut("slow");
+			return false;
+		}
+		else {
+			return true
+		}
 	}
+
+	$(function () {
+		$("input:text").keyup(function () {
+			$(this).val($(this).val().replace("`", "'"));
+		});
+	});
 </script>

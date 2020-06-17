@@ -84,10 +84,10 @@ class WorshipsController extends Controller
     }
 
     public function digit(){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_AsGeoJSON(building.geom) AS geometry"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id');
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
         $geojson = array(
             'type'      => 'FeatureCollection',
@@ -109,49 +109,49 @@ class WorshipsController extends Controller
     }
 
     public function semua(){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->orderBy('worship_building.name_of_worship_building')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->orderBy('worship_buildings.name_of_worship_building')
                     ->get();
         return $query;
     }
 
     public function cari_nama($nama){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->orWhere('worship_building.name_of_worship_building', 'ilike', array("%".$nama."%"))  
-                    ->orderBy('worship_building.name_of_worship_building')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->orWhere('worship_buildings.name_of_worship_building', 'ilike', array("%".$nama."%"))  
+                    ->orderBy('worship_buildings.name_of_worship_building')
                     ->get();
         return $query;
     }
 
     public function cari_jenis($jenis){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->where('worship_building.type_of_worship', '=', '?')
-                    ->orderBy('worship_building.name_of_worship_building')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->where('worship_buildings.type_of_worship', '=', '?')
+                    ->orderBy('worship_buildings.name_of_worship_building')
                     ->setBindings([$jenis])
                     ->get();
         return $query;
     }
 
     public function cari_konstruksi($konstruksi){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->where('worship_building.type_of_construction', '=', '?')
-                    ->orderBy('worship_building.name_of_worship_building')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->where('buildings.type_of_construction', '=', '?')
+                    ->orderBy('worship_buildings.name_of_worship_building')
                     ->setBindings([$konstruksi])
                     ->get();
         return $query;
@@ -159,11 +159,11 @@ class WorshipsController extends Controller
 
     public function cari_luasbang($luasbang){
         $luasbang2 = explode(",", $luasbang);
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
                     ->whereBetween('building_area', $luasbang2)
                     ->orderBy('name_of_worship_building')
                     ->get();
@@ -172,11 +172,11 @@ class WorshipsController extends Controller
 
     public function cari_luastanah($luastanah){
         $luastanah2 = explode(",", $luastanah);
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                            ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                            ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
                     ->whereBetween('land_area', $luastanah2)
                     ->orderBy('name_of_worship_building')
                     ->get();
@@ -185,11 +185,11 @@ class WorshipsController extends Controller
 
     public function cari_tahun($tahun){
         $tahun2 = explode(",", $tahun);
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                            ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                            ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
                     ->whereBetween('standing_year', $tahun2)
                     ->orderBy('name_of_worship_building')
                     ->get();
@@ -198,15 +198,15 @@ class WorshipsController extends Controller
 
     public function cari_radius($rad){
         $r = explode(",", $rad);
-        $lat = $r[0];
-        $lng = $r[1];
+        $lat = $r[0];   if (!is_numeric($lat)) { return abort(500); }
+        $lng = $r[1];   if (!is_numeric($lng)) { return abort(500); }
         $radius = $r[2];
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_CENTROID(building.geom)) AS longitude, 
-                                    ST_Y(ST_CENTROID(building.geom)) AS latitude,
-                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), building.geom) AS jarak"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
+                                    ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude,
+                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
                     ->whereRaw("ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1),geom) <= ?")
                     ->orderByRaw('jarak')
                     ->setBindings([$radius])
@@ -230,48 +230,50 @@ class WorshipsController extends Controller
 
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building')
+        $total = count($fasilitas);
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building',)
                     ->join('detail_worship_building_facilities', 
-                            'worship_building.worship_building_id', 
-                            '=', 'detail_worship_building_facilities.worship_building_id')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->whereIn('detail_worship_building_facilities.facility_id', $fasilitas)
-                    ->groupBy('detail_worship_building_facilities.worship_building_id',
-                                'worship_building.worship_building_id',
-                                'worship_building.name_of_worship_building',
-                                'building.geom'
+                            'worship_buildings.worship_building_id', 
+                            '=', 'detail_worship_building_facilities.worshipb_id')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->whereIn('detail_worship_building_facilities.worship_building_facilities', $fasilitas)
+                    ->groupBy('detail_worship_building_facilities.worshipb_id',
+                                'worship_buildings.worship_building_id',
+                                'detail_worship_building_facilities.worshipb_id',
+                                'buildings.building_id'
                     )
-                    ->orderBy('worship_building.name_of_worship_building')
+                    ->orderBy('worship_buildings.name_of_worship_building')
+                    ->havingRaw('COUNT(*) = '. $total)
                     ->get();
         return $query;
     }
 
     public function cari_model($model){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id AS id', 'worship_building.name_of_worship_building AS name')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->where('building.model_id', '=', '?')
-                    ->orderBy('worship_building.name_of_worship_building')
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id AS id', 'worship_buildings.name_of_worship_building AS name')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->where('buildings.model_id', '=', '?')
+                    ->orderBy('worship_buildings.name_of_worship_building')
                     ->setBindings([$model])
                     ->get();
         return $query;
     }
 
     public function info($id){
-        $query = DB::table('worship_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('worship_building.worship_building_id', 'worship_building.name_of_worship_building', 
+        $query = DB::table('worship_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->addSelect('worship_buildings.worship_building_id', 'worship_buildings.name_of_worship_building', 
                                 'building_gallery.photo_url')
-                    ->leftJoin('building_gallery', 'worship_building.worship_building_id', 
+                    ->leftJoin('building_gallery', 'worship_buildings.worship_building_id', 
                             '=', 'building_gallery.building_id')
-                    ->join('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->where('worship_building.worship_building_id', '=', '?')
+                    ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->where('worship_buildings.worship_building_id', '=', '?')
                     ->orderBy('building_gallery.upload_date', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
@@ -280,16 +282,16 @@ class WorshipsController extends Controller
     }
 
     public function detail($id){
-        $query = DB::table('worship_building')
-                    ->addSelect('worship_building.*', 'name_of_worship_building', 'building_area', 'land_area',
+        $query = DB::table('worship_buildings')
+                    ->addSelect('worship_buildings.*', 'name_of_worship_building', 'building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_worship.name_of_type AS jenis', 
                                 'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('type_of_worship', 'worship_building.type_of_worship', '=', 'type_of_worship.type_id')
-                    ->leftJoin('building', 'worship_building.worship_building_id', '=', 'building.building_id')
-                    ->leftJoin('type_of_construction', 'building.type_of_construction', '=', 'type_of_construction.type_id')
-                    ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
-                    ->where('worship_building.worship_building_id', '=', '?')
+                    ->leftJoin('type_of_worship', 'worship_buildings.type_of_worship', '=', 'type_of_worship.type_id')
+                    ->leftJoin('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
+                    ->leftJoin('type_of_construction', 'buildings.type_of_construction', '=', 'type_of_construction.type_id')
+                    ->leftJoin('building_model', 'buildings.model_id', '=', 'building_model.model_id')
+                    ->where('worship_buildings.worship_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();
 

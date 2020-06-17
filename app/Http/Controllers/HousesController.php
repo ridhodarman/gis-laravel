@@ -85,10 +85,10 @@ class HousesController extends Controller
     }
 
     public function digit(){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_AsGeoJSON(building.geom) AS geometry"))
-                    ->addSelect('house_building.house_building_id')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id');
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom) AS geometry"))
+                    ->addSelect('house_buildings.house_building_id')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
         $geojson = array(
             'type'      => 'FeatureCollection',
@@ -109,38 +109,38 @@ class HousesController extends Controller
     }
 
     public function cari_id($id){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 'house_building.house_building_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->orWhere('house_building.house_building_id', 'ilike', array("%".$id."%"))
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 'house_buildings.house_building_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->orWhere('house_buildings.house_building_id', 'ilike', array("%".$id."%"))
                     ->get();
         return $query;
     }
 
     public function cari_model($model){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 'house_building.house_building_id AS name')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->where('building.model_id', '=', '?')
-                    ->orderBy('house_building.house_building_id')
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 'house_buildings.house_building_id AS name')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->where('buildings.model_id', '=', '?')
+                    ->orderBy('house_buildings.house_building_id')
                     ->setBindings([$model])
                     ->get();
         return $query;
     }
 
     public function info($id){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 'building_gallery.photo_url')
-                    ->leftJoin('building_gallery', 'house_building.house_building_id', 
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 'building_gallery.photo_url')
+                    ->leftJoin('building_gallery', 'house_buildings.house_building_id', 
                             '=', 'building_gallery.building_id')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->where('house_building.house_building_id', '=', '?')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->where('house_buildings.house_building_id', '=', '?')
                     ->orderBy('building_gallery.upload_date', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
@@ -149,38 +149,38 @@ class HousesController extends Controller
     }
 
     public function cari_namapemilik($nama){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
                                 'citizen.name AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->join('citizen', 'house_building.owner_id', '=', 'citizen.national_identity_number')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->join('citizen', 'house_buildings.owner_id', '=', 'citizen.national_identity_number')
                     ->orWhere('citizen.name', 'ilike', array("%".$nama."%"))
                     ->get();
         return $query;
     }
 
     public function cari_nikpemilik($nik){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
-                                'house_building.owner_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->orWhere('house_building.owner_id', 'ilike', array("%".$nik."%"))
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
+                                'house_buildings.owner_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->orWhere('house_buildings.owner_id', 'ilike', array("%".$nik."%"))
                     ->get();
         return $query;
     }
 
     public function cari_namapenghuni($nama){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
                                 'citizen.name AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->join('family_card', 'house_building.house_building_id', '=', 'family_card.house_building_id')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
                     ->join('citizen', 'family_card.family_card_number', '=', 'citizen.family_card_number')
                     ->orWhere('citizen.name', 'ilike', array("%".$nama."%"))
                     ->get();
@@ -188,13 +188,13 @@ class HousesController extends Controller
     }
 
     public function cari_nikpenghuni($nik){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
                                 'citizen.national_identity_number AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->join('family_card', 'house_building.house_building_id', '=', 'family_card.house_building_id')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
                     ->join('citizen', 'family_card.family_card_number', '=', 'citizen.family_card_number')
                     ->orWhere('citizen.national_identity_number', 'ilike', array("%".$nik."%"))
                     ->get();
@@ -202,26 +202,26 @@ class HousesController extends Controller
     }
 
     public function cari_kkpenghuni($kk){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
                                 'family_card.family_card_number AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->join('family_card', 'house_building.house_building_id', '=', 'family_card.house_building_id')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
                     ->orWhere('family_card.family_card_number', 'ilike', array("%".$kk."%"))
                     ->get();
         return $query;
     }
 
     public function cari_sukupenghuni($suku){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
-                                'house_building.house_building_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->join('citizen', 'house_building.owner_id', '=', 'citizen.national_identity_number')
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
+                                'house_buildings.house_building_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->join('citizen', 'house_buildings.owner_id', '=', 'citizen.national_identity_number')
                     ->join('datuk', 'citizen.datuk_id', '=', 'datuk.datuk_id')
                     ->join('tribe', 'datuk.tribe_id', '=', 'tribe.tribe_id')
                     ->orWhere('tribe.tribe_id', '=', array($suku))
@@ -230,25 +230,25 @@ class HousesController extends Controller
     }
 
     public function cari_konstruksi($k){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
-                                'house_building.house_building_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->orWhere('building.type_of_construction', '=', array($k))
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
+                                'house_buildings.house_building_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->orWhere('buildings.type_of_construction', '=', array($k))
                     ->get();
         return $query;
     }
 
     public function cari_tahun($tahun){
         $tahun2 = explode(",", $tahun);
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
-                                'house_building.house_building_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
+                                'house_buildings.house_building_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
                     ->whereBetween('standing_year', $tahun2)
                     ->get();
         return $query;
@@ -256,29 +256,29 @@ class HousesController extends Controller
 
     public function cari_listrik($listrik){
         $listrik2 = explode(",", $listrik);
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude,
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude,
                                         coalesce(house_building_id) || 
                                         coalesce(' (') || 
                                         coalesce(electricity_capacity) || 
                                         coalesce('VA)') AS result
                                 "))
-                    ->addSelect('house_building.house_building_id')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
+                    ->addSelect('house_buildings.house_building_id')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
                     ->whereBetween('electricity_capacity', $listrik2)
                     ->get();
         return $query;
     }
 
     public function cari_status($s){
-        $query = DB::table('house_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('house_building.house_building_id', 
-                                'house_building.house_building_id AS result')
-                    ->join('building', 'house_building.house_building_id', '=', 'building.building_id')
-                    ->orWhere('house_building.building_status', '=', array($s))
+        $query = DB::table('house_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('house_buildings.house_building_id', 
+                                'house_buildings.house_building_id AS result')
+                    ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->orWhere('house_buildings.building_status', '=', array($s))
                     ->get();
         return $query;
     }

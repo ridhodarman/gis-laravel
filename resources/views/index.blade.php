@@ -133,13 +133,18 @@
                         <!-- profile info & task notification -->
                         <div class="col-md-8 col-sm-4 clearfix">
                             <ul class="notification-area pull-right" style="padding-right: 32%">
-                                <li id="tombol-login"><button class="btn btn-outline btn-primary" data-toggle="modal" data-target="#login"><i class="fas fa-sign-in-alt"></i> Login</button></li>
-                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="search()"><i class="fab fa-searchengin"></i> Search Request</button></li>
-                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="keloladata()"><i class="ti-settings"></i> Manage Data</button></li>
+                                <li id="tombol-login"><button class="btn btn-outline btn-primary" onclick="location.href = 'login';"><i class="fas fa-sign-in-alt"></i> Login</button></li>
+                                @if (Auth::user()) 
+                                    @if (Auth::user()->role==1) 
+                                    <li name="terbatas"><button class="btn btn-outline btn-primary"><i class="fas fa-helicopter"></i> Super User Access</button></li>
+                                    @endif
+                                @endif
+                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="search()"><i class="fas fa-dna"></i> Search Request</button></li>
+                                <li name="terbatas"><button class="btn btn-outline btn-primary" onclick="keloladata()"><i class="fas fa-warehouse"></i> Manage Data</button></li>
                                 <li name="terbatas" class="user-name dropdown-toggle" data-toggle="dropdown">
                                     <i class="ti-settings"></i>
                                     <div class="dropdown-menu">
-                                        <div style="text-align: center; font-weight: bold">Hi,
+                                        <div style="text-align: center; font-weight: bold; cursor:vertical-text;">Hi,
                                             @if (Auth::user()) 
                                             {{Auth::user()->name}}
                                             @endif
@@ -147,9 +152,12 @@
                                         <div class="icon-container" onclick="pengaturan()" style="font-size: 90%"><span class="icon-name">&emsp;<i class="fas fa-wrench"></i> Account Setting</span></div>
                                         <div class="icon-container" style="font-size: 90%; font-weight: normal"><span class="icon-name">
                                             <a href="{{ route('logout') }}"
+                                            style="color:black"
+                                            onMouseOver="this.style.color='#2374f7'"
+                                            onMouseOut="this.style.color='black'" 
                                             onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
-                                                &emsp;<i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}
+                                                &emsp;<i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                                             </a>
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -163,62 +171,6 @@
                     </div>
                 </div>
             </div>
-
-            <style type="text/css">
-                .gambarlogin {
-                    background-image: url('inc/bg.jpg');
-                     -webkit-background-size: 100% 100%;
-                    -moz-background-size: 100% 100%;
-                    -o-background-size: 100% 100%;
-                    background-size: 100% 100%;
-                    }
-                .tulisan {
-                    text-shadow: #ff0000 0 0 10px;
-                    color: white;
-                    font-weight : bold; 
-                }
-                .form-transparan {
-                    background: rgba(0, 0, 0, 0.59);
-                    color: lightgray;
-                }
-
-                .tombol-login {
-                    background: rgba(0, 93, 199, 0.68);
-                }
-
-                .tombol-kensyel {
-                    background: rgba(0, 12, 26, 0.68)
-                }
-                .ket {
-                    text-shadow: gray 0 0 20px;
-                    color: white;
-                    float: right;
-                }
-            </style>
-            <div class="modal fade" id="login">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content gambarlogin">
-                        <div class="modal-header">
-                            <h5 class="modal-title tulisan">L o g i n</h5>
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                        </div>
-                        <form method="post" action="/login" style="width: 90%">
-                        {{csrf_field()}}
-                        <div class="ket">*village employee login form</div>
-                        <div class="modal-body">
-                            <font class="tulisan">Username:</font>
-                            <input type="text" class="form-control form-transparan" name="username" placeholder="username..." required>
-                            <font class="tulisan">Password:</font>
-                            <input type="password" class="form-control form-transparan" name="password" placeholder="password..." required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary tombol-kensyel" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary tombol-login"><i class="fas fa-sign-in-alt"></i> Login</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div id="belakang" style="z-index: 0; visibility: hidden;"></div>
             <script type="text/javascript">
                 $("#tampilan-header").clone().prependTo("#belakang");
@@ -228,7 +180,7 @@
                 }
 
                 function keloladata () {
-                     window.location.href="pages";
+                     window.location.href="bangunan";
                 }
             </script>
             <!-- header area end -->
@@ -473,6 +425,7 @@
         $("#jenis-bang").append("<i class='fas fa-mosque'></i> Worship Building Info")
         $('#info-bang').modal('show');
         //$('#konten-bang').load("inc/detail-ibadah.php?id="+id);
+        //$('#konten-bang').load(`ibadah_detail/${id}`);
         $('#konten-bang').load(`ibadah_detail/${id}`);
     }
 

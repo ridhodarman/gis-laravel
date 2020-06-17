@@ -84,10 +84,10 @@ class educationalsController extends Controller
     }
 
     public function digit(){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_AsGeoJSON(building.geom) AS geometry"))
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom) AS geometry"))
                     ->addSelect('educational_building_id', 'name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id');
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
         $geojson = array(
             'type'      => 'FeatureCollection',
@@ -109,49 +109,49 @@ class educationalsController extends Controller
     }
 
     public function semua(){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->get();
         return $query;
     }
 
     public function cari_nama($nama){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->orWhere('educational_building.name_of_educational_building', 'ilike', array("%".$nama."%"))
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->orWhere('educational_buildings.name_of_educational_building', 'ilike', array("%".$nama."%"))
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->get();
         return $query;
     }
 
     public function cari_tingkat($tingkat){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->where('educational_building.id_level_of_education', '=', '?')
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->where('educational_buildings.id_level_of_education', '=', '?')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->setBindings([$tingkat])
                     ->get();
         return $query;
     }
 
     public function cari_jenis($jenis){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->where('educational_building.school_type', '=', '?')
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->where('educational_buildings.school_type', '=', '?')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->setBindings([$jenis])
                     ->get();
         return $query;
@@ -159,11 +159,11 @@ class educationalsController extends Controller
 
     public function cari_luasbang($luasbang){
         $luasbang2 = explode(",", $luasbang);
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->whereBetween('building_area', $luasbang2)
                     ->orderBy('name_of_educational_building')
                     ->get();
@@ -172,11 +172,11 @@ class educationalsController extends Controller
 
     public function cari_luastanah($luastanah){
         $luastanah2 = explode(",", $luastanah);
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                            ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                            ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->whereBetween('land_area', $luastanah2)
                     ->orderBy('name_of_educational_building')
                     ->get();
@@ -184,13 +184,13 @@ class educationalsController extends Controller
     }
 
     public function cari_konstruksi($konstruksi){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->where('building.type_of_construction', '=', '?')
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->where('buildings.type_of_construction', '=', '?')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->setBindings([$konstruksi])
                     ->get();
         return $query;
@@ -198,11 +198,11 @@ class educationalsController extends Controller
 
     public function cari_tahun($tahun){
         $tahun2 = explode(",", $tahun);
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                            ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                            ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->whereBetween('standing_year', $tahun2)
                     ->orderBy('name_of_educational_building')
                     ->get();
@@ -214,12 +214,12 @@ class educationalsController extends Controller
         $lat = $r[0];
         $lng = $r[1];
         $radius = $r[2];
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_CENTROID(building.geom)) AS longitude, 
-                                    ST_Y(ST_CENTROID(building.geom)) AS latitude,
-                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), building.geom) AS jarak"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_CENTROID(buildings.geom)) AS longitude, 
+                                    ST_Y(ST_CENTROID(buildings.geom)) AS latitude,
+                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom) AS jarak"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->whereRaw("ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1),geom) <= ?")
                     ->orderByRaw('jarak')
                     ->setBindings([$radius])
@@ -243,48 +243,48 @@ class educationalsController extends Controller
 
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('detail_educational_building_facilities', 
-                            'educational_building.educational_building_id', 
+                            'educational_buildings.educational_building_id', 
                             '=', 'detail_educational_building_facilities.educational_building_id')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->whereIn('detail_educational_building_facilities.facility_id', $fasilitas)
                     ->groupBy('detail_educational_building_facilities.educational_building_id',
-                                'educational_building.educational_building_id',
-                                'educational_building.name_of_educational_building',
-                                'building.geom'
+                                'educational_buildings.educational_building_id',
+                                'educational_buildings.name_of_educational_building',
+                                'buildings.geom'
                     )
-                    ->orderBy('educational_building.name_of_educational_building')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->get();
         return $query;
     }
 
     public function cari_model($model){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id AS id', 'educational_building.name_of_educational_building AS name')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->where('building.model_id', '=', '?')
-                    ->orderBy('educational_building.name_of_educational_building')
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id AS id', 'educational_buildings.name_of_educational_building AS name')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->where('buildings.model_id', '=', '?')
+                    ->orderBy('educational_buildings.name_of_educational_building')
                     ->setBindings([$model])
                     ->get();
         return $query;
     }
 
     public function info($id){
-        $query = DB::table('educational_building')
-                    ->select(DB::raw("ST_X(ST_Centroid(building.geom)) AS longitude, 
-                                        ST_Y(ST_CENTROID(building.geom)) AS latitude"))
-                    ->addSelect('educational_building.educational_building_id', 'educational_building.name_of_educational_building', 
+        $query = DB::table('educational_buildings')
+                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom)) AS latitude"))
+                    ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building', 
                                 'building_gallery.photo_url')
-                    ->leftJoin('building_gallery', 'educational_building.educational_building_id', 
+                    ->leftJoin('building_gallery', 'educational_buildings.educational_building_id', 
                             '=', 'building_gallery.building_id')
-                    ->join('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->where('educational_building.educational_building_id', '=', '?')
+                    ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->where('educational_buildings.educational_building_id', '=', '?')
                     ->orderBy('building_gallery.upload_date', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
@@ -293,16 +293,16 @@ class educationalsController extends Controller
     }
 
     public function detail($id){
-        $query = DB::table('educational_building')
-                    ->addSelect('educational_building.*', 'name_of_educational_building','building_area', 'land_area',
+        $query = DB::table('educational_buildings')
+                    ->addSelect('educational_buildings.*', 'name_of_educational_building','building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'name_of_level AS level', 
                                 'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('level_of_education', 'educational_building.id_level_of_education', '=', 'level_of_education.level_id')
-                    ->leftJoin('building', 'educational_building.educational_building_id', '=', 'building.building_id')
-                    ->leftJoin('type_of_construction', 'building.type_of_construction', '=', 'type_of_construction.type_id')
-                    ->leftJoin('building_model', 'building.model_id', '=', 'building_model.model_id')
-                    ->where('educational_building.educational_building_id', '=', '?')
+                    ->leftJoin('level_of_education', 'educational_buildings.id_level_of_education', '=', 'level_of_education.level_id')
+                    ->leftJoin('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
+                    ->leftJoin('type_of_construction', 'buildings.type_of_construction', '=', 'type_of_construction.type_id')
+                    ->leftJoin('building_model', 'buildings.model_id', '=', 'building_model.model_id')
+                    ->where('educational_buildings.educational_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();
 

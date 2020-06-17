@@ -1,8 +1,3 @@
-<script src="{{ asset('pages/inc/slideshow/jquery.resize.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/jquery.waitforimages.min.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/modernizr.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/jquery.carousel-3d.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('pages/inc/slideshow/jquery.carousel-3d.default.css') }}">
 @php
 $n=1;$foto;$tglfoto;
 foreach ($photo as $p){
@@ -319,7 +314,7 @@ $server='foto/bangunan/';
                                     <i class="ti-fullscreen"></i>
                                 </button> -->
                             </h5><br/>
-                            @php echo $img @endphp
+                            @php echo $img; @endphp
                         </div>
                     </div>
                 </div>

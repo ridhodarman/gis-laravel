@@ -13,12 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view ('index', ['api' => 'AIzaSyBNnzxae2AewMUN0Tt_fC3gN38goeLVdVE']);
-});
+Route::get('/welcome', function () {return view ('welcome');});
 
-Route::get('/welcome', function () {
-    return view ('welcome');
+Route::get('/logout2', function (){
+    Auth::logout();
+    return redirect('/login');
+});
+$api;
+Route::get('/', function () {
+    $building_model = \App\Building_model::all();
+    $type_of_construction = \App\Type_of_construction::all();
+                                            
+    return view ('index', 
+            [
+                'api' => 'AIzaSyBNnzxae2AewMUN0Tt_fC3gN38goeLVdVE',
+                'model' => $building_model,
+                'konstruksi' => $type_of_construction
+            ]
+        
+        );
 });
 
 Route::get('/house_digit', 'HousesController@digit');
@@ -111,6 +124,44 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/pages', function () { return view ('admin.building.index');})->middleware('auth');
-Route::get('/identitas', function () { return view ('admin.kependudukan.identitas');})->middleware('auth');
-Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');})->middleware('auth');
+Route::get('/bangunan', function () { return view ('admin.building.index');})->middleware('auth');
+
+Route::get('/spasial', function () { return view ('admin.building.spasial.index');})->middleware('auth');
+Route::get('/spasial-info', function () { return view ('admin.building.spasial.info');})->middleware('auth');
+
+Route::get('/kependudukan', function () { return view ('admin.kependudukan.index');})->middleware('auth');
+Route::get('/penduduk', function () { return view ('admin.kependudukan.penduduk');})->middleware('auth');
+
+Route::get('/konstruksi', 'Type_of_constructionsController@index')->middleware('auth');
+Route::post('/konstruksi', 'Type_of_constructionsController@store')->middleware('auth');
+Route::patch('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@update')->middleware('auth');
+Route::delete('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@destroy')->middleware('auth');
+
+Route::get('/model', 'Building_modelsController@index')->middleware('auth');
+Route::post('/model', 'Building_modelsController@store')->middleware('auth');
+Route::patch('/model/{Building_model}', 'Building_modelsController@update')->middleware('auth');
+Route::delete('/model/{Building_model}', 'Building_modelsController@destroy')->middleware('auth');
+
+Route::get('/suku', 'TribesController@index')->middleware('auth');
+Route::post('/suku', 'TribesController@store')->middleware('auth');
+Route::patch('/suku/{tribe}', 'TribesController@update')->middleware('auth');
+Route::delete('/suku/{tribe}', 'TribesController@destroy')->middleware('auth');
+
+Route::get('/datuk', 'DatuksController@index')->middleware('auth');
+Route::post('/datuk', 'DatuksController@store')->middleware('auth');
+Route::patch('/datuk/{datuk}', 'DatuksController@update')->middleware('auth');
+Route::delete('/datuk/{datuk}', 'DatuksController@destroy')->middleware('auth');
+
+Route::get('/pendidikan', 'EducationsController@index')->middleware('auth');
+Route::post('/pendidikan', 'EducationsController@store')->middleware('auth');
+Route::patch('/pendidikan/{education}', 'EducationsController@update')->middleware('auth');
+Route::delete('/pendidikan/{education}', 'EducationsController@destroy')->middleware('auth');
+
+Route::get('/pekerjaan', 'JobsController@index')->middleware('auth');
+Route::post('/pekerjaan', 'JobsController@store')->middleware('auth');
+Route::patch('/pekerjaan/{job}', 'JobsController@update')->middleware('auth');
+Route::delete('/pekerjaan/{job}', 'JobsController@destroy')->middleware('auth');
+
+//Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');})->middleware('auth');
+Route::get('/keluarga', 'Family_cardsController@index')->middleware('auth');
+Route::post('/keluarga', 'Family_cardsController@store')->middleware('auth');

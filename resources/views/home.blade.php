@@ -1,14 +1,3 @@
-@if (Auth::user()) 
-    @if (Auth::user()->role!=1) 
-    <script type="text/javascript">
-        window.location.href="/welcome";
-    </script>
-    @else 
-    <script type="text/javascript">
-        window.location.href="/welcome";
-    </script>
-    @endif
-@endif
 @extends('layouts.app')
 
 @section('content')
@@ -25,7 +14,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in! <br/> 
+                    <a href="/logout2">Log out now</a>
                 </div>
             </div>
         </div>
