@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Family_card;
 use Illuminate\Http\Request;
+use DB;
 
 class Family_cardsController extends Controller
 {
@@ -21,7 +22,10 @@ class Family_cardsController extends Controller
                             ->orderBy('family_card_number')
                             ->get();
         //return $kk;
-        return view ('admin.kependudukan.keluarga',['kk' => $kk]);
+        $query = DB::table('house_buildings')->Select('house_building_id')->get();
+        //return $query;
+
+        return view ('admin.kependudukan.keluarga',['kk' => $kk, 'rumah' => $query]);
     }
 
     /**
@@ -45,7 +49,6 @@ class Family_cardsController extends Controller
         $request->validate([
             'family_card_number' => 'required|max:25|unique:family_cards'
         ]);
-        $request->family_card_number = str_replace("`", "", $request->family_card_number);
         Family_card::create($request->all());
         $pesan = "<b>".$request->family_card_number.'</b> added successfully';
         return redirect('/keluarga')->with('status', $pesan);
@@ -93,6 +96,8 @@ class Family_cardsController extends Controller
      */
     public function destroy(Family_card $family_card)
     {
-        //
+        Family_card::destroy($family_card->family_card_number);
+        $pesan = "<b>".$family_card->family_card_number.'</b> successfully deleted !';
+        return redirect('/keluarga')->with('status-hapus', $pesan);
     }
 }

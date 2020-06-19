@@ -55,4 +55,5 @@
 			$(this).val($(this).val().replace("`", "'"));
 		});
 	});
+
 </script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \App\Building_model;
 use Illuminate\Http\Request;
+use Validator;
 
 class Building_modelsController extends Controller
 {
@@ -43,7 +44,7 @@ class Building_modelsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_of_model' => 'required|max:40|unique:building_models'
+            'name_of_model' => 'required|max:40|unique:building_models|not_regex:/`/i'
         ]);
         Building_model::create($request->all());
         $pesan = "<b>".$request->name_of_model.'</b> added successfully';
@@ -81,28 +82,27 @@ class Building_modelsController extends Controller
      */
     public function update(Request $request, Building_model $Building_model)
     {
-        try {
-            Building_model::where('id', $Building_model->id)
-                ->update([
-                    'name_of_model' => $request->nama_e
-                ]);
-            $pesan = "the data was successfully changed to <b>".$request->nama_e.'</b>';
-            return redirect('/model')->with('status', $pesan);
+        $validator = Validator::make($request->all(), [
+            'new_name' => 'required|max:40|unique:building_models,name_of_model|not_regex:/`/i'
+        ]);
+        
+        if ($validator->fails()) {
+            $json = json_decode($validator->messages(), TRUE);
+            $pesan = $json['new_name'][0];
+            return redirect('/model')->with(
+                array('gagal-edit' => $pesan, 
+                        'id_edit' => $Building_model->id,
+                        'nama_edit' => $Building_model->name_of_model,
+                        'nama_baru' => $request->new_name
+                    )
+                );
         }
-        catch(\Illuminate\Database\QueryException $ex){ 
-        $p = explode("ERROR: ", $ex->getMessage());
-        $p = explode(' "', $p[1]);
-        $p = explode('(SQL', $p[0]);
-        $pesan =$p[0];
-        return redirect('/model')->with(
-            array('gagal-edit' => $pesan, 
-                    'id_edit' => $Building_model->id,
-                    'nama_edit' => $Building_model->name_of_model,
-                    'nama_baru' => $request->nama_e
-                )
-            );
-
-        }
+        Building_model::where('id', $Building_model->id)
+                            ->update([
+                                'name_of_model' => $request->new_name
+                            ]);
+                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        return redirect('/model')->with('status', $pesan);
     }
 
     /**

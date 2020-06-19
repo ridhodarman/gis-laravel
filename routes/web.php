@@ -165,3 +165,6 @@ Route::delete('/pekerjaan/{job}', 'JobsController@destroy')->middleware('auth');
 //Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');})->middleware('auth');
 Route::get('/keluarga', 'Family_cardsController@index')->middleware('auth');
 Route::post('/keluarga', 'Family_cardsController@store')->middleware('auth');
+Route::delete('/keluarga/{family_card}', 'Family_cardsController@destroy')->middleware('auth');
+
+Route::get('/tes', 'HomeController@tes');

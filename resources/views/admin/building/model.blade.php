@@ -97,7 +97,7 @@
                         <div class="form-group">
                             <label>Name of building model:</label>
                             <input type="hidden" class="form-control" name="id_e" id="id-e">
-                            <input type="text" name="nama_e" id="nama-e" class="form-control"
+                            <input type="text" name="new_name" id="nama-e" class="form-control"
                                 onkeyup="javascript:capitalize(this);">
                         </div>
                     </div>
@@ -145,9 +145,9 @@
     @if (session('gagal-edit'))
     <script>
         $(document).ready(function () {
-            edit(`{{ session('id_edit') }}`, `{{ $m->name_of_model }}`);
+            edit(`{{ session('id_edit') }}`, `{{ session('nama_edit') }}`);
             $('#warning').modal('show');
-            $("#pesan-warning").append(`<b> {{ session('nama_baru') }} </b> = {!! session('gagal-edit') !!}`);
+            $("#pesan-warning").append(`{!! session('gagal-edit') !!}`);
         });
     </script>
     @endif
@@ -156,7 +156,7 @@
         function edit(id, model) {
             $('#edit').modal('show');
             $('#judul-e').html(`Edit '${model}' `);
-            document.getElementById("nama-e").value = model;
+            document.getElementById("nama-e").value = escapeHtml(model);
             document.getElementById("id-e").value = id;
             $('#form-edit').attr('action', `model/${id}`);
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Education;
 use Illuminate\Http\Request;
+use Validator;
 
 class EducationsController extends Controller
 {
@@ -43,7 +44,7 @@ class EducationsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'education_level' => 'required|max:40|unique:educations'
+            'education_level' => 'required|max:40|unique:educations|not_regex:/`/i'
         ]);
         Education::create($request->all());
         $pesan = "<b>".$request->education_level.'</b> added successfully';
@@ -81,28 +82,27 @@ class EducationsController extends Controller
      */
     public function update(Request $request, Education $education)
     {
-        try {
-            Education::where('id', $education->id)
-                ->update([
-                    'education_level' => $request->nama_e
-                ]);
-            $pesan = "the data was successfully changed to <b>".$request->nama_e.'</b>';
-            return redirect('/pendidikan')->with('status', $pesan);
+        $validator = Validator::make($request->all(), [
+            'new_name' => 'required|max:40|unique:educations,education_level|not_regex:/`/i'
+        ]);
+        
+        if ($validator->fails()) {
+            $json = json_decode($validator->messages(), TRUE);
+            $pesan = $json['new_name'][0];
+            return redirect('/pendidikan')->with(
+                array('gagal-edit' => $pesan, 
+                        'id_edit' => $education->id,
+                        'nama_edit' => $education->education_level,
+                        'nama_baru' => $request->new_name
+                    )
+                );
         }
-        catch(\Illuminate\Database\QueryException $ex){ 
-        $p = explode("ERROR: ", $ex->getMessage());
-        $p = explode(' "', $p[1]);
-        $p = explode('(SQL', $p[0]);
-        $pesan =$p[0];
-        return redirect('/pendidikan')->with(
-            array('gagal-edit' => $pesan, 
-                    'id_edit' => $education->id,
-                    'nama_edit' => $education->education_level,
-                    'nama_baru' => $request->nama_e
-                )
-            );
-
-        }
+        Education::where('id', $education->id)
+                            ->update([
+                                'education_level' => $request->new_name
+                            ]);
+                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        return redirect('/pendidikan')->with('status', $pesan);
     }
 
     /**

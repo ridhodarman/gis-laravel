@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tribe;
 use Illuminate\Http\Request;
+use Validator;
 
 class TribesController extends Controller
 {
@@ -18,7 +19,7 @@ class TribesController extends Controller
                             ->selectRaw('count(datuks.id) as jumlah')
                             ->leftJoin('datuks', 'tribes.id', '=', 'datuks.tribe_id')
                             ->groupBy('tribes.id')
-                            ->orderBy('tribes.name_of_tribe')
+                            ->orderBy('name_of_tribe')
                             ->get();
         //return $tribe;
         return view ('admin.datuk.suku',['suku' => $tribe]);
@@ -43,7 +44,7 @@ class TribesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_of_tribe' => 'required|max:40|unique:tribes'
+            'name_of_tribe' => 'required|max:40|unique:tribes|not_regex:/`/i'
         ]);
         Tribe::create($request->all());
         $pesan = "<b>".$request->name_of_tribe.'</b> added successfully';
@@ -81,28 +82,27 @@ class TribesController extends Controller
      */
     public function update(Request $request, Tribe $tribe)
     {
-        try {
-            Tribe::where('id', $tribe->id)
-                ->update([
-                    'name_of_tribe' => $request->nama_e
-                ]);
-            $pesan = "the data was successfully changed to <b>".$request->nama_e.'</b>';
-            return redirect('/suku')->with('status', $pesan);
+        $validator = Validator::make($request->all(), [
+            'new_name' => 'required|max:40|unique:tribes,name_of_tribe|not_regex:/`/i'
+        ]);
+        
+        if ($validator->fails()) {
+            $json = json_decode($validator->messages(), TRUE);
+            $pesan = $json['new_name'][0];
+            return redirect('/suku')->with(
+                array('gagal-edit' => $pesan, 
+                        'id_edit' => $tribe->id,
+                        'nama_edit' => $tribe->name_of_tribe,
+                        'nama_baru' => $request->new_name
+                    )
+                );
         }
-        catch(\Illuminate\Database\QueryException $ex){ 
-        $p = explode("ERROR: ", $ex->getMessage());
-        $p = explode(' "', $p[1]);
-        $p = explode('(SQL', $p[0]);
-        $pesan =$p[0];
-        return redirect('/suku')->with(
-            array('gagal-edit' => $pesan, 
-                    'id_edit' => $tribe->id,
-                    'nama_edit' => $tribe->name_of_tribe,
-                    'nama_baru' => $request->nama_e
-                )
-            );
-
-        }
+        Tribe::where('id', $tribe->id)
+                            ->update([
+                                'name_of_tribe' => $request->new_name
+                            ]);
+                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        return redirect('/suku')->with('status', $pesan);
     }
 
     /**

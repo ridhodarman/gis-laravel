@@ -44,7 +44,7 @@ class Type_of_constructionsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_of_type' => 'required|max:40|unique:type_of_constructions'
+            'name_of_type' => 'required|max:40|unique:type_of_constructions|not_regex:/`/i'
         ]);
         Type_of_construction::create($request->all());
         $pesan = "<b>".$request->name_of_type.'</b> added successfully';
@@ -82,29 +82,27 @@ class Type_of_constructionsController extends Controller
      */
     public function update(Request $request, Type_of_construction $Type_of_construction)
     {
+        $validator = Validator::make($request->all(), [
+            'new_name' => 'required|max:40|unique:type_of_constructions,name_of_type|not_regex:/`/i'
+        ]);
         
-        try {
-            Type_of_construction::where('id', $Type_of_construction->id)
-                ->update([
-                    'name_of_type' => $request->nama_e
-                ]);
-            $pesan = "the data was successfully changed to <b>".$request->nama_e.'</b>';
-            return redirect('/konstruksi')->with('status', $pesan);
+        if ($validator->fails()) {
+            $json = json_decode($validator->messages(), TRUE);
+            $pesan = $json['new_name'][0];
+            return redirect('/konstruksi')->with(
+                array('gagal-edit' => $pesan, 
+                        'id_edit' => $Type_of_construction->id,
+                        'nama_edit' => $Type_of_construction->name_of_type,
+                        'nama_baru' => $request->new_name
+                    )
+                );
         }
-        catch(\Illuminate\Database\QueryException $ex){ 
-        $p = explode("ERROR: ", $ex->getMessage());
-        $p = explode(' "', $p[1]);
-        $p = explode('(SQL', $p[0]);
-        $pesan =$p[0];
-        return redirect('/konstruksi')->with(
-            array('gagal-edit' => $pesan, 
-                    'id_edit' => $Type_of_construction->id,
-                    'nama_edit' => $Type_of_construction->name_of_type,
-                    'nama_baru' => $request->nama_e
-                )
-            );
-
-        }
+        Type_of_construction::where('id', $Type_of_construction->id)
+                            ->update([
+                                'name_of_type' => $request->new_name
+                            ]);
+                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        return redirect('/konstruksi')->with('status', $pesan);
     }
 
     /**

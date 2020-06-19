@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Datuk;
 use Illuminate\Http\Request;
+use Validator;
 
 class DatuksController extends Controller
 {
@@ -43,7 +44,7 @@ class DatuksController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'datuk_name' => 'required|max:40|unique:datuks'
+            'datuk_name' => 'required|max:40|unique:datuks|not_regex:/`/i'
         ]);
         Datuk::create($request->all());
         $pesan = "<b>".$request->datuk_name.'</b> added successfully';
@@ -81,28 +82,27 @@ class DatuksController extends Controller
      */
     public function update(Request $request, Datuk $datuk)
     {
-        try {
-            Datuk::where('id', $datuk->id)
-                ->update([
-                    'datuk_name' => $request->nama_e
-                ]);
-            $pesan = "the data was successfully changed to <b>".$request->nama_e.'</b>';
-            return redirect('/datuk')->with('status', $pesan);
+        $validator = Validator::make($request->all(), [
+            'new_name' => 'required|max:40|unique:datuks,datuk_name|not_regex:/`/i'
+        ]);
+        
+        if ($validator->fails()) {
+            $json = json_decode($validator->messages(), TRUE);
+            $pesan = $json['new_name'][0];
+            return redirect('/datuk')->with(
+                array('gagal-edit' => $pesan, 
+                        'id_edit' => $datuk->id,
+                        'nama_edit' => $datuk->datuk_name,
+                        'nama_baru' => $request->new_name
+                    )
+                );
         }
-        catch(\Illuminate\Database\QueryException $ex){ 
-        $p = explode("ERROR: ", $ex->getMessage());
-        $p = explode(' "', $p[1]);
-        $p = explode('(SQL', $p[0]);
-        $pesan =$p[0];
-        return redirect('/datuk')->with(
-            array('gagal-edit' => $pesan, 
-                    'id_edit' => $datuk->id,
-                    'nama_edit' => $datuk->datuk_name,
-                    'nama_baru' => $request->nama_e
-                )
-            );
-
-        }
+        Datuk::where('id', $datuk->id)
+                            ->update([
+                                'datuk_name' => $request->new_name
+                            ]);
+                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        return redirect('/datuk')->with('status', $pesan);
     }
 
     /**

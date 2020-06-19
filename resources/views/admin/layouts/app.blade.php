@@ -75,12 +75,13 @@
         }
 
         function escapeHtml(unsafe) {
+            //alert("eskep")
             return unsafe
-                .replace('&amp;', "&")
-                .replace('&lt;', "<")
-                .replace('&gt;', ">")
-                .replace('&quot;', "\"")
-                .replace('&#039;', "'");
+                .split('&amp;').join("&")
+                .split('&lt;').join("<")
+                .split('&gt;').join(">")
+                .split('&quot;').join("\"")
+                .split('&#039;').join("'"); 
         }
     </script>
 </head>

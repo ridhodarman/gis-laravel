@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label>Datuk Name:</label>
                             <input type="hidden" class="form-control" name="id_e" id="id-e">
-                            <input type="text" name="nama_e" id="nama-e" class="form-control"
+                            <input type="text" name="new_name" id="nama-e" class="form-control"
                                 onkeyup="javascript:capitalize(this);">
                         </div>
                     </div>
@@ -146,26 +146,26 @@
     @if (session('gagal-edit'))
     <script>
         $(document).ready(function () {
-            edit(`{{ session('id_edit') }}`, `{{ $d->datuk_name }}`);
+            edit(`{{ session('id_edit') }}`, `{{ session('nama_edit') }}`);
             $('#warning').modal('show');
-            $("#pesan-warning").append(`<b> {{ session('nama_baru') }} </b> = {!! session('gagal-edit') !!}`);
+            $("#pesan-warning").append(`{!! session('gagal-edit') !!}`);
         });
     </script>
     @endif
 
     <script type="text/javascript">
-        function edit(id, jenis) {
+        function edit(id, datuk) {
             $('#edit').modal('show');
-            $('#judul-e').html(`Edit '${jenis}' `);
-            document.getElementById("nama-e").value = jenis;
+            $('#judul-e').html(`Edit '${datuk}' `);
+            document.getElementById("nama-e").value = escapeHtml(datuk);
             document.getElementById("id-e").value = id;
             $('#form-edit').attr('action', `datuk/${id}`);
         }
 
-        function hapus(id, jenis, jumlah) {
+        function hapus(id, datuk, jumlah) {
             $('#hapus').modal('show');
-            $('#judul').html(`Delete '${jenis}' ?`);
-            $('#nama').html(jenis);
+            $('#judul').html(`Delete '${datuk}' ?`);
+            $('#nama').html(datuk);
             $('#jumlah').html(jumlah);
             $('#form-hapus').attr('action', `datuk/${id}`);
         }
