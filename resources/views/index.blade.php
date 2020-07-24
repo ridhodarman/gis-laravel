@@ -416,7 +416,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-store-alt'></i> Micro, Small, Medium, Enterprise Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load(`umkm_detail/${id}`);
+        $('#konten-bang').load(`umkm/detail/${id}`);
     }
 
     function detailibadah(id) {

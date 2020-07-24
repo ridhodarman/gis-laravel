@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Education;
 use Illuminate\Http\Request;
-use Validator;
 
 class EducationsController extends Controller
 {
@@ -82,27 +81,16 @@ class EducationsController extends Controller
      */
     public function update(Request $request, Education $education)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'new_name' => 'required|max:40|unique:educations,education_level|not_regex:/`/i'
         ]);
-        
-        if ($validator->fails()) {
-            $json = json_decode($validator->messages(), TRUE);
-            $pesan = $json['new_name'][0];
-            return redirect('/pendidikan')->with(
-                array('gagal-edit' => $pesan, 
-                        'id_edit' => $education->id,
-                        'nama_edit' => $education->education_level,
-                        'nama_baru' => $request->new_name
-                    )
-                );
-        }
+
         Education::where('id', $education->id)
-                            ->update([
-                                'education_level' => $request->new_name
-                            ]);
-                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
-                        return redirect('/pendidikan')->with('status', $pesan);
+                ->update([
+                    'education_level' => $request->new_name
+                ]);
+        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+        return redirect('/pendidikan')->with('status', $pesan);
     }
 
     /**

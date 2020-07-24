@@ -204,10 +204,10 @@
         }
 
         function tampilnilai() {
-            $("#id_rumah").val("{{ old('house_building_id') }}").change();
+            $("#id_rumah").val(`{{ old('house_building_id') }}`).change();
             cekrumah();
-            $("#kategori").val("{{ old('category') }}").change();
-            $("#residence").val("{{ old('residence_status') }}").change();
+            $("#kategori").val(`{{ old('category') }}`).change();
+            $("#residence").val(`{{ old('residence_status') }}`).change();
         }
 
         $("#view_rumah").hide(); $("#tinggal").hide();

@@ -21,7 +21,7 @@ function dataumkm(url){
 }
 
 function tampilsemuaumkm() { //menampilkan semua umkm
-  let url = 'umkm_semua'
+  let url = "umkm/semua"
   dataumkm(url);
 }
 
@@ -60,20 +60,30 @@ function cari_umkm(rows) {
 
 function carinamaumkm() { //menampilkan umkm berdasarkan nama
   let namaumkm = document.getElementById("namaumkm").value;
-  let url = `umkm_cari_nama/${namaumkm}`;
+  let url = `umkm/nama/${namaumkm}`;
   dataumkm(url);
 }
 
 function carijenis_umkm() { 
   let jenis = document.getElementById("jenisumkm").value;
-  let url = `umkm_cari_jenis/${jenis}`;
+  let url = `umkm/jenis/${jenis}`;
   dataumkm(url);
 }
 
-function carikons_umkm() { 
-  let jenis_k = document.getElementById("jeniskons_umkm").value;
-  let url = `umkm_cari_konstruksi/${jenis_k}`;
-  dataumkm(url);
+function carifasilitas_umkm(){
+  let arrayFas=[];
+  for(i=0; i<$("input[name=fas_umkm]:checked").length;i++){
+    arrayFas.push($("input[name=fas_umkm]:checked")[i].value);
+  }
+  if (arrayFas==''){
+    $('#ket-p').empty();
+    $('#peringatan').modal('show');
+    $('#ket-p').append('Choose Facility !');
+  }else{
+    console.log(`umkm/fasilitas=${arrayFas}`);
+    let url = `umkm/fasilitas/${arrayFas}`;
+    dataumkm(url);
+  }
 }
 
 function carijorong_umkm() { 
@@ -87,7 +97,6 @@ function klikInfoWindowumkm(id) {
     console.log("marker dengan id=" + id + " diklik");
     detailumkm_infow(id);
   });
-
 }
 
 function detailumkm_infow(id) { //menampilkan informas
@@ -95,7 +104,7 @@ function detailumkm_infow(id) { //menampilkan informas
   clearroute2();
   console.log("fungsi info marker id=" + id);
     $.ajax({
-    url: `umkm_info/${id}`,
+    url: `umkm/info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
@@ -166,7 +175,7 @@ function cariRadius_umkm() { //menampilkan bang umkm berdasarkan radius
     rad[0] = pos.lat;
     rad[1] = pos.lng;
     rad[2] = radiusumkm;
-    let url = `umkm_cari_radius/${rad}`;
+    let url = `umkm/radius/${lat}/${lng}/${radiusumkm}`;
     
     $.ajax({
       url: url,
@@ -204,22 +213,6 @@ function cariRadius_umkm() { //menampilkan bang umkm berdasarkan radius
     map.setCenter(pos);
     circles.push(circle); 
       
-  }
-}
-
-function carifasilitas_umkm(){
-  let arrayFas=[];
-  for(i=0; i<$("input[name=fas_umkm]:checked").length;i++){
-    arrayFas.push($("input[name=fas_umkm]:checked")[i].value);
-  }
-  if (arrayFas==''){
-    $('#ket-p').empty();
-    $('#peringatan').modal('show');
-    $('#ket-p').append('Choose Facility !');
-  }else{
-    console.log(`umkm cari fasilitas=${arrayFas}`);
-    let url = `umkm_cari_fasilitas/${arrayFas}`;
-    dataumkm(url);
   }
 }
 

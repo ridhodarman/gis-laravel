@@ -97,8 +97,10 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Education Level:</label>
-                            <input type="hidden" class="form-control" name="id_e" id="id-e">
-                            <input type="text" name="new_name" id="nama-e" class="form-control"
+                            <input type="hidden" name="id_e" id="id_e">
+                            <input type="hidden" name="nama_e" id="nama_e">
+                            <input type="text" name="new_name" id="new_name" 
+                            class="form-control @error('new_name') is-invalid @enderror"
                                 onkeyup="javascript:capitalize(this);">
                         </div>
                     </div>
@@ -110,6 +112,16 @@
             </form>
         </div>
     </div>
+    @error('new_name')
+    <script>
+        $(document).ready(function () {
+            edit(`{{ old('id_e') }}`, `{{ old('nama_e') }}`);
+            $('#warning').modal('show');
+            $("#pesan-warning").append(`{{ $message }}`);
+        });
+    </script>
+    @enderror
+
 
     <div class="modal fade" id="hapus">
         <div class="modal-dialog">
@@ -143,22 +155,13 @@
     </script>
     @endif
 
-    @if (session('gagal-edit'))
-    <script>
-        $(document).ready(function () {
-            edit(`{{ session('id_edit') }}`, `{{ session('nama_edit') }}`);
-            $('#warning').modal('show');
-            $("#pesan-warning").append(`{!! session('gagal-edit') !!}`);
-        });
-    </script>
-    @endif
-
     <script type="text/javascript">
         function edit(id, pend) {
             $('#edit').modal('show');
             $('#judul-e').html(`Edit '${pend}' `);
-            document.getElementById("nama-e").value = escapeHtml(pend);
-            document.getElementById("id-e").value = id;
+            document.getElementById("nama_e").value = escapeHtml(pend);
+            document.getElementById("new_name").value = escapeHtml(pend);
+            document.getElementById("id_e").value = id;
             $('#form-edit').attr('action', `pendidikan/${id}`);
         }
 

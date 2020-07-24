@@ -1091,7 +1091,7 @@ function carimodel() {
 
   if (document.getElementById("model_umkm").checked == 1) {
   $.ajax({
-    url: `umkm_cari_model/${model}`,
+    url: `umkm/model/${model}`,
     data: "",
     dataType: 'json',
     success: function (rows) {

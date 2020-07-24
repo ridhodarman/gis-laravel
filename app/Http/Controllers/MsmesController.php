@@ -144,47 +144,18 @@ class MsmesController extends Controller
         return $query;
     }
 
-    public function cari_konstruksi($konstruksi){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
-                    ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
-                    ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.type_of_construction', '=', '?')
-                    ->orderBy('msme_buildings.name_of_msme_building')
-                    ->setBindings([$konstruksi])
-                    ->get();
-        return $query;
-    }
-
-    public function cari_radius($rad){
-        $r = explode(",", $rad);
-        $lat = $r[0];
-        $lng = $r[1];
-        $radius = $r[2];
+    public function cari_radius($lat, $lng, $rad){
+        $lat = (double) $lat;
+        $lng = (double) $lng;
         $query = DB::table('msme_buildings')
                     ->select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude,
-                                    ST_DISTANCE_SPHERE(ST_geom::geometryFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
+                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
-                    ->whereRaw("ST_DISTANCE_SPHERE(ST_geom::geometryFromText('POINT($lng $lat)',-1),geom::geometry) <= ?")
+                    ->whereRaw("ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1),geom::geometry) <= ?")
                     ->orderByRaw('jarak')
-                    ->setBindings([$radius])
-                    ->get();
-        return $query;
-    }
-    
-    public function cari_jorong($jorong){
-        $query = DB::table(DB::raw('msme_building AS W, jorong AS J, building AS B')) 
-                    ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
-                                      ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
-                                      W.msme_building_id, W.name_of_msme_building"))
-                    ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
-                                AND J.jorong_id = ? 
-                                AND B.building_id=W.msme_building_id")
-                    ->orderByRaw('W.name_of_msme_building')
-                    ->setBindings([$jorong])
+                    ->setBindings([$rad])
                     ->get();
         return $query;
     }
@@ -197,13 +168,13 @@ class MsmesController extends Controller
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('detail_msme_building_facilities', 
                             'msme_buildings.msme_building_id', 
-                            '=', 'detail_msme_building_facilities.msme_building_id')
+                            '=', 'detail_msme_building_facilities.msmeb_id')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
-                    ->whereIn('detail_msme_building_facilities.facility_id', $fasilitas)
-                    ->groupBy('detail_msme_building_facilities.msme_building_id',
+                    ->whereIn('detail_msme_building_facilities.msme_building_facilities', $fasilitas)
+                    ->groupBy('detail_msme_building_facilities.msmeb_id',
                                 'msme_buildings.msme_building_id',
                                 'msme_buildings.name_of_msme_building',
-                                'buildings.geom::geometry'
+                                'buildings.geom'
                     )
                     ->orderBy('msme_buildings.name_of_msme_building')
                     ->get();
@@ -216,7 +187,7 @@ class MsmesController extends Controller
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id AS id', 'msme_buildings.name_of_msme_building AS name')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.model_id', '=', '?')
+                    ->where('buildings.building_model', '=', '?')
                     ->orderBy('msme_buildings.name_of_msme_building')
                     ->setBindings([$model])
                     ->get();
@@ -228,14 +199,28 @@ class MsmesController extends Controller
                     ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building', 
-                                'building_gallery.photo_url')
-                    ->leftJoin('building_gallery', 'msme_buildings.msme_building_id', 
-                            '=', 'building_gallery.building_id')
+                                'building_gallerys.photo_url')
+                    ->leftJoin('building_gallerys', 'msme_buildings.msme_building_id', 
+                            '=', 'building_gallerys.building_id')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->where('msme_buildings.msme_building_id', '=', '?')
-                    ->orderBy('building_gallery.upload_date', 'DESC')
+                    ->orderBy('building_gallerys.updated_at', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
+                    ->get();
+        return $query;
+    }
+    
+    public function cari_jorong($jorong){
+        $query = DB::table(DB::raw('msme_building AS W, jorong AS J, building AS B')) 
+                    ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
+                                    ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
+                                    W.msme_building_id, W.name_of_msme_building"))
+                    ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
+                                AND J.jorong_id = ? 
+                                AND B.building_id=W.msme_building_id")
+                    ->orderByRaw('W.name_of_msme_building')
+                    ->setBindings([$jorong])
                     ->get();
         return $query;
     }
@@ -245,18 +230,18 @@ class MsmesController extends Controller
                     ->addSelect('msme_buildings.*', 'name_of_msme_building', 'owner_name', 'contact_person',
                                 'building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
-                                'name_of_model', 'address', 'type_of_msme.name_of_type AS jenis', 
-                                'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('type_of_msme', 'msme_buildings.type_of_msme', '=', 'type_of_msme.type_id')
+                                'name_of_model', 'address', 'type_of_msmes.name_of_type AS jenis', 
+                                'type_of_constructions.name_of_type AS constr')
+                    ->leftJoin('type_of_msmes', 'msme_buildings.type_of_msme', '=', 'type_of_msmes.id')
                     ->leftJoin('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
-                    ->leftJoin('type_of_construction', 'buildings.type_of_construction', '=', 'type_of_construction.type_id')
-                    ->leftJoin('building_model', 'buildings.model_id', '=', 'building_model.model_id')
+                    ->leftJoin('type_of_constructions', 'buildings.type_of_construction', '=', 'type_of_constructions.id')
+                    ->leftJoin('building_models', 'buildings.building_model', '=', 'building_models.id')
                     ->where('msme_buildings.msme_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();
 
-        $query2 = DB::table('building_gallery')
-                    ->Select('photo_url', 'upload_date')
+        $query2 = DB::table('building_gallerys')
+                    ->Select('photo_url', 'updated_at')
                     ->where('building_id', '=', '?')
                     ->setBindings([$id]);
         $sql2 = $query2->get();
@@ -264,9 +249,9 @@ class MsmesController extends Controller
         $query3 = DB::table('detail_msme_building_facilities')
                     ->Select('name_of_facility', 'quantity_of_facilities')
                     ->join('msme_building_facilities', 
-                                'detail_msme_building_facilities.facility_id', '=', 
-                                    'msme_building_facilities.facility_id')
-                    ->where('detail_msme_building_facilities.msme_building_id', '=', '?')
+                                'detail_msme_building_facilities.msme_building_facilities', '=', 
+                                    'msme_building_facilities.id')
+                    ->where('detail_msme_building_facilities.msmeb_id', '=', '?')
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 
