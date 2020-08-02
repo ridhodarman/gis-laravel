@@ -1,9 +1,9 @@
-<script src="{{ asset('pages/inc/slideshow/jquery.resize.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/jquery.waitforimages.min.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/modernizr.js') }}"></script>
-<script src="{{ asset('pages/inc/slideshow/jquery.carousel-3d.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('pages/inc/slideshow/jquery.carousel-3d.default.css') }}">
-<?php
+<script src="{{ asset('pages2/inc/slideshow/jquery.resize.js') }}"></script>
+<script src="{{ asset('pages2/inc/slideshow/jquery.waitforimages.min.js') }}"></script>
+<script src="{{ asset('pages2/inc/slideshow/modernizr.js') }}"></script>
+<script src="{{ asset('pages2/inc/slideshow/jquery.carousel-3d.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('pages2/inc/slideshow/jquery.carousel-3d.default.css') }}">
+@php
 $n=1;$foto;$tglfoto;
 foreach ($photo as $p){
     $foto[$n]=$p->photo_url;
@@ -59,7 +59,7 @@ $server='foto/bangunan/';
         $jumlah=$n-1;
         $img=$img. "Total Photo: ".$jumlah;
 
-?>
+@endphp
 
 <div class="main-content-inner">
     <div class="row">
@@ -68,8 +68,8 @@ $server='foto/bangunan/';
                 <div class="card-body">
                     <div class="media">
                         <div class="media-body">
-                        <?php if($type=="worship") {?>
-                        @foreach ($info as $i)
+                            @php if($type=="worship") {@endphp
+                            @foreach ($info as $i)
                             <h6>ID:
                                 {{$i->worship_building_id}}
                             </h6>
@@ -89,11 +89,11 @@ $server='foto/bangunan/';
                                         {{$i->jenis}}
                                     </td>
                                 </tr>
-                        @endforeach
-                        <?php } 
-                            if($type=="msme") { ?>
-                            @foreach ($info as $i)
-                            <h6>ID:
+                                @endforeach
+                                @php } 
+                            if($type=="msme") { @endphp
+                                @foreach ($info as $i)
+                                <h6>ID:
                                     {{$i->msme_building_id}}
                                 </h6>
                                 <br />
@@ -126,188 +126,188 @@ $server='foto/bangunan/';
                                             {{$i->contact_person}}
                                         </td>
                                     </tr>
-                            @endforeach
-                            <?php } 
-                            if($type=="office") { ?>
-                            @foreach ($info as $i)
-                            <h6>ID:
-                                    {{$i->office_building_id}}
-                                </h6>
-                                <br />
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td>Nama </td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->name_of_office_building}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Type of Office </td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->jenis}}
-                                        </td>
-                                    </tr>
-                            @endforeach
-                            <?php } 
-                            if($type=="educational") { ?>
-                            @foreach ($info as $i)
-                            <h6>ID:
-                                    {{$i->educational_building_id}}
-                                </h6>
-                                <br />
-                                <table style="width: 100%;">
-                                    <tr>
-                                        <td>Nama </td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->name_of_educational_building}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Level of Education </td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->level}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>School Type</td>
-                                        <td>:</td>
-                                        <td>
-                                            <?php 
+                                    @endforeach
+                                    @php } 
+                            if($type=="office") { @endphp
+                                    @foreach ($info as $i)
+                                    <h6>ID:
+                                        {{$i->office_building_id}}
+                                    </h6>
+                                    <br />
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td>Nama </td>
+                                            <td>:</td>
+                                            <td>
+                                                {{$i->name_of_office_building}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Type of Office </td>
+                                            <td>:</td>
+                                            <td>
+                                                {{$i->jenis}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @php } 
+                            if($type=="educational") { @endphp
+                                        @foreach ($info as $i)
+                                        <h6>ID:
+                                            {{$i->educational_building_id}}
+                                        </h6>
+                                        <br />
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td>Nama </td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{$i->name_of_educational_building}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Level of Education </td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{$i->level}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>School Type</td>
+                                                <td>:</td>
+                                                <td>
+                                                    @php 
                                                 if($i->school_type==0){echo "Public School";}
                                                 else if($i->school_type==1){echo "Private School";}
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Headmaster Name</td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->headmaster_name}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>All Students</td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->all_students}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>All Teachers</td>
-                                        <td>:</td>
-                                        <td>
-                                            {{$i->all_teachers}}
-                                        </td>
-                                    </tr>
-                            @endforeach
-                            <?php } 
-                            if($type=="health") { ?>
-                            @foreach ($info as $i)
-                            <h6>ID:
-                                {{$i->health_building_id}}
-                            </h6>
-                            <br />
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td>Nama </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->name_of_health_building}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Type of Health Building </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->jenis}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Name of Head</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->name_of_head}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>All Medical Personnel</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->all_medical_personnel}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>All Non-Medical Personnel</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->all_non_medical_personnel}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <?php } ?>
-                            @foreach ($info as $i)
-                                <tr>
-                                    <td>Building Size </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->building_area}} m<sup>2</sup>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Land Area </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->land_area}} m<sup>2</sup>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Parking Area </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{0+$i->parking_area}} m<sup>2</sup>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Standing Year </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->standing_year}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Construction Type </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->constr}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Electricity Capacity </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{0+$i->electricity_capacity}} VA
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Address </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->address}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Building Model </td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$i->name_of_model}}
-                                    </td>
-                                </tr>
-                            </table>
-                            @endforeach
+                                            @endphp
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Headmaster Name</td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{$i->headmaster_name}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>All Students</td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{$i->all_students}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>All Teachers</td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{$i->all_teachers}}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @php } 
+                            if($type=="health") { @endphp
+                                            @foreach ($info as $i)
+                                            <h6>ID:
+                                                {{$i->health_building_id}}
+                                            </h6>
+                                            <br />
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td>Nama </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->name_of_health_building}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Type of Health Building </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->jenis}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Name of Head</td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->name_of_head}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>All Medical Personnel</td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->all_medical_personnel}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>All Non-Medical Personnel</td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->all_non_medical_personnel}}
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                @php } @endphp
+                                                @foreach ($info as $i)
+                                                <tr>
+                                                    <td>Building Size </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->building_area}} m<sup>2</sup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Land Area </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->land_area}} m<sup>2</sup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Parking Area </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{0+$i->parking_area}} m<sup>2</sup>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Standing Year </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->standing_year}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Construction Type </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->constr}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Electricity Capacity </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{0+$i->electricity_capacity}} VA
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->address}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Building Model </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        {{$i->name_of_model}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -322,8 +322,8 @@ $server='foto/bangunan/';
                                 <!-- <button id="ukuranpenuh" class="btn btn-warning btn-sm" title="show all images in full screen">
                                     <i class="ti-fullscreen"></i>
                                 </button> -->
-                            </h5><br/>
-                            <?php echo $img; ?>
+                            </h5><br />
+                            @php echo $img; @endphp
                         </div>
                     </div>
                 </div>
@@ -334,33 +334,33 @@ $server='foto/bangunan/';
                 <div class="card-body">
                     <div class="media">
                         <div class="media-body">
-                        <h6>Facility</h6>
-                        <br/>
-                        <table width="100%" class="table-striped table-bordered table-hover">
-                            <thead style="text-align: center;">
-                                <th>Name of Facility</th>
-                                <th>Qty</th>
-                            </thead>
-                            <tbody>
-                            	@foreach ($fasilitas as $f)
+                            <h6>Facility</h6>
+                            <br />
+                            <table width="100%" class="table-striped table-bordered table-hover">
+                                <thead style="text-align: center;">
+                                    <th>Name of Facility</th>
+                                    <th>Qty</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($fasilitas as $f)
                                     <tr style="height: 200%">
-                                    <td>{{$f->name_of_facility}}</td>
-                                    <td>{{$f->quantity_of_facilities}}</td>
+                                        <td>{{$f->name_of_facility}}</td>
+                                        <td>{{$f->quantity_of_facilities}}</td>
                                     </tr>
-                                @endforeach
-                                
-                            <?php
+                                    @endforeach
+
+                                    @php
                             if (count($fasilitas)<1) {
-                            	echo '<td colspan="2"><center>no facility data</center></td>';
+                                echo '<td colspan="2"><center>no facility data</center></td>';
                             }
-                            ?>
-                                
-                            </tbody>
-                        </table>
+                            @endphp
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>

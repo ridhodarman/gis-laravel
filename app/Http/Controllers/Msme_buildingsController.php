@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
-use App\Msmes;
-use Illuminate\Http\Request;
 
-class MsmesController extends Controller
+use App\Msme_building;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Building_gallery;
+use App\detail_msme_building_facilities;
+
+class Msme_buildingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +44,10 @@ class MsmesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Msmes  $msmes
+     * @param  \App\Msme_building  $msme_building
      * @return \Illuminate\Http\Response
      */
-    public function show(Msmes $msmes)
+    public function show(Msme_building $msme_building)
     {
         //
     }
@@ -52,10 +55,10 @@ class MsmesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Msmes  $msmes
+     * @param  \App\Msme_building  $msme_building
      * @return \Illuminate\Http\Response
      */
-    public function edit(Msmes $msmes)
+    public function edit(Msme_building $msme_building)
     {
         //
     }
@@ -64,10 +67,10 @@ class MsmesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Msmes  $msmes
+     * @param  \App\Msme_building  $msme_building
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Msmes $msmes)
+    public function update(Request $request, Msme_building $msme_building)
     {
         //
     }
@@ -75,17 +78,16 @@ class MsmesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Msmes  $msmes
+     * @param  \App\Msme_building  $msme_building
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Msmes $msmes)
+    public function destroy(Msme_building $msme_building)
     {
         //
     }
 
     public function digit(){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geom"))
+        $query = Msme_building::select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geom"))
                     ->addSelect('msme_building_id', 'name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
@@ -109,8 +111,7 @@ class MsmesController extends Controller
     }
 
     public function semua(){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
@@ -120,8 +121,7 @@ class MsmesController extends Controller
     }
 
     public function cari_nama($nama){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
@@ -132,8 +132,7 @@ class MsmesController extends Controller
     }
 
     public function cari_jenis($jenis){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
@@ -147,8 +146,7 @@ class MsmesController extends Controller
     public function cari_radius($lat, $lng, $rad){
         $lat = (double) $lat;
         $lng = (double) $lng;
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude,
                                     ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
@@ -162,8 +160,8 @@ class MsmesController extends Controller
 
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $total = count($fasilitas);
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('detail_msme_building_facilities', 
@@ -176,14 +174,14 @@ class MsmesController extends Controller
                                 'msme_buildings.name_of_msme_building',
                                 'buildings.geom'
                     )
+                    ->havingRaw('COUNT(*) = '. $total)
                     ->orderBy('msme_buildings.name_of_msme_building')
                     ->get();
         return $query;
     }
 
     public function cari_model($model){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id AS id', 'msme_buildings.name_of_msme_building AS name')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
@@ -195,8 +193,7 @@ class MsmesController extends Controller
     }
 
     public function info($id){
-        $query = DB::table('msme_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building', 
                                 'building_gallerys.photo_url')
@@ -212,7 +209,7 @@ class MsmesController extends Controller
     }
     
     public function cari_jorong($jorong){
-        $query = DB::table(DB::raw('msme_building AS W, jorong AS J, building AS B')) 
+        $query = DB::table(DB::raw('msme_buildings AS W, jorongs AS J, buildings AS B')) 
                     ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
                                     W.msme_building_id, W.name_of_msme_building"))
@@ -226,8 +223,7 @@ class MsmesController extends Controller
     }
 
     public function detail($id){
-        $query = DB::table('msme_buildings')
-                    ->addSelect('msme_buildings.*', 'name_of_msme_building', 'owner_name', 'contact_person',
+        $query = Msme_building::Select('msme_buildings.*', 'name_of_msme_building', 'owner_name', 'contact_person',
                                 'building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_msmes.name_of_type AS jenis', 
@@ -240,14 +236,12 @@ class MsmesController extends Controller
                     ->setBindings([$id]);
         $sql = $query->get();
 
-        $query2 = DB::table('building_gallerys')
-                    ->Select('photo_url', 'updated_at')
+        $query2 = Building_gallery::Select('photo_url', 'updated_at')
                     ->where('building_id', '=', '?')
                     ->setBindings([$id]);
         $sql2 = $query2->get();
 
-        $query3 = DB::table('detail_msme_building_facilities')
-                    ->Select('name_of_facility', 'quantity_of_facilities')
+        $query3 = detail_msme_building_facilities::Select('name_of_facility', 'quantity_of_facilities')
                     ->join('msme_building_facilities', 
                                 'detail_msme_building_facilities.msme_building_facilities', '=', 
                                     'msme_building_facilities.id')

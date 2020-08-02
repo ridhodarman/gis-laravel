@@ -19,21 +19,8 @@ Route::get('/logout2', function (){
     Auth::logout();
     return redirect('/login');
 });
-$api;
-Route::get('/', function () {
-    $building_model = \App\Building_model::all();
-    $type_of_construction = \App\Type_of_construction::all();
-                                            
-    return view ('index', 
-            [
-                'api' => 'AIzaSyBNnzxae2AewMUN0Tt_fC3gN38goeLVdVE',
-                'model' => $building_model,
-                'konstruksi' => $type_of_construction
-            ]
-        
-        );
-});
 
+Route::get('/', 'PagesController@index')->name('index');
 Route::get('/house_digit', 'HousesController@digit');
 Route::get('/rumah_cari_id/{id}', 'HousesController@cari_id');
 Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
@@ -64,17 +51,17 @@ Route::get('/ibadah_cari_model/{model}', 'WorshipsController@cari_model');
 Route::get('/ibadah_info/{id}', 'WorshipsController@info');
 Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
 
-Route::get('/umkm', 'MsmesController@index')->name('umkm');
-Route::get('/msme_digit', 'MsmesController@digit');
-Route::get('/umkm/semua', 'MsmesController@semua');
-Route::get('/umkm/nama/{nama}', 'MsmesController@cari_nama');
-Route::get('/umkm/jenis/{jenis}', 'MsmesController@cari_jenis');
-Route::get('/umkm/radius/{lat}/{lng}/{rad}', 'MsmesController@cari_radius');
-Route::get('/umkm/fasilitas/{fasilitas}', 'MsmesController@cari_fasilitas');
-Route::get('/umkm_cari_jorong/{jorong}', 'MsmesController@cari_jorong');
-Route::get('/umkm/model/{model}', 'MsmesController@cari_model');
-Route::get('/umkm/info/{id}', 'MsmesController@info');
-Route::get('/umkm/detail/{id}', 'MsmesController@detail');
+Route::get('/umkm', 'Msme_buildingsController@index')->name('umkm');
+Route::get('/umkm/digit', 'Msme_buildingsController@digit');
+Route::get('/umkm/semua', 'Msme_buildingsController@semua');
+Route::get('/umkm/nama/{nama}', 'Msme_buildingsController@cari_nama');
+Route::get('/umkm/jenis/{jenis}', 'Msme_buildingsController@cari_jenis');
+Route::get('/umkm/radius/{lat}/{lng}/{rad}', 'Msme_buildingsController@cari_radius');
+Route::get('/umkm/fasilitas/{fas}', 'Msme_buildingsController@cari_fasilitas');
+Route::get('/umkm/jorong/{jorong}', 'Msme_buildingsController@cari_jorong');
+Route::get('/umkm/model/{model}', 'Msme_buildingsController@cari_model');
+Route::get('/umkm/info/{id}', 'Msme_buildingsController@info');
+Route::get('/umkm/detail/{id}', 'Msme_buildingsController@detail');
 
 Route::get('/office_digit', 'OfficesController@digit');
 Route::get('/kantor_semua', 'OfficesController@semua');

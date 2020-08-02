@@ -83,12 +83,13 @@ function carifasilitas_umkm(){
     console.log(`umkm/fasilitas=${arrayFas}`);
     let url = `umkm/fasilitas/${arrayFas}`;
     dataumkm(url);
+    $('#fas-umkm').modal('hide');
   }
 }
 
 function carijorong_umkm() { 
   let jorong = document.getElementById("jorong_umkm").value;
-  let url = `umkm_cari_jorong/${jorong}`;
+  let url = `umkm/jorong/${jorong}`;
   dataumkm(url);
 }
 
@@ -162,6 +163,7 @@ function detailumkm_infow(id) { //menampilkan informas
 function cariRadius_umkm() { //menampilkan bang umkm berdasarkan radius
   if (pos == 'null') {
     $('#atur-posisi').modal('show');
+     document.getElementById("inputradiusumkm").value=0;
   }
   else {
     radiusStatus = true;

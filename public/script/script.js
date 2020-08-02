@@ -97,7 +97,7 @@ function digitasirumah() {
 
 function digitasiumkm() {
   $.ajax({
-    url: server+'msme_digit',
+    url: server+'umkm/digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {
