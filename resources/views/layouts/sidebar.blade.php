@@ -465,32 +465,12 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskantor">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_office ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="carijenis_kantor()"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Construction Type</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div class="input-group mb-3">
-                                        <select aria-label="Text input with dropdown button" id="jeniskons_kantor">
-                                            @foreach ($konstruksi as $k)
-                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
+                                            @foreach ($jenis_kantor as $jk)
+                                                <option value="{{$jk->id}}">{{$jk->name_of_type}}</option>
                                             @endforeach
                                         </select>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="carikons_kantor()"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="carijenis_kantor()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                     </li>
@@ -501,42 +481,16 @@ select {
                                     <li>
                                     <div class="input-group">
                                         <p aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append" style="width: 28%">
-                                                <input type="text" id="kantor_awaltahun" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from"/>
+                                            <div class="input-group-append" style="width: 25%">
+                                                <input type="text" id="kantor_awaltahun" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="from"/>
                                                 <span class="input-group-text">-</span>
-                                                <input type="text" id="kantor_akhirtahun" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
+                                                <input type="text" id="kantor_akhirtahun" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="until"/>
                                                 <button class="btn btn-primary input-group-text" onclick="caritahun_kantor()"><i class="fa fa-search"></i></button>
                                             </div>
                                         </p>
                                     </div>
                                     </li>
                                 </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Radius</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div style="color: lightgray"><b>Radius: <font id="m_kantor">0</font> m<br></b></div>
-                                    <input  type="range" onchange="cariRadius_kantor()" id="inputradiuskantor" name="inputradius" data-highlight="true" min="1" max="10" value="1"/>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Jorong</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div class="input-group mb-3">
-                                        <select aria-label="Text input with dropdown button" id="jorong_kantor">
-                                            @foreach ($jorong as $j)
-                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="carijorong_kantor()"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#fas-kantor">Search By Facility</a>
                             </li>
                         </ul>
                     </li>

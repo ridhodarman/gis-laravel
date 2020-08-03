@@ -450,7 +450,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fa fa-bank'></i> Office Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load(`kantor_detail/${id}`);
+        $('#konten-bang').load(`kantor/detail/${id}`);
     }
 
     function detailrumah(id) {

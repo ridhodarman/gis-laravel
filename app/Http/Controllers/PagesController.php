@@ -10,6 +10,7 @@ use App\Type_of_msme;
 use App\msme_building_facilities;
 use App\Type_of_worship;
 use App\worship_building_facilities;
+use App\Type_of_office;
 
 class PagesController extends Controller
 {
@@ -27,6 +28,7 @@ class PagesController extends Controller
         $msme_building_facilities = msme_building_facilities::select('id','name_of_facility')->orderBy('name_of_facility')->get();
         $type_of_worship = Type_of_worship::select('id','name_of_type')->orderBy('name_of_type')->get();
         $worship_building_facilities = worship_building_facilities::select('id','name_of_facility')->orderBy('name_of_facility')->get();
+        $type_of_office = Type_of_office::select('id','name_of_type')->orderBy('name_of_type')->get();
                                                 
         return view ('index', 
                 [
@@ -38,6 +40,7 @@ class PagesController extends Controller
                     'fasilitas_umkm' => $msme_building_facilities,
                     'jenis_ibadah' => $type_of_worship,
                     'fasilitas_ibadah' => $worship_building_facilities,
+                    'jenis_kantor' => $type_of_office
                 ]
             
             );

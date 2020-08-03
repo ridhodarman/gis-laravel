@@ -225,7 +225,7 @@ function digitasit4ibadah() {
 
 function digitasikantor() {
   $.ajax({
-    url: server+'office_digit',
+    url: server+'kantor/digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

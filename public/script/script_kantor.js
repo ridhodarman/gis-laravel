@@ -54,40 +54,27 @@ function cari_kantor(rows) {
 }
 
 function tampilsemuakantor() {
-  let url = 'kantor_semua';
+  let url = 'kantor/semua';
   datakantor(url)
 }
 
 function carinamakantor() { 
   let namakantor = document.getElementById("namakantor").value;
-  let url = `kantor_cari_nama/${namakantor}`;
+  let url = `kantor/nama/${namakantor}`;
   datakantor(url);
 }
 
 function carijenis_kantor() { 
   let jenis = document.getElementById("jeniskantor").value;
-  let url = `kantor_cari_jenis/${jenis};`
+  let url = `kantor/jenis/${jenis}`;
   datakantor(url);
 }
-
-function carikons_kantor() { 
-  let jenis_k = document.getElementById("jeniskons_kantor").value;
-  let url = `kantor_cari_konstruksi/${jenis_k}`;
-  datakantor(url);
-}
-
 
 function caritahun_kantor() { 
   let tahun = [];
   tahun[0] = document.getElementById("kantor_awaltahun").value;
   tahun[1] = document.getElementById("kantor_akhirtahun").value;
-  let url = `kantor_cari_tahun/${tahun}`;
-  datakantor(url);
-}
-
-function carijorong_kantor() { 
-  let jorong = document.getElementById("jorong_kantor").value;
-  let url = `kantor_cari_jorong/${jorong}`;
+  let url = `kantor/tahun/${tahun}`;
   datakantor(url);
 }
 
@@ -104,7 +91,7 @@ function detailkantor_infow(id) { //menampilkan informas
   clearroute2();
   console.log("fungsi info marker id=" + id);
     $.ajax({
-    url: `kantor_info/${id}`,
+    url: `kantor/info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
@@ -148,74 +135,74 @@ function detailkantor_infow(id) { //menampilkan informas
   });
 }
 
-function carifasilitas_kantor(){
-  let arrayFas=[];
-  for(i=0; i<$("input[name=fas_kantor]:checked").length;i++){
-    arrayFas.push($("input[name=fas_kantor]:checked")[i].value);
-  }
-  if (arrayFas==''){
-    $('#ket-p').empty();
-    $('#peringatan').modal('show');
-    $('#ket-p').append('Choose Facility !');
-  }else{
-    let url = `kantor_cari_fasilitas/${arrayFas}`;
-    datakantor(url);
-  }
-}
+// function carifasilitas_kantor(){
+//   let arrayFas=[];
+//   for(i=0; i<$("input[name=fas_kantor]:checked").length;i++){
+//     arrayFas.push($("input[name=fas_kantor]:checked")[i].value);
+//   }
+//   if (arrayFas==''){
+//     $('#ket-p').empty();
+//     $('#peringatan').modal('show');
+//     $('#ket-p').append('Choose Facility !');
+//   }else{
+//     let url = `kantor/fasilitas/${arrayFas}`;
+//     datakantor(url);
+//   }
+// }
 
-function cariRadius_kantor() { //menampilkan bang kantor berdasarkan radius
-  if (pos == 'null') {
-    $('#atur-posisi').modal('show');
-  }
-  else {
-    radiusStatus = true;
-    $('#hasilcari1').show();
-    let inputradiuskantor = document.getElementById("inputradiuskantor").value;
-    let radiuskantor = inputradiuskantor * 100;
-    let lat = document.getElementById("lat").value;
-    let lng = document.getElementById("lng").value;
-    console.log("panggil radiusnyaa, b.kantor sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiuskantor);
-    let rad = [];
-    rad[0] = pos.lat;
-    rad[1] = pos.lng;
-    rad[2] = radiuskantor;
-    let url = `kantor_cari_radius/${rad}`;
+// function cariRadius_kantor() { //menampilkan bang kantor berdasarkan radius
+//   if (pos == 'null') {
+//     $('#atur-posisi').modal('show');
+//   }
+//   else {
+//     radiusStatus = true;
+//     $('#hasilcari1').show();
+//     let inputradiuskantor = document.getElementById("inputradiuskantor").value;
+//     let radiuskantor = inputradiuskantor * 100;
+//     let lat = document.getElementById("lat").value;
+//     let lng = document.getElementById("lng").value;
+//     console.log("panggil radiusnyaa, b.kantor sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiuskantor);
+//     let rad = [];
+//     rad[0] = pos.lat;
+//     rad[1] = pos.lng;
+//     rad[2] = radiuskantor;
+//     let url = `kantor/radius/${rad}`;
     
-    $.ajax({
-      url: url,
-      data: "",
-      dataType: 'json',
-      success: function (rows) {
-        cari_kantor(rows);
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        $('#gagal').modal('show');
-        $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-        $('#notifikasi').append(thrownError);
-      }
-    });
+//     $.ajax({
+//       url: url,
+//       data: "",
+//       dataType: 'json',
+//       success: function (rows) {
+//         cari_kantor(rows);
+//       },
+//       error: function (xhr, ajaxOptions, thrownError) {
+//         $('#gagal').modal('show');
+//         $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
+//         $('#notifikasi').append(thrownError);
+//       }
+//     });
 
-    document.getElementById('m_kantor').innerHTML = radiuskantor;
-    hapusInfo();
-    hapusRadius();
-    clearroute2();
-    hapusMarkerTerdekat();
-    $('#hasilcari').empty();
-    $('#found').empty();
+//     document.getElementById('m_kantor').innerHTML = radiuskantor;
+//     hapusInfo();
+//     hapusRadius();
+//     clearroute2();
+//     hapusMarkerTerdekat();
+//     $('#hasilcari').empty();
+//     $('#found').empty();
     
-    let circle = new google.maps.Circle({
-      center: pos,
-      radius: parseFloat(inputradiuskantor * 100),
-      map: map,
-      strokeColor: "blue",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "blue",
-      fillOpacity: 0.35
-    });
-    map.setZoom(15);
-    map.setCenter(pos);
-    circles.push(circle); 
+//     let circle = new google.maps.Circle({
+//       center: pos,
+//       radius: parseFloat(inputradiuskantor * 100),
+//       map: map,
+//       strokeColor: "blue",
+//       strokeOpacity: 0.8,
+//       strokeWeight: 2,
+//       fillColor: "blue",
+//       fillOpacity: 0.35
+//     });
+//     map.setZoom(15);
+//     map.setCenter(pos);
+//     circles.push(circle); 
       
-  }
-}
+//   }
+// }
