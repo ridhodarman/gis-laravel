@@ -8,6 +8,9 @@ select {
 .putih {
     background-color: white;
 }
+.kecilkan {
+    font-size: 99%;
+}
 </style>
 <div class="sidebar-menu">
     <div class="sidebar-header">
@@ -279,13 +282,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jorong_umkm">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM jorong ORDER BY name_of_jorong");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['jorong_id'].">".$row['name_of_jorong']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jorong as $j)
+                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijorong_umkm()"><i class="fa fa-search"></i></button>
@@ -342,13 +341,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jenisibadah">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_worship ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jenis_ibadah as $ji)
+                                                <option value="{{$ji->id}}">{{$ji->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijenis_ibadah()"><i class="fa fa-search"></i></button>
@@ -379,9 +374,9 @@ select {
                                     <div class="input-group">
                                         <p aria-label="Amount (to the nearest dollar)">
                                             <div class="input-group-append" style="width: 25%">
-                                                <input type="text" id="ibadah_awalbang" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from" />
+                                                <input type="text" id="ibadah_awalbang" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="from" />
                                                 <span class="input-group-text">-</span>
-                                                <input type="text" id="ibadah_akhirbang" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
+                                                <input type="text" id="ibadah_akhirbang" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="until"/>
                                                 <button class="btn btn-primary input-group-text" onclick="cariluasbang_ibadah()"><i class="fa fa-search"></i></button>
                                             </div>
                                         </p>
@@ -389,16 +384,16 @@ select {
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Land Area</a>
+                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Parking Area</a>
                                 <ul class="collapse">
                                     <li>
                                     <div class="input-group">
                                         <p aria-label="Amount (to the nearest dollar)">
                                             <div class="input-group-append" style="width: 25%">
-                                                <input type="text" id="ibadah_awaltanah" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from"/>
+                                                <input type="text" id="ibadah_awalparkir" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="from"/>
                                                 <span class="input-group-text">-</span>
-                                                <input type="text" id="ibadah_akhirtanah" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
-                                                <button class="btn btn-primary input-group-text" onclick="cariluastanah_ibadah()"><i class="fa fa-search"></i></button>
+                                                <input type="text" id="ibadah_akhirparkir" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="until"/>
+                                                <button class="btn btn-primary input-group-text" onclick="cariluasparkir_ibadah()"><i class="fa fa-search"></i></button>
                                             </div>
                                         </p>
                                     </div>
@@ -410,10 +405,10 @@ select {
                                     <li>
                                     <div class="input-group">
                                         <p aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append" style="width: 28%">
-                                                <input type="text" id="ibadah_awaltahun" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from"/>
+                                            <div class="input-group-append" style="width: 25%">
+                                                <input type="text" id="ibadah_awaltahun" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="from"/>
                                                 <span class="input-group-text">-</span>
-                                                <input type="text" id="ibadah_akhirtahun" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
+                                                <input type="text" id="ibadah_akhirtahun" class="input-group-text putih kecilkan" onkeypress="return hanyaAngka(event)" placeholder="until"/>
                                                 <button class="btn btn-primary input-group-text" onclick="caritahun_ibadah()"><i class="fa fa-search"></i></button>
                                             </div>
                                         </p>
@@ -434,13 +429,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jorong_ibadah">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM jorong ORDER BY name_of_jorong");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['jorong_id'].">".$row['name_of_jorong']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jorong as $j)
+                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijorong_ibadah()"><i class="fa fa-search"></i></button>
@@ -534,13 +525,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jorong_kantor">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM jorong ORDER BY name_of_jorong");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['jorong_id'].">".$row['name_of_jorong']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jorong as $j)
+                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijorong_kantor()"><i class="fa fa-search"></i></button>
@@ -665,13 +652,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jorong_pendidikan">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM jorong ORDER BY name_of_jorong");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['jorong_id'].">".$row['name_of_jorong']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jorong as $j)
+                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijorong_pendidikan()"><i class="fa fa-search"></i></button>
@@ -726,13 +709,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jorong_kesehatan">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM jorong ORDER BY name_of_jorong");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['jorong_id'].">".$row['name_of_jorong']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jorong as $j)
+                                                <option value="{{$j->jorong_id}}">{{$j->name_of_jorong}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijorong_kesehatan()"><i class="fa fa-search"></i></button>
@@ -862,17 +841,14 @@ select {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $sql=pg_query("SELECT * FROM worship_building_facilities ORDER BY name_of_facility ASC");
-                        while ($data=pg_fetch_assoc($sql)) {
-                            $id=$data['facility_id'];
-                            $fas=$data['name_of_facility'];
-                            echo "<tr>";
-                            echo '<td><center><input type="checkbox" class="form-control" value="'.$id.'" name="fas_ibadah"/></center></td>';
-                            echo "<td><center>".$fas."</center></td>";
-                            echo "</tr>";  
-                        }
-                    ?>
+                    @foreach ($fasilitas_ibadah as $fi)
+                        <tr>
+                            <td>
+                                <center><input type="checkbox" class="form-control" value="{{$fi->id}}" name="fas_ibadah"/></center>
+                            </td>
+                            <td><center>{{$fi->name_of_facility}}</center></td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             </div>

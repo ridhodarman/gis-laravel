@@ -1,4 +1,4 @@
-var batasnagari; var warnanagari = "red"; var ketebalan = 3.0;
+var batasnagari; var warnanagari = "red"; var ketebalan = 2.0;
 var njorong = 0; var digitjorong = [];
 var nrumah = 0; var digitrumah = [];
 var numkm = 0; var digitumkm = [];
@@ -161,7 +161,7 @@ function digitasiumkm() {
 
 function digitasit4ibadah() {
   $.ajax({
-    url: server+'/worship_digit',
+    url: server+'/ibadah/digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

@@ -426,7 +426,7 @@
         $('#info-bang').modal('show');
         //$('#konten-bang').load("inc/detail-ibadah.php?id="+id);
         //$('#konten-bang').load(`ibadah_detail/${id}`);
-        $('#konten-bang').load(`ibadah_detail/${id}`);
+        $('#konten-bang').load(`ibadah/detail/${id}`);
     }
 
     function detailpendidikan(id) {

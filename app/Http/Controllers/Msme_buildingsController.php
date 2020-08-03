@@ -196,12 +196,12 @@ class Msme_buildingsController extends Controller
         $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building', 
-                                'building_gallerys.photo_url')
-                    ->leftJoin('building_gallerys', 'msme_buildings.msme_building_id', 
-                            '=', 'building_gallerys.building_id')
+                                'building_galleries.photo_url')
+                    ->leftJoin('building_galleries', 'msme_buildings.msme_building_id', 
+                            '=', 'building_galleries.building_id')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->where('msme_buildings.msme_building_id', '=', '?')
-                    ->orderBy('building_gallerys.updated_at', 'DESC')
+                    ->orderBy('building_galleries.updated_at', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
                     ->get();

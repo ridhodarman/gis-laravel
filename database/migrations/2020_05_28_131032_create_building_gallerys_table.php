@@ -13,7 +13,7 @@ class CreateBuildingGallerysTable extends Migration
      */
     public function up()
     {
-        Schema::create('building_gallerys', function (Blueprint $table) {
+        Schema::create('building_galleries', function (Blueprint $table) {
             $table->string('building_id', 7)->unsigned();
             $table->foreign('building_id')->references('building_id')->on('buildings')->onDelete('cascade')->onUpdate('cascade');
             $table->string('photo_url', 30);

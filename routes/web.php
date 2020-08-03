@@ -36,20 +36,20 @@ Route::get('/rumah_cari_tahun/{tahun}', 'HousesController@cari_tahun')->middlewa
 Route::get('/rumah_cari_listrik/{listrik}', 'HousesController@cari_listrik')->middleware('auth');
 Route::get('/rumah_cari_status/{s}', 'HousesController@cari_status')->middleware('auth');
 
-Route::get('/worship_digit', 'WorshipsController@digit');
-Route::get('/ibadah_semua', 'WorshipsController@semua');
-Route::get('/ibadah_cari_nama/{nama}', 'WorshipsController@cari_nama');
-Route::get('/ibadah_cari_jenis/{jenis}', 'WorshipsController@cari_jenis');
-Route::get('/ibadah_cari_konstruksi/{konstruksi}', 'WorshipsController@cari_konstruksi');
-Route::get('/ibadah_cari_luasbang/{luasbang}', 'WorshipsController@cari_luasbang');
-Route::get('/ibadah_cari_luastanah/{luastanah}', 'WorshipsController@cari_luastanah');
-Route::get('/ibadah_cari_tahun/{tahun}', 'WorshipsController@cari_tahun');
-Route::get('/ibadah_cari_radius/{rad}', 'WorshipsController@cari_radius');
-Route::get('/ibadah_cari_jorong/{jorong}', 'WorshipsController@cari_jorong');
-Route::get('/ibadah_cari_fasilitas/{fasilitas}', 'WorshipsController@cari_fasilitas');
-Route::get('/ibadah_cari_model/{model}', 'WorshipsController@cari_model');
-Route::get('/ibadah_info/{id}', 'WorshipsController@info');
-Route::get('/ibadah_detail/{id}', 'WorshipsController@detail');
+Route::get('/ibadah/digit', 'Worship_buildingsController@digit');
+Route::get('/ibadah_semua', 'Worship_buildingsController@semua');
+Route::get('/ibadah/nama/{nama}', 'Worship_buildingsController@cari_nama');
+Route::get('/ibadah/jenis/{jenis}', 'Worship_buildingsController@cari_jenis');
+Route::get('/ibadah/konstruksi/{konstruksi}', 'Worship_buildingsController@cari_konstruksi');
+Route::get('/ibadah/luasbang/{luasbang}', 'Worship_buildingsController@cari_luasbang');
+Route::get('/ibadah/parkir/{parkir}', 'Worship_buildingsController@cari_luasparkir');
+Route::get('/ibadah/tahun/{tahun}', 'Worship_buildingsController@cari_tahun');
+Route::get('/ibadah/radius/{lat}/{lng}/{rad}', 'Worship_buildingsController@cari_radius');
+Route::get('/ibadah/jorong/{jorong}', 'Worship_buildingsController@cari_jorong');
+Route::get('/ibadah/fasilitas/{fasilitas}', 'Worship_buildingsController@cari_fasilitas');
+Route::get('/ibadah/model/{model}', 'Worship_buildingsController@cari_model');
+Route::get('/ibadah/info/{id}', 'Worship_buildingsController@info');
+Route::get('/ibadah/detail/{id}', 'Worship_buildingsController@detail');
 
 Route::get('/umkm', 'Msme_buildingsController@index')->name('umkm');
 Route::get('/umkm/digit', 'Msme_buildingsController@digit');

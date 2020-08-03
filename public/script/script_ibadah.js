@@ -60,19 +60,19 @@ function tampilsemuaibadah() {
 
 function carinamaibadah() { 
   let namaibadah = document.getElementById("namaibadah").value;
-  let url = `ibadah_cari_nama/${namaibadah}`;
+  let url = `ibadah/nama/${namaibadah}`;
   datamesjid(url);
 }
 
 function carijenis_ibadah() { 
   let jenis = document.getElementById("jenisibadah").value;
-  let url = `ibadah_cari_jenis/${jenis}`;
+  let url = `ibadah/jenis/${jenis}`;
   datamesjid(url);
 }
 
 function carikons_ibadah() { 
   let konstruksi = document.getElementById("jeniskons_ibadah").value;
-  let url = `ibadah_cari_konstruksi/${konstruksi}`;
+  let url = `ibadah/konstruksi/${konstruksi}`;
   datamesjid(url);
 }
 
@@ -80,15 +80,15 @@ function cariluasbang_ibadah() {
   let luasbang = [];
   luasbang[0] = document.getElementById("ibadah_awalbang").value;
   luasbang[1] = document.getElementById("ibadah_akhirbang").value;
-  let url = `ibadah_cari_luasbang/${luasbang}`;
+  let url = `ibadah/luasbang/${luasbang}`;
   datamesjid(url);
 }
 
-function cariluastanah_ibadah() { 
-  let luastanah = [];
-  luastanah[0] = document.getElementById("ibadah_awaltanah").value;
-  luastanah[1] = document.getElementById("ibadah_akhirtanah").value;
-  let url = `ibadah_cari_luastanah/${luastanah}`;
+function cariluasparkir_ibadah() { 
+  let luasparkir = [];
+  luasparkir[0] = document.getElementById("ibadah_awalparkir").value;
+  luasparkir[1] = document.getElementById("ibadah_akhirparkir").value;
+  let url = `ibadah/parkir/${luasparkir}`;
   datamesjid(url);
 }
 
@@ -96,13 +96,13 @@ function caritahun_ibadah() {
   let tahun = [];
   tahun[0] = document.getElementById("ibadah_awaltahun").value;
   tahun[1] = document.getElementById("ibadah_akhirtahun").value;
-  let url = `ibadah_cari_tahun/${tahun}`;
+  let url = `ibadah/tahun/${tahun}`;
   datamesjid(url);
 }
 
 function carijorong_ibadah() { 
   let jorong = document.getElementById("jorong_ibadah").value;
-  let url = `ibadah_cari_jorong/${jorong}`;
+  let url = `ibadah/jorong/${jorong}`;
   datamesjid(url);
 }
 
@@ -116,14 +116,16 @@ function carifasilitas_ibadah(){
     $('#peringatan').modal('show');
     $('#ket-p').append('Choose Facility !');
   }else{
-    let url = `ibadah_cari_fasilitas/${arrayFas}`;
+    let url = `ibadah/fasilitas/${arrayFas}`;
     datamesjid(url);
+    $('#fas-ibadah').modal('hide');
   }
 }
 
 function cariRadius_ibadah() { //menampilkan bang ibadah berdasarkan radius
   if (pos == 'null') {
     $('#atur-posisi').modal('show');
+    document.getElementById("inputradiusibadah").value=0;
   }
   else {
     radiusStatus = true;
@@ -133,11 +135,7 @@ function cariRadius_ibadah() { //menampilkan bang ibadah berdasarkan radius
     let lat = document.getElementById("lat").value;
     let lng = document.getElementById("lng").value;
     console.log("panggil radiusnyaa, b.ibadah sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiusibadah);
-    let rad = [];
-    rad[0] = pos.lat;
-    rad[1] = pos.lng;
-    rad[2] = radiusibadah;
-    let url = `ibadah_cari_radius/${rad}`;
+    let url = `ibadah/radius/${lat}/${lng}/${radiusibadah}`;
     
     $.ajax({
       url: url,
@@ -190,7 +188,7 @@ function detailibadah_infow(id) { //menampilkan informas
   clearroute2();
   console.log("fungsi info marker id=" + id);
     $.ajax({
-    url: `ibadah_info/${id}`,
+    url: `ibadah/info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
