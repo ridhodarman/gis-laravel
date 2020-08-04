@@ -288,7 +288,7 @@ function digitasikantor() {
 
 function digitasipendidikan() {
   $.ajax({
-    url: server+'educational_digit',
+    url: server+'pendidikan/digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

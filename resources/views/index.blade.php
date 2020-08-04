@@ -434,7 +434,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='fas fa-school'></i> Educational Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load(`pendidikan_detail/${id}`);
+        $('#konten-bang').load(`pendidikan/detail/${id}`);
     }
 
     function detailkesehatan(id) {

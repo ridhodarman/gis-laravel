@@ -515,13 +515,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="tingkatpendidikan">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM level_of_education ORDER BY name_of_level");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['level_id'].">".$row['name_of_level']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($tingkat as $t)
+                                                <option value="{{$t->id}}">{{$t->name_of_level}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="caritingkat_pendidikan()"><i class="fa fa-search"></i></button>
@@ -545,62 +541,6 @@ select {
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Building Area</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div class="input-group">
-                                        <p aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append" style="width: 25%">
-                                                <input type="text" id="pendidikan_awalbang" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from" />
-                                                <span class="input-group-text">-</span>
-                                                <input type="text" id="pendidikan_akhirbang" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
-                                                <button class="btn btn-primary input-group-text" onclick="cariluasbang_pendidikan()"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </p>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Land Area</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div class="input-group">
-                                        <p aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append" style="width: 25%">
-                                                <input type="text" id="pendidikan_awaltanah" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="from"/>
-                                                <span class="input-group-text">-</span>
-                                                <input type="text" id="pendidikan_akhirtanah" class="input-group-text putih" onkeypress="return hanyaAngka(event)" placeholder="until"/>
-                                                <button class="btn btn-primary input-group-text" onclick="cariluastanah_pendidikan()"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </p>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Construction Type</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div class="input-group mb-3">
-                                        <select aria-label="Text input with dropdown button" id="jeniskons_pendidikan">
-                                            @foreach ($konstruksi as $k)
-                                                <option value="{{$k->id}}">{{$k->name_of_type}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="carikons_pendidikan()"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:void(0)" aria-expanded="true">Search By Radius</a>
-                                <ul class="collapse">
-                                    <li>
-                                    <div style="color: lightgray"><b>Radius: <font id="m_pendidikan">0</font> m<br></b></div>
-                                    <input  type="range" onchange="cariRadius_pendidikan();" id="inputradiuspendidikan" data-highlight="true" min="1" max="10" value="0"/>
-                                    </li>
-                                </ul>
-                            </li>
                             <li><a href="javascript:void(0)" aria-expanded="true">Search By Jorong</a>
                                 <ul class="collapse">
                                     <li>
@@ -616,9 +556,6 @@ select {
                                     </div>
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#fas-pendidikan">Search By Facility</a>
                             </li>
                         </ul>
                     </li>
