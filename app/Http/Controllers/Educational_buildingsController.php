@@ -211,12 +211,12 @@ class Educational_buildingsController extends Controller
                     ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building', 
-                                'building_gallery.photo_url')
-                    ->leftJoin('building_gallery', 'educational_buildings.educational_building_id', 
-                            '=', 'building_gallery.building_id')
+                                'building_galleries.photo_url')
+                    ->leftJoin('building_galleries', 'educational_buildings.educational_building_id', 
+                            '=', 'building_galleries.building_id')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->where('educational_buildings.educational_building_id', '=', '?')
-                    ->orderBy('building_gallery.upload_date', 'DESC')
+                    ->orderBy('building_galleries.updated_at', 'DESC')
                     ->limit(1)
                     ->setBindings([$id])
                     ->get();
@@ -225,20 +225,22 @@ class Educational_buildingsController extends Controller
 
     public function detail($id){
         $query = DB::table('educational_buildings')
-                    ->addSelect('educational_buildings.*', 'name_of_educational_building','building_area', 'land_area',
+                    ->addSelect('educational_buildings.*', 'name_of_educational_building',
+                                'all_teachers', 'all_students',
+                                'building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'name_of_level AS level', 
-                                'type_of_construction.name_of_type AS constr')
-                    ->leftJoin('level_of_education', 'educational_buildings.id_level_of_education', '=', 'level_of_education.level_id')
+                                'type_of_constructions.name_of_type AS constr')
+                    ->leftJoin('level_of_educations', 'educational_buildings.level_of_education', '=', 'level_of_educations.id')
                     ->leftJoin('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
-                    ->leftJoin('type_of_construction', 'buildings.type_of_construction', '=', 'type_of_construction.type_id')
-                    ->leftJoin('building_model', 'buildings.model_id', '=', 'building_model.model_id')
+                    ->leftJoin('type_of_constructions', 'buildings.type_of_construction', '=', 'type_of_constructions.id')
+                    ->leftJoin('building_models', 'buildings.building_model', '=', 'building_models.id')
                     ->where('educational_buildings.educational_building_id', '=', '?')
                     ->setBindings([$id]);
         $sql = $query->get();
 
-        $query2 = DB::table('building_gallery')
-                    ->Select('photo_url', 'upload_date')
+        $query2 = DB::table('building_galleries')
+                    ->Select('photo_url', 'updated_at')
                     ->where('building_id', '=', '?')
                     ->setBindings([$id]);
         $sql2 = $query2->get();
@@ -246,9 +248,9 @@ class Educational_buildingsController extends Controller
         $query3 = DB::table('detail_educational_building_facilities')
                     ->Select('name_of_facility', 'quantity_of_facilities')
                     ->join('educational_building_facilities', 
-                                'detail_educational_building_facilities.facility_id', '=', 
-                                    'educational_building_facilities.facility_id')
-                    ->where('detail_educational_building_facilities.educational_building_id', '=', '?')
+                                'detail_educational_building_facilities.educational_building_facilities', '=', 
+                                    'educational_building_facilities.id')
+                    ->where('detail_educational_building_facilities.educationalb_id', '=', '?')
                     ->setBindings([$id]);
         $sql3 = $query3->get();
 

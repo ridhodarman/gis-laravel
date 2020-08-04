@@ -152,7 +152,7 @@ function detailpendidikan_infow(id) { //menampilkan informas
   clearroute2();
   console.log("fungsi info marker id=" + id);
     $.ajax({
-    url: `pendidikan_info/${id}`,
+    url: `pendidikan/info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {

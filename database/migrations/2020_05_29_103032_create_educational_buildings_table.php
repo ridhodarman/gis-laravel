@@ -19,7 +19,7 @@ class CreateEducationalBuildingsTable extends Migration
             $table->string('name_of_educational_building', 40);
             $table->foreignId('level_of_education')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('all_students')->nullable();
-            $table->integer('all_theacers')->nullable();
+            $table->integer('all_teachers')->nullable();
             $table->string('headmaster_name', 40)->nullable();
             $table->char('school_type', 1)->nullable();
             $table->integer('parking_area')->nullable();

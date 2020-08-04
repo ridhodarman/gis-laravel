@@ -79,8 +79,8 @@ Route::get('/pendidikan/tingkat/{tingkat}', 'Educational_buildingsController@car
 Route::get('/pendidikan/jenis/{jenis}', 'Educational_buildingsController@cari_jenis');
 Route::get('/pendidikan/jorong/{jorong}', 'Educational_buildingsController@cari_jorong');
 Route::get('/pendidikan/model/{model}', 'Educational_buildingsController@cari_model');
-Route::get('/pendidikan_info/{id}', 'Educational_buildingsController@info');
-Route::get('/pendidikan_detail/{id}', 'Educational_buildingsController@detail');
+Route::get('/pendidikan/info/{id}', 'Educational_buildingsController@info');
+Route::get('/pendidikan/detail/{id}', 'Educational_buildingsController@detail');
 
 Route::get('/health_digit', 'HealthsController@digit');
 Route::get('/kesehatan_semua', 'HealthsController@semua');
