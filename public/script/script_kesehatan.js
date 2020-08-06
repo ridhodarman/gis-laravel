@@ -29,8 +29,8 @@ function cari_kesehatan(rows) {
     let a = 0;
     for (let i in rows) {
       let row = rows[i];
-      let id = row.health_building_id;
-      let name = row.name_of_health_building;
+      let id = row.health_service_building_id;
+      let name = row.name_of_health_service_building;
       let latitude = row.latitude;
       let longitude = row.longitude;
       centerBaru = new google.maps.LatLng(latitude, longitude);
@@ -55,7 +55,7 @@ function cari_kesehatan(rows) {
 
 function tampilsemuakesehatan() {
   $.ajax({
-    url: 'kesehatan_semua',
+    url: 'kesehatan/semua',
     data: "",
     dataType: 'json',
     success: function (rows) {
@@ -71,25 +71,26 @@ function tampilsemuakesehatan() {
 
 function carinamakesehatan() { 
   let namakesehatan = document.getElementById("namakesehatan").value;
-  let url = `kesehatan_cari_nama/${namakesehatan}`  
+  let url = `kesehatan/nama/${namakesehatan}`  
   datakesehatan(url);
 }
 
 function carijenis_kesehatan() { 
   let jenis = document.getElementById("jeniskesehatan").value;
-  let url = `kesehatan_cari_jenis/${jenis}`;
+  let url = `kesehatan/jenis/${jenis}`;
   datakesehatan(url);
 }
 
 function carijorong_kesehatan() { 
   let jorong = document.getElementById("jorong_kesehatan").value;
-  let url = `kesehatan_cari_jorong/${jorong}`;
+  let url = `kesehatan/jorong/${jorong}`;
   datakesehatan(url);
 }
 
 function cariRadius_kesehatan() { //menampilkan bang kesehatan berdasarkan radius
   if (pos == 'null') {
     $('#atur-posisi').modal('show');
+    document.getElementById("inputradiuskesehatan").value=0;
   }
   else {
     radiusStatus = true;
@@ -99,11 +100,7 @@ function cariRadius_kesehatan() { //menampilkan bang kesehatan berdasarkan radiu
     let lat = document.getElementById("lat").value;
     let lng = document.getElementById("lng").value;
     console.log("panggil radiusnyaa, b.kesehatan sekitar dengan koordinat:" + lat + "," + lng + " dan radius=" + radiuskesehatan);
-    let rad = [];
-    rad[0] = pos.lat;
-    rad[1] = pos.lng;
-    rad[2] = radiuskesehatan;
-    let url = `kesehatan_cari_radius/${rad}`;
+    let url = `kesehatan/radius/${lat}/${lng}/${radiuskesehatan}`;
     
     $.ajax({
       url: url,
@@ -156,16 +153,16 @@ function detailkesehatan_infow(id) { //menampilkan informas
   hapusInfo();
   clearroute2();
   console.log("fungsi info marker id=" + id);
-  console.log(`kesehatan_info/${id}`)
+  console.log(`kesehatan/info/${id}`)
     $.ajax({
-    url: `kesehatan_info/${id}`,
+    url: `kesehatan/info/${id}`,
     data: "",
     dataType: 'json',
     success: function (rows) {
       for (let i in rows) {
         let row = rows[i];
-        let id = row.health_building_id;
-        let nama = row.name_of_health_building;
+        let id = row.health_service_building_id;
+        let nama = row.name_of_health_service_building;
         let image = row.photo_url;
         if (image==null) {
           image = "There are no photos for this building";
@@ -219,8 +216,8 @@ function carifasilitas_kesehatan(){
     $('#peringatan').modal('show');
     $('#ket-p').append('Choose Facility !');
   }else{
-    $.ajax({ url: server+'act/kesehatan_cari-fasilitas.php?fas='+arrayFas, data: "", dataType: 'json', success: function(rows){
-      console.log(server+'act/kesehatan_cari-fasilitas.php?fas='+arrayFas);
+    $.ajax({ url: server+'/kesehatan/fasilitas/'+arrayFas, data: "", dataType: 'json', success: function(rows){
+      console.log(server+'/kesehatan/fasilitas/'+arrayFas);
       $('#found').empty();
       $('#hasilcari').empty();
       if(rows==null)
@@ -233,8 +230,8 @@ function carifasilitas_kesehatan(){
         for (let i in rows) 
             {   
               let row     = rows[i];
-              let id   = row.id;
-              let nama   = row.name;
+              let id   = row.health_service_building_id;
+              let nama   = row.name_of_health_service_building;
               let latitude  = row.latitude ;
               let longitude = row.longitude ;
               centerBaru = new google.maps.LatLng(latitude, longitude);

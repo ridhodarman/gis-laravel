@@ -580,13 +580,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="jeniskesehatan">
-                                            <?php                
-                                                $sql_j=pg_query("SELECT * FROM type_of_health_building ORDER BY name_of_type");
-                                                while($row = pg_fetch_assoc($sql_j))
-                                                {
-                                                    echo"<option value=".$row['type_id'].">".$row['name_of_type']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($jenis_kesehatan as $jk)
+                                                <option value="{{$jk->id}}">{{$jk->name_of_type}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="carijenis_kesehatan()"><i class="fa fa-search"></i></button>
@@ -846,17 +842,14 @@ select {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $sql=pg_query("SELECT * FROM health_building_facilities ORDER BY name_of_facility ASC");
-                        while ($data=pg_fetch_assoc($sql)) {
-                            $id=$data['facility_id'];
-                            $fas=$data['name_of_facility'];
-                            echo "<tr>";
-                            echo '<td><center><input type="checkbox" class="form-control" value="'.$id.'" name="fas_kesehatan"/></center></td>';
-                            echo "<td><center>".$fas."</center></td>";
-                            echo "</tr>";  
-                        }
-                    ?>
+                    @foreach ($fasilitas_kesehatan as $fk)
+                        <tr>
+                            <td>
+                                <center><input type="checkbox" class="form-control" value="{{$fk->id}}" name="fas_kesehatan"/></center>
+                            </td>
+                            <td><center>{{$fk->name_of_facility}}</center></td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             </div>

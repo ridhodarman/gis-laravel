@@ -82,16 +82,16 @@ Route::get('/pendidikan/model/{model}', 'Educational_buildingsController@cari_mo
 Route::get('/pendidikan/info/{id}', 'Educational_buildingsController@info');
 Route::get('/pendidikan/detail/{id}', 'Educational_buildingsController@detail');
 
-Route::get('/health_digit', 'HealthsController@digit');
-Route::get('/kesehatan_semua', 'HealthsController@semua');
-Route::get('/kesehatan_cari_nama/{nama}', 'HealthsController@cari_nama');
-Route::get('/kesehatan_cari_jenis/{jenis}', 'HealthsController@cari_jenis');
-Route::get('/kesehatan_cari_radius/{rad}', 'HealthsController@cari_radius');
-Route::get('/kesehatan_cari_jorong/{jorong}', 'HealthsController@cari_jorong');
-Route::get('/kesehatan_cari_fasilitas/{fasilitas}', 'HealthsController@cari_fasilitas');
-Route::get('/kesehatan_cari_model/{model}', 'HealthsController@cari_model');
-Route::get('/kesehatan_info/{id}', 'HealthsController@info');
-Route::get('/kesehatan_detail/{id}', 'HealthsController@detail');
+Route::get('/kesehatan/digit', 'Health_service_buildingsController@digit');
+Route::get('/kesehatan/semua', 'Health_service_buildingsController@semua');
+Route::get('/kesehatan/nama/{nama}', 'Health_service_buildingsController@cari_nama');
+Route::get('/kesehatan/jenis/{jenis}', 'Health_service_buildingsController@cari_jenis');
+Route::get('/kesehatan/radius/{lat}/{lng}/{rad}', 'Health_service_buildingsController@cari_radius');
+Route::get('/kesehatan/jorong/{jorong}', 'Health_service_buildingsController@cari_jorong');
+Route::get('/kesehatan/fasilitas/{fasilitas}', 'Health_service_buildingsController@cari_fasilitas');
+Route::get('/kesehatan/model/{model}', 'Health_service_buildingsController@cari_model');
+Route::get('/kesehatan/info/{id}', 'Health_service_buildingsController@info');
+Route::get('/kesehatan/detail/{id}', 'Health_service_buildingsController@detail');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

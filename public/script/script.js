@@ -27,6 +27,7 @@ function loadpeta() {
        },
        center: new google.maps.LatLng(-0.322189, 100.349190),
        zoom: 14,
+       //gestureHandling: 'greedy',
        mapTypeId: 'mystyle'
      });
      map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'Styled Map' }));
@@ -356,7 +357,7 @@ function digitasipendidikan() {
 
 function digitasikesehatan() {
   $.ajax({
-    url: server+'health_digit',
+    url: server+'kesehatan/digit',
     dataType: 'json',
     cache: false,
     success: function (arrays) {

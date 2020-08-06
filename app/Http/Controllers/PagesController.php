@@ -12,6 +12,8 @@ use App\Type_of_worship;
 use App\worship_building_facilities;
 use App\Type_of_office;
 use App\Level_of_education;
+use App\Type_of_health_service;
+use App\health_service_building_facilities;
 
 class PagesController extends Controller
 {
@@ -31,6 +33,8 @@ class PagesController extends Controller
         $worship_building_facilities = worship_building_facilities::select('id','name_of_facility')->orderBy('name_of_facility')->get();
         $type_of_office = Type_of_office::select('id','name_of_type')->orderBy('name_of_type')->get();
         $level_of_education = Level_of_education::select('id','name_of_level')->orderBy('name_of_level')->get();
+        $type_of_health_service = Type_of_health_service::select('id','name_of_type')->orderBy('name_of_type')->get();
+        $health_service_building_facilities = health_service_building_facilities::select('id','name_of_facility')->orderBy('name_of_facility')->get();
                                                 
         return view ('index', 
                 [
@@ -43,7 +47,9 @@ class PagesController extends Controller
                     'jenis_ibadah' => $type_of_worship,
                     'fasilitas_ibadah' => $worship_building_facilities,
                     'jenis_kantor' => $type_of_office,
-                    'tingkat' => $level_of_education
+                    'tingkat' => $level_of_education,
+                    'jenis_kesehatan' => $type_of_health_service,
+                    'fasilitas_kesehatan' => $health_service_building_facilities
                 ]
             
             );

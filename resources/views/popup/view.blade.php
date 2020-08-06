@@ -208,7 +208,7 @@ $server='foto/bangunan/';
                             if($type=="health") { @endphp
                                             @foreach ($info as $i)
                                             <h6>ID:
-                                                {{$i->health_building_id}}
+                                                {{$i->health_service_building_id}}
                                             </h6>
                                             <br />
                                             <table style="width: 100%;">
@@ -216,7 +216,7 @@ $server='foto/bangunan/';
                                                     <td>Nama </td>
                                                     <td>:</td>
                                                     <td>
-                                                        {{$i->name_of_health_building}}
+                                                        {{$i->name_of_health_service_building}}
                                                     </td>
                                                 </tr>
                                                 <tr>
