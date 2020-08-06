@@ -86,9 +86,7 @@ function digitasirumah() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -149,9 +147,7 @@ function digitasiumkm() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -214,9 +210,7 @@ function digitasit4ibadah() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -277,9 +271,7 @@ function digitasikantor() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -345,9 +337,7 @@ function digitasipendidikan() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -408,9 +398,7 @@ function digitasikesehatan() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({
@@ -479,9 +467,7 @@ function digitasijorong() {
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
+      console.log(xhr.status + ": " + thrownError);
     }
   });
   var infoWindow = new google.maps.InfoWindow({

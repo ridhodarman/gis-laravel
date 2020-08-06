@@ -162,7 +162,7 @@
                                 <li name="terbatas"><button class="btn btn-outline btn-primary"
                                         onclick="keloladata()"><i class="fas fa-warehouse"></i> Manage Data</button>
                                 </li>
-                                <li name="terbatas" class="user-name dropdown-toggle" data-toggle="dropdown">
+                                <li name="terbatas" class="user-name dropdown-toggle" data-toggle="dropdown" id="logo-pengaturan">
                                     <i class="ti-settings"></i>
                                     <div class="dropdown-menu">
                                         <div style="text-align: center; font-weight: bold; cursor:vertical-text;">Hi,
@@ -196,6 +196,10 @@
             </div>
             <div id="belakang" style="z-index: 0; visibility: hidden;"></div>
             <script type="text/javascript">
+                $( document ).ready(function() {
+                    $( "#logo-pengaturan" ).click();
+                });
+
                 $("#tampilan-header").clone().prependTo("#belakang");
 
                 function pengaturan() {
@@ -203,7 +207,7 @@
                 }
 
                 function keloladata() {
-                    window.location.href = "bangunan";
+                    window.location.href = "{{ route('bangunan') }}";
                 }
             </script>
             <!-- header area end -->

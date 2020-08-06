@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('content')
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -12,7 +12,7 @@
         <a class="nav-link" id="model-tab" data-toggle="tab" href="#model" role="tab" aria-controls="model" aria-selected="false"><i class="fas fa-home"></i> Manage Building Model Data</a>
     </li>
 </ul>
-<div class="tab-content mt-3" id="myTabContent">
+<div class="tab-content card" id="myTabContent">
     @yield('isi')
     <!-- <div class="tab-pane fade show active" id="bang" role="tabpanel" aria-labelledby="bang-tab">
         

@@ -15,6 +15,13 @@ use App\Level_of_education;
 use App\Type_of_health_service;
 use App\health_service_building_facilities;
 
+use App\Worship_building;
+use App\House_building;
+use App\Office_building;
+use App\Educational_building;
+use App\Health_service_building;
+use App\Msme_building;
+
 class PagesController extends Controller
 {
     /**
@@ -55,6 +62,26 @@ class PagesController extends Controller
             );
     }
 
+    public function bangunan()
+    {
+        $ibadah = Worship_building::count();
+        $rumah = House_building::count();
+        $kantor = Office_building::count();
+        $pendidikan = Educational_building::count();
+        $kesehatan = Health_service_building::count();
+        $umkm = Msme_building::count();
+        return view ('admin.building.index', 
+                [
+                    'ibadah' => $ibadah,
+                    'rumah' => $rumah,
+                    'kantor' => $kantor,
+                    'pendidikan' => $pendidikan,
+                    'kesehatan' => $kesehatan,
+                    'umkm' => $umkm
+                ]
+            
+            );
+    }
     /**
      * Show the form for creating a new resource.
      *

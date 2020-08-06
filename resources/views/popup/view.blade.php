@@ -313,7 +313,7 @@ $server='foto/bangunan/';
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <div class="media">
@@ -329,34 +329,21 @@ $server='foto/bangunan/';
                 </div>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-12 mt-2">
             <div class="card">
                 <div class="card-body">
                     <div class="media">
                         <div class="media-body">
                             <h6>Facility</h6>
-                            <br />
-                            <table width="100%" class="table-striped table-bordered table-hover">
-                                <thead style="text-align: center;">
-                                    <th>Name of Facility</th>
-                                    <th>Qty</th>
-                                </thead>
-                                <tbody>
+                                @if ( count($fasilitas) <1 )
+                                    no facility data
+                                @else
                                     @foreach ($fasilitas as $f)
-                                    <tr style="height: 200%">
-                                        <td>{{$f->name_of_facility}}</td>
-                                        <td>{{$f->quantity_of_facilities}}</td>
-                                    </tr>
+                                        {{$f->name_of_facility}}
+                                        <span class="badge badge-secondary">{{$f->quantity_of_facilities}}</span>
+                                        &emsp;
                                     @endforeach
-
-                                    @php
-                            if (count($fasilitas)<1) {
-                                echo '<td colspan="2"><center>no facility data</center></td>';
-                            }
-                            @endphp
-
-                                </tbody>
-                            </table>
+                                @endif
                         </div>
                     </div>
                 </div>

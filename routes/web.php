@@ -25,16 +25,16 @@ Route::get('/house_digit', 'HousesController@digit');
 Route::get('/rumah_cari_id/{id}', 'HousesController@cari_id');
 Route::get('/rumah_cari_model/{model}', 'HousesController@cari_model');
 Route::get('/rumah_info/{id}', 'HousesController@info');
-Route::get('/rumah_cari_namapemilik/{nama}', 'HousesController@cari_namapemilik')->middleware('auth');
-Route::get('/rumah_cari_nikpemilik/{nik}', 'HousesController@cari_nikpemilik')->middleware('auth');
-Route::get('/rumah_cari_namapenghuni/{nama}', 'HousesController@cari_namapenghuni')->middleware('auth');
-Route::get('/rumah_cari_nikpenghuni/{nik}', 'HousesController@cari_nikpenghuni')->middleware('auth');
-Route::get('/rumah_cari_kkpenghuni/{kk}', 'HousesController@cari_kkpenghuni')->middleware('auth');
-Route::get('/rumah_cari_sukupenghuni/{suku}', 'HousesController@cari_sukupenghuni')->middleware('auth');
-Route::get('/rumah_cari_konstruksi/{k}', 'HousesController@cari_konstruksi')->middleware('auth');
-Route::get('/rumah_cari_tahun/{tahun}', 'HousesController@cari_tahun')->middleware('auth');
-Route::get('/rumah_cari_listrik/{listrik}', 'HousesController@cari_listrik')->middleware('auth');
-Route::get('/rumah_cari_status/{s}', 'HousesController@cari_status')->middleware('auth');
+Route::get('/rumah_cari_namapemilik/{nama}', 'HousesController@cari_namapemilik');
+Route::get('/rumah_cari_nikpemilik/{nik}', 'HousesController@cari_nikpemilik');
+Route::get('/rumah_cari_namapenghuni/{nama}', 'HousesController@cari_namapenghuni');
+Route::get('/rumah_cari_nikpenghuni/{nik}', 'HousesController@cari_nikpenghuni');
+Route::get('/rumah_cari_kkpenghuni/{kk}', 'HousesController@cari_kkpenghuni');
+Route::get('/rumah_cari_sukupenghuni/{suku}', 'HousesController@cari_sukupenghuni');
+Route::get('/rumah_cari_konstruksi/{k}', 'HousesController@cari_konstruksi');
+Route::get('/rumah_cari_tahun/{tahun}', 'HousesController@cari_tahun');
+Route::get('/rumah_cari_listrik/{listrik}', 'HousesController@cari_listrik');
+Route::get('/rumah_cari_status/{s}', 'HousesController@cari_status');
 
 Route::get('/ibadah/digit', 'Worship_buildingsController@digit');
 Route::get('/ibadah_semua', 'Worship_buildingsController@semua');
@@ -96,47 +96,49 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/bangunan', function () { return view ('admin.building.index');})->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bangunan', 'PagesController@bangunan')->name('bangunan');
+    //Route::get('/spasial', 'PagesController@spasial')->name('spasial');
+    Route::get('/spasial', function () { return view ('admin.building.spasial.index');});
+    Route::get('/spasial-info', function () { return view ('admin.building.spasial.info');});
 
-Route::get('/spasial', function () { return view ('admin.building.spasial.index');})->middleware('auth');
-Route::get('/spasial-info', function () { return view ('admin.building.spasial.info');})->middleware('auth');
+    Route::get('/kependudukan', function () { return view ('admin.kependudukan.index');});
+    Route::get('/penduduk', function () { return view ('admin.kependudukan.penduduk');});
 
-Route::get('/kependudukan', function () { return view ('admin.kependudukan.index');})->middleware('auth');
-Route::get('/penduduk', function () { return view ('admin.kependudukan.penduduk');})->middleware('auth');
+    Route::get('/konstruksi', 'Type_of_constructionsController@index');
+    Route::post('/konstruksi', 'Type_of_constructionsController@store');
+    Route::patch('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@update');
+    Route::delete('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@destroy');
 
-Route::get('/konstruksi', 'Type_of_constructionsController@index')->middleware('auth');
-Route::post('/konstruksi', 'Type_of_constructionsController@store')->middleware('auth');
-Route::patch('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@update')->middleware('auth');
-Route::delete('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@destroy')->middleware('auth');
+    Route::get('/model', 'Building_modelsController@index');
+    Route::post('/model', 'Building_modelsController@store');
+    Route::patch('/model/{Building_model}', 'Building_modelsController@update');
+    Route::delete('/model/{Building_model}', 'Building_modelsController@destroy');
 
-Route::get('/model', 'Building_modelsController@index')->middleware('auth');
-Route::post('/model', 'Building_modelsController@store')->middleware('auth');
-Route::patch('/model/{Building_model}', 'Building_modelsController@update')->middleware('auth');
-Route::delete('/model/{Building_model}', 'Building_modelsController@destroy')->middleware('auth');
+    Route::get('/suku', 'TribesController@index');
+    Route::post('/suku', 'TribesController@store');
+    Route::patch('/suku/{tribe}', 'TribesController@update');
+    Route::delete('/suku/{tribe}', 'TribesController@destroy');
 
-Route::get('/suku', 'TribesController@index')->middleware('auth');
-Route::post('/suku', 'TribesController@store')->middleware('auth');
-Route::patch('/suku/{tribe}', 'TribesController@update')->middleware('auth');
-Route::delete('/suku/{tribe}', 'TribesController@destroy')->middleware('auth');
+    Route::get('/datuk', 'DatuksController@index');
+    Route::post('/datuk', 'DatuksController@store');
+    Route::patch('/datuk/{datuk}', 'DatuksController@update');
+    Route::delete('/datuk/{datuk}', 'DatuksController@destroy');
 
-Route::get('/datuk', 'DatuksController@index')->middleware('auth');
-Route::post('/datuk', 'DatuksController@store')->middleware('auth');
-Route::patch('/datuk/{datuk}', 'DatuksController@update')->middleware('auth');
-Route::delete('/datuk/{datuk}', 'DatuksController@destroy')->middleware('auth');
+    Route::get('/pendidikan', 'EducationsController@index');
+    Route::post('/pendidikan', 'EducationsController@store');
+    Route::patch('/pendidikan/{education}', 'EducationsController@update');
+    Route::delete('/pendidikan/{education}', 'EducationsController@destroy');
 
-Route::get('/pendidikan', 'EducationsController@index')->middleware('auth');
-Route::post('/pendidikan', 'EducationsController@store')->middleware('auth');
-Route::patch('/pendidikan/{education}', 'EducationsController@update')->middleware('auth');
-Route::delete('/pendidikan/{education}', 'EducationsController@destroy')->middleware('auth');
+    Route::get('/pekerjaan', 'JobsController@index');
+    Route::post('/pekerjaan', 'JobsController@store');
+    Route::patch('/pekerjaan/{job}', 'JobsController@update');
+    Route::delete('/pekerjaan/{job}', 'JobsController@destroy');
 
-Route::get('/pekerjaan', 'JobsController@index')->middleware('auth');
-Route::post('/pekerjaan', 'JobsController@store')->middleware('auth');
-Route::patch('/pekerjaan/{job}', 'JobsController@update')->middleware('auth');
-Route::delete('/pekerjaan/{job}', 'JobsController@destroy')->middleware('auth');
-
-//Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');})->middleware('auth');
-Route::get('/keluarga', 'Family_cardsController@index')->middleware('auth');
-Route::post('/keluarga', 'Family_cardsController@store')->middleware('auth');
-Route::delete('/keluarga/{family_card}', 'Family_cardsController@destroy')->middleware('auth');
+    //Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');});
+    Route::get('/keluarga', 'Family_cardsController@index');
+    Route::post('/keluarga', 'Family_cardsController@store');
+    Route::delete('/keluarga/{family_card}', 'Family_cardsController@destroy');
+});
 
 Route::get('/tes', 'HomeController@tes');
