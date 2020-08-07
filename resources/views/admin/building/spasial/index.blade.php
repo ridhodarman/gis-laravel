@@ -1,26 +1,23 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('content')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM2fDXHmGzCDmDBk3bdPIEjs6zwnI1kGQ&libraries=drawing"></script>
 <script type="text/javascript" src="{{ asset('script/map-tambah.js') }}"></script>
-<div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-    <button 
-        class="btn btn-default btn-lg tombol" 
-        style="width: 90%;" 
-        data-toggle="modal" 
+<div class="tombol-atas mt-3 mb-3 mr-5 ml-5" style="text-align: center;">
+    <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal"
         data-target="#tambahibadah">+
         Add Worship Building Data 
     </button>
     </div>
 
-<div class="modal fade bd-example-modal-lg modal-xl" id="tambahibadah">
+<form role="form" action="act/tambah-b-ibadah.php" enctype="multipart/form-data" method="post">
+<div class="modal fade bd-example-modal-lg modal-xl modal-dialog-scrollable" id="tambahibadah">
     <div class="modal-dialog modal-lg modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Worship Building Data</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
-            <form role="form" action="act/tambah-b-ibadah.php" enctype="multipart/form-data" method="post">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-8">
@@ -111,11 +108,11 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="tambahbangunan">+ Add</button>
                 </div>
-                </form>
         </div>
     </div>
 </div>
-    
+</form>
+
     <div class="panel-body" style="padding-top: 2%; padding-left: 2%; padding-right: 2%" id="tabel-jeniskonstruksi">
         <h4 style="text-align: center;">Building List</h4>
         <table width="100%" class="table table-striped table-bordered table-hover" id="listkonstruksi">

@@ -99,7 +99,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('/bangunan', 'PagesController@bangunan')->name('bangunan');
     //Route::get('/spasial', 'PagesController@spasial')->name('spasial');
-    Route::get('/spasial', function () { return view ('admin.building.spasial.index');});
+    Route::get('/spasial', function () { return view ('admin.building.spasial.index');})->name('spasial');
     Route::get('/spasial-info', function () { return view ('admin.building.spasial.info');});
 
     Route::get('/kependudukan', function () { return view ('admin.kependudukan.index');});

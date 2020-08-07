@@ -2,8 +2,8 @@
 
 @section('isi')
 <div class="tab-pane fade show active" id="konstruksi" role="tabpanel" aria-labelledby="konstruksi">
-    <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
+    <div class="tombol-atas mt-5 mb-3 mr-5 ml-5" style="text-align: center;">
+        <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal"
             data-target="#tambahjenis">+
             Add New Types of Construction</button>
     </div>

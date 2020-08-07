@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('content')
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -15,7 +15,7 @@
         <a class="nav-link" id="kerja-tab" data-toggle="tab" href="#kerja" role="tab" aria-controls="kerja" aria-selected="false"><i class="fas fa-chalkboard-teacher"></i> Job List</a>
     </li>
 </ul>
-<div class="tab-content mt-3" id="myTabContent">
+<div class="tab-content card" id="myTabContent">
     @yield('isi')
 </div>
 <script type="text/javascript">

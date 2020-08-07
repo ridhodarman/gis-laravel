@@ -2,8 +2,8 @@
 
 @section('isi')
 <div class="tab-pane fade show active" id="model" role="tabpanel" aria-labelledby="model">
-    <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
+    <div class="tombol-atas mt-5 mb-3 mr-5 ml-5" style="text-align: center;">
+        <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal"
             data-target="#tambahmodel">+
             Add a new building model</button>
     </div>

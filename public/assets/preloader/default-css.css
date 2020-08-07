@@ -474,6 +474,7 @@ img {
       letter-spacing: 0.05em;
       margin: 40px auto;
       text-transform: uppercase;
+      padding-top: 5%
     }
 /*CSS UNTUK ANIMASI LOADING HABIS*/
 @keyframes popin{

@@ -1,5 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+<!-- <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico"> -->
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -11,9 +11,9 @@
 <!-- others css -->
 <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="assets/css/typography.css">
-<link rel="stylesheet" href="assets/css/default-css.css">
+<link rel="stylesheet" href="assets/preloader/default-css.css">
 <link rel="stylesheet" href="assets/css/styles.css">
-<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/preloader/responsive.css">
 <link rel="stylesheet" href="assets/css/style2.css">
 <!-- modernizr css -->
 <!-- <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script> -->
@@ -26,15 +26,15 @@
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 
 <!-- untuk keperluan slideshow -->
-<script src="{{ asset('js/slideshow/jquery.resize.js') }}"></script>
+<!-- <script src="{{ asset('js/slideshow/jquery.resize.js') }}"></script>
 <script src="{{ asset('js/slideshow/jquery.waitforimages.min.js') }}"></script>
 <script src="{{ asset('js/slideshow/modernizr.js') }}"></script>
 <script src="{{ asset('js/slideshow/jquery.carousel-3d.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('js/slideshow/jquery.carousel-3d.default.css') }}">
+<link rel="stylesheet" href="{{ asset('js/slideshow/jquery.carousel-3d.default.css') }}"> -->
 
 <!-- untuk select cari -->
-<link rel="stylesheet" href="{{ asset( 'assets/dist/css/bootstrap-select.css') }}">
-<meta name="viewport" content="width=device-width">
+<!-- <link rel="stylesheet" href="{{ asset( 'assets/dist/css/bootstrap-select.css') }}">
+<meta name="viewport" content="width=device-width"> -->
 
 
 <script type="text/javascript">

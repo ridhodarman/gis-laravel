@@ -7,9 +7,11 @@
             <div class="main-content-inner">
                 <br/>
                 <center>
-                    <button onclick="location.href='/spasial'" class="btn btn-light btn-lg" style="width: 90%; border-color: #e8e8e8;">
-                        <i class="fas fa-globe-asia"></i> &nbsp; Manage spatial data and building attributes
-                    </button>
+                    <a href="{{ route('spasial') }}">
+                        <button class="btn btn-light btn-lg tombol-atas">
+                            <i class="fas fa-globe-asia"></i> &nbsp; Manage spatial data and building attributes
+                        </button>
+                    </a>
                 </center>
                 <div class="row">
                     <div class="col-lg-12">
