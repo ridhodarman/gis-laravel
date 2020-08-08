@@ -197,7 +197,7 @@
             <div id="belakang" style="z-index: 0; visibility: hidden;"></div>
             <script type="text/javascript">
                 $( document ).ready(function() {
-                    $( "#logo-pengaturan" ).click();
+                    //$( "#logo-pengaturan" ).click();
                 });
 
                 $("#tampilan-header").clone().prependTo("#belakang");

@@ -1,8 +1,22 @@
 @extends('admin.layouts.sidebar')
 
 @section('content')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM2fDXHmGzCDmDBk3bdPIEjs6zwnI1kGQ&libraries=drawing"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1TwYksj1uQg1V_5yPUZqwqYYtUIvidrY&libraries=drawing"></script>
 <script type="text/javascript" src="{{ asset('script/map-tambah.js') }}"></script>
+<script src="{{ asset('assets/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('assets/sweetalert2/dist/sweetalert2.min.css') }}">
+<script>
+    function geom2() {
+        Swal.fire({
+        title: 'Sweet!',
+        text: 'Modal with a custom image.',
+        imageUrl: 'https://miro.medium.com/max/960/1*ST2GwMJxuWIAGMchig46SQ.gif',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        })
+    }
+</script>
 <div class="tombol-atas mt-3 mb-3 mr-5 ml-5" style="text-align: center;">
     <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal"
         data-target="#tambahibadah">+
@@ -20,7 +34,7 @@
             </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -38,12 +52,12 @@
                                 </div>
                             </div>
                             <div class="panel-body" style="padding-top: 1%">
-                                <div id="map" style="width:100%;height:440px;"></div>
+                                <div id="map" style="width:100%;height:450px;"></div>
                             </div>
                             
                         </div>
             <?php include('inc/koneksi2.php');    ?>
-                        <div class="col-sm-4" id="hide3">
+                        <div class="col-sm-5" style="margin-top: -10px;">
                             <!-- menampilkan form tambah-->
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -91,15 +105,39 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" name="alamat"></textarea>
+                                <textarea class="form-control h-25" rows="1" name="alamat"></textarea>
                             </div>
                             <div class="form-group">
-                                <label><span style="color:red">*</span> Coordinat</label>
-                                <div style="float:right">
-                                        <input type="checkbox" id="geojson" name="geojson" onclick="geojson2()">
-                                        <label>Input GeoJson</label>
-                                </div>
-                                <textarea readonly class="form-control" id="geom" name="geom" onclick="geom2()" required></textarea>
+                                <nav style="display: flex; font-size: 95%;">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" checked id="customRadio1" name="customRadio2" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio1" style="padding-left: 18px;">Google Map Drawing Tools</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio4" style="padding-left: 18px;">Input GeoJson</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadio5" name="customRadio2" class="custom-control-input">
+                                        <label class="custom-control-label" for="customRadio5" style="padding-left: 18px;">Add Coordinat List</label> 
+                                    </div>
+                                </nav>
+                                <textarea class="form-control h-25" rows="4"
+                                id="geom" name="geom" onclick="geom2()" readonly required></textarea>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-success btn-sm" onclick="inputkoordinat()">
+                                        <i class="fas fa-compress-arrows-alt"></i> add Coordinat
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-minus-circle"></i> delete the last coordinate
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> delete all
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-xs">
+                                        <i class="fas fa-drafting-compass"></i> see GeoJson data on map
+                                    </button>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +151,50 @@
 </div>
 </form>
 
-    <div class="panel-body" style="padding-top: 2%; padding-left: 2%; padding-right: 2%" id="tabel-jeniskonstruksi">
+<script>
+    function inputkoordinat() {
+        let geom = document.getElementById("geom").value;
+        let angka = geom.split(",").length;
+        let urutan = angka;
+        (async () => {
+        $("#tambahibadah .close").click()
+        const { value: formValues } = await Swal.fire({
+        title: `Enter coordinates (${urutan})`,
+        showCloseButton: true,
+        showCancelButton: true,
+        padding: '3em',
+        background: `#fff`,
+        backdrop: `
+            rgba(0,0,0,0.5)
+            bottom right
+            no-repeat
+        `,
+        html:
+            '<input id="swal-input1" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="latitude, ex:-0,xx">' +
+            '<input id="swal-input2" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="longitude, ex:100,xx">',
+        focusConfirm: false,
+        preConfirm: () => {
+            return [
+            document.getElementById('swal-input1').value,
+            document.getElementById('swal-input2').value
+            ]
+        }
+        })
+if (formValues) {
+  Swal.fire(JSON.stringify(formValues))
+  $('#tambahibadah').modal('show');
+}
+else {
+    $('#tambahibadah').modal('show');
+}
+})()
+$(document).ajaxComplete(function(){
+    $('#swal-input1').focus();
+    $('#tambahibadah').modal('show');
+});
+    }
+</script>
+    <div class="panel-body card" style="padding-top: 2%; padding-left: 2%; padding-right: 2%" id="tabel-jeniskonstruksi">
         <h4 style="text-align: center;">Building List</h4>
         <table width="100%" class="table table-striped table-bordered table-hover" id="listkonstruksi">
             <thead>
@@ -168,31 +249,6 @@
                                         </div>
                                     </div>
                                 </div>
-    
-    
-                                <div class="modal fade" id="edit-k'.$id.'">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <form method="post" id="form-editjenis'.$id.'">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Edit</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label>Name of Construction Type:</label>
-                                                    <input type="text" class="form-control" name="jenis-baru" id="jenis-baru'.$id.'" value="'.$jenis.'" required>
-                                                </div>
-                                                <input type="hidden" class="form-control" name="id-jenisk" value="'.$id.'">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button type="button" class="btn btn-primary" id="tombol-edit" onclick="editjenis('.$ids.')"><i class="ti-save"></i> Save</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                         ';
                         $no++;
                     }
