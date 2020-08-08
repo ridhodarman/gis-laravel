@@ -126,12 +126,12 @@
                                 id="geom" name="geom" onclick="geom2()" readonly required></textarea>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button type="button" class="btn btn-success btn-sm" onclick="inputkoordinat()">
-                                        <i class="fas fa-compress-arrows-alt"></i> add Coordinat
+                                        <i class="fas fa-map-pin"></i> add coordinat
                                     </button>
-                                    <button type="button" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-minus-circle"></i> delete the last coordinate
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="hapuskoord()" style="text-shadow: #a1a1a1 0 0 10px;">
+                                        <i class="fas fa-minus-circle"></i> remove the last coordinate
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="hapussemua()">
                                         <i class="fas fa-trash-alt"></i> delete all
                                     </button>
                                     <button type="button" class="btn btn-info btn-xs">
@@ -170,28 +170,144 @@
             no-repeat
         `,
         html:
-            '<input id="swal-input1" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="latitude, ex:-0,xx">' +
-            '<input id="swal-input2" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="longitude, ex:100,xx">',
+            '<input id="lat2" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="latitude, ex:-0,xx">' +
+            '<input id="lng2" class="swal2-input" style="background-color: rgba(255,255,255,0.80)" placeholder="longitude, ex:100,xx">',
         focusConfirm: false,
         preConfirm: () => {
             return [
-            document.getElementById('swal-input1').value,
-            document.getElementById('swal-input2').value
+            document.getElementById('lat2').value,
+            document.getElementById('lng2').value
             ]
         }
         })
-if (formValues) {
-  Swal.fire(JSON.stringify(formValues))
-  $('#tambahibadah').modal('show');
-}
-else {
-    $('#tambahibadah').modal('show');
-}
-})()
-$(document).ajaxComplete(function(){
-    $('#swal-input1').focus();
-    $('#tambahibadah').modal('show');
-});
+        if (formValues) {
+            let lat = document.getElementById('lng2').value;
+            let lng = document.getElementById('lng2').value;
+            if (!lat || !lng){
+                Swal.fire(
+                'The Internet?',
+                'That thing is still around?',
+                'info'
+                )
+            }
+            else if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                Swal.fire({
+                html:
+                    `
+                    <div>${JSON.stringify(formValues)}</div>
+                    <div id="map2" style="width:100%;height:300px;"></div>
+                    `,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    '<i class="fa fa-thumbs-up"></i> Great!',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText:
+                    `<i class="fa fa-thumbs-down"></i> don't add`,
+                cancelButtonAriaLabel: `Thumbs down don't add`
+                }).then((result) => {
+                if (result.value) {
+                    let geom = document.getElementById('geom').value;
+                    let str = geom.toLowerCase();
+                    let check = str.includes("multipolygon(((");
+                    if (check) {
+                        let check2 = str.includes(")))");
+                        if (check2) {
+                            let tambah = geom.replace(")))", `,${lat} ${lng})))`);
+                            document.getElementById('geom').value=tambah;
+                        }
+                        else {
+                            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Invalid coordinates!' })
+                        }
+                    }
+                    else {
+                        document.getElementById('geom').value=`MULTIPOLYGON(((${lat} ${lng})))`
+                    }
+                    Swal.fire(
+                    'Added!',
+                    `coordinates: ${JSON.stringify(formValues)} added to textarea.`,
+                    'success'
+                    )
+                }
+                })
+                const myLatLng = { lat: -25.363, lng: 131.044 };
+
+                const map = new google.maps.Map(
+                    document.getElementById("map2"),
+                    {
+                    zoom: 20,
+                    center: myLatLng,
+                    mapTypeId: google.maps.MapTypeId.SATELLITE,
+                    gestureHandling: 'greedy'
+                    }
+                );
+
+                new google.maps.Marker({
+                    position: myLatLng,
+                    map,
+                    title: `coordinat location (${urutan})`
+                });
+
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid coordinates!'
+                })
+            }
+                $('#tambahibadah').modal('show');
+            }
+        else {
+            $('#tambahibadah').modal('show');
+        }
+        })()
+        $(document).ajaxComplete(function(){
+            $('#lat2').focus();
+            $('#tambahibadah').modal('show');
+        });
+    }
+
+    function hapuskoord() {
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d98200',
+        cancelButtonColor: '#5c5c5c',
+        confirmButtonText: 'Yes, remove it!'
+        }).then((result) => {
+        if (result.value) {
+            Swal.fire(
+            'Removed!',
+            'Your file has been removed.',
+            'success'
+            )
+        }
+        })
+    }
+
+    function hapussemua() {
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#5c5c5c',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.value) {
+            $( "#delete-button" ).click();
+            Swal.fire(
+            'Deleted!',
+            'Your GeoJson has been deleted.',
+            'success'
+            )
+        }
+        })
     }
 </script>
     <div class="panel-body card" style="padding-top: 2%; padding-left: 2%; padding-right: 2%" id="tabel-jeniskonstruksi">
