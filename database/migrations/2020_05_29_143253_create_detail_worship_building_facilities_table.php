@@ -20,6 +20,7 @@ class CreateDetailWorshipBuildingFacilitiesTable extends Migration
             $table->integer('quantity_of_facilities');
             $table->timestamps();
             $table->primary(['worshipb_id', 'worship_building_facilities']);
+            $table->softDeletes();
         });
     }
 

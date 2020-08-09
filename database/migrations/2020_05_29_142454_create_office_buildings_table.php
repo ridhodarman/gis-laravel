@@ -21,6 +21,7 @@ class CreateOfficeBuildingsTable extends Migration
             $table->integer('land_area')->nullable();
             $table->integer('parking_area')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

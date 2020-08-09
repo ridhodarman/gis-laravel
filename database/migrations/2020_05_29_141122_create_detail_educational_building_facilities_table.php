@@ -20,6 +20,7 @@ class CreateDetailEducationalBuildingFacilitiesTable extends Migration
             $table->integer('quantity_of_facilities');
             $table->timestamps();
             $table->primary(['educationalb_id', 'educational_building_facilities']);
+            $table->softDeletes();
         });
     }
 

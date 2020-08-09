@@ -17,6 +17,7 @@ class CreateTribesTable extends Migration
             $table->id();
             $table->string('name_of_tribe', 30)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

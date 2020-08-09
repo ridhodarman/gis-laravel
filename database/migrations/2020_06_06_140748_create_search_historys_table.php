@@ -25,6 +25,7 @@ class CreateSearchHistorysTable extends Migration
             $table->string('search_value', 90);
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

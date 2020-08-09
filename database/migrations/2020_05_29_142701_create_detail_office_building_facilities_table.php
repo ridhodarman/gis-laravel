@@ -20,6 +20,7 @@ class CreateDetailOfficeBuildingFacilitiesTable extends Migration
             $table->integer('quantity_of_facilities');
             $table->timestamps();
             $table->primary(['officeb_id', 'office_building_facilities']);
+            $table->softDeletes();
         });
     }
 

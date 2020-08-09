@@ -23,6 +23,7 @@ class CreateHouseBuildingsTable extends Migration
             $table->integer('land_area')->nullable();
             $table->char('building_status', 1)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('family_cards', function (Blueprint $table) {

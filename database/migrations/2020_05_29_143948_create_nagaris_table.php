@@ -18,6 +18,7 @@ class CreateNagarisTable extends Migration
             $table->string('name_of_nagari', 30);
             $table->multiLineString('geom');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

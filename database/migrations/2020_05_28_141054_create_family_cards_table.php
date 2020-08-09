@@ -21,6 +21,7 @@ class CreateFamilyCardsTable extends Migration
             $table->char('category', 1)->nullable();
             $table->char('residence_status', 1)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

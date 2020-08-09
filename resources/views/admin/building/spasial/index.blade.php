@@ -5,22 +5,10 @@
 <script type="text/javascript" src="{{ asset('script/map-tambah.js') }}"></script>
 <script src="{{ asset('assets/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('assets/sweetalert2/dist/sweetalert2.min.css') }}">
-<script>
-    function geom2() {
-        Swal.fire({
-        title: 'Sweet!',
-        text: 'Modal with a custom image.',
-        imageUrl: 'https://miro.medium.com/max/960/1*ST2GwMJxuWIAGMchig46SQ.gif',
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: 'Custom image',
-        })
-    }
-</script>
 <div class="tombol-atas mt-3 mb-3 mr-5 ml-5" style="text-align: center;">
     <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal"
         data-target="#tambahibadah">+
-        Add Worship Building Data 
+        Ad New Building Data 
     </button>
     </div>
 
@@ -29,35 +17,13 @@
     <div class="modal-dialog modal-lg modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Worship Building Data</h5>
+                <h5 class="modal-title">Add New Building Data</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-7">
-                            
-                            <div class="row">
-                                <div class="form-group col-sm-6">
-                                    <input id="latlng" type="text" class="form-control" value="" placeholder="Latitude, Longitude">
-                                    <div id="notif"></div>
-                                </div>
-                                <div class="form-group col-sm-6" style="vertical-align:middle">
-                                    <button class="btn btn-default" id="btnlatlng" type="button" title="Cari Koordinat"><i class="fa fa-search"></i></button>
-                                    &emsp;
-                                    <button class="btn btn-default" type="button" title="Hapus Marker" onclick="hapusmarkerdankoor()"><i
-                                            class="fa fa-ban"></i></button>
-                                    &emsp;
-                                    <button class="btn btn-default" id="delete-button" type="button" title="Remove shape"><i
-                                            class="fa fa-trash"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body" style="padding-top: 1%">
-                                <div id="map" style="width:100%;height:450px;"></div>
-                            </div>
-                            
-                        </div>
-            <?php include('inc/koneksi2.php');    ?>
-                        <div class="col-sm-5" style="margin-top: -10px;">
+                        <?php include('inc/koneksi2.php');    ?>
+                        <div class="col-sm-5">
                             <!-- menampilkan form tambah-->
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -105,39 +71,69 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control h-25" rows="1" name="alamat"></textarea>
+                                <textarea class="form-control h-25" rows="2" name="alamat"></textarea>
                             </div>
+                        </div>
+                        <div class="col-sm-7">
                             <div class="form-group">
-                                <nav style="display: flex; font-size: 95%;">
+                                <nav style="display: flex;">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" checked id="customRadio1" name="customRadio2" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1" style="padding-left: 18px;">Google Map Drawing Tools</label>
+                                        <input type="radio" checked id="googlemaps" name="customRadio2" class="custom-control-input" onchange="spasial()">
+                                        <label class="custom-control-label" for="googlemaps" style="padding-left: 18px;">Google Map Drawing Tools</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio4" style="padding-left: 18px;">Input GeoJson</label>
+                                    <div class="custom-control custom-radio custom-control-inline" onchange="spasial()">
+                                        <input type="radio" id="geojson" name="customRadio2" class="custom-control-input">
+                                        <label class="custom-control-label" for="geojson" style="padding-left: 18px;">Input GeoJson</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio5" name="customRadio2" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio5" style="padding-left: 18px;">Add Coordinat List</label> 
+                                    <div class="custom-control custom-radio custom-control-inline" onchange="spasial()">
+                                        <input type="radio" id="koordinat" name="customRadio2" class="custom-control-input">
+                                        <label class="custom-control-label" for="koordinat" style="padding-left: 18px;">Add Coordinat List</label> 
                                     </div>
                                 </nav>
-                                <textarea class="form-control h-25" rows="4"
+                                <div id="inputgeom2"></div>
+                            </div>
+                            <div class="row" style="margin-left: 1%;" id="kontrolpeta">
+                                <div class="col-sm-6">
+                                    <input id="latlng" type="text" class="form-control" value="" placeholder="Latitude, Longitude">
+                                    <div id="notif"></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-default" id="btnlatlng" type="button" title="Cari Koordinat"><i class="fa fa-search"></i></button>
+                                    &emsp;
+                                    <button class="btn btn-default" type="button" title="Hapus Marker" onclick="hapusmarkerdankoor()"><i
+                                            class="fa fa-ban"></i></button>
+                                    &emsp;
+                                    <button class="btn btn-default" id="delete-button" type="button" title="Remove shape"><i
+                                            class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="padding-top: 1%;">
+                                <div id="map" style="width:100%; height:450px;"></div>
+                            </div>
+                            <div id="inputgeom"></div>
+                            <div id="inputgeom1">
+                                <textarea class="form-control h-25" rows="2"
                                 id="geom" name="geom" onclick="geom2()" readonly required></textarea>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-success btn-sm" onclick="inputkoordinat()">
-                                        <i class="fas fa-map-pin"></i> add coordinat
-                                    </button>
-                                    <button type="button" class="btn btn-warning btn-sm" onclick="hapuskoord()" style="text-shadow: #a1a1a1 0 0 10px;">
-                                        <i class="fas fa-minus-circle"></i> remove the last coordinate
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="hapussemua()">
-                                        <i class="fas fa-trash-alt"></i> delete all
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-xs">
-                                        <i class="fas fa-drafting-compass"></i> see GeoJson data on map
-                                    </button>
-                                  </div>
+                                <div id="kontroljson" class="table-responsive">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-success btn-sm" onclick="tambahkoordinat()" name="ukoordinat">
+                                            <i class="fas fa-map-pin"></i> add coordinates
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="hapuskoord()" style="text-shadow: #a1a1a1 0 0 10px;" name="ukoordinat">
+                                            <i class="fas fa-minus-circle"></i> remove the last coordinate
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" title="delete all GeoJson data on this text area" onclick="hapussemua()" name="ukoordinat">
+                                            <i class="fas fa-trash-alt"></i> delete GeoJson
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" name="ukoordinat">
+                                            <i class="fas fa-paper-plane"></i> check the coordinate list
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-xs" title="visualize the geojson data results in the text area on the map">
+                                            <i class="fas fa-drafting-compass"></i> check GeoJson data on map
+                                        </button>
+                                    </div>
+                                </div>
+                                <br/>
                             </div>
                         </div>
                     </div>
@@ -152,7 +148,56 @@
 </form>
 
 <script>
-    function inputkoordinat() {
+    spasial();
+    function geom2() {
+        if($('#googlemaps').is(':checked')){
+            Swal.fire({
+            title: 'Sweet!',
+            text: 'Modal with a custom image.',
+            imageUrl: 'https://miro.medium.com/max/960/1*ST2GwMJxuWIAGMchig46SQ.gif',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            })
+        }
+        if($('#koordinat').is(':checked')){
+            Swal.fire({
+            title: 'Sweet!',
+            text: 'Modal with a custom image.',
+            imageUrl: 'https://i.pinimg.com/originals/20/d8/73/20d8733b97d44108a7c4cc40564dff71.gif',
+            imageWidth: 400,
+            imageHeight: 300,
+            imageAlt: 'Custom image',
+            })
+        }
+    }
+
+    function spasial() {
+        if($('#koordinat').is(':checked')){
+            jQuery("#inputgeom1").detach().prependTo('#inputgeom2');
+            $('#kontrolpeta').hide();
+            $("textarea[id*=geom]").attr('rows','4'); 
+            $('#geom').prop('readonly', true);
+            $('#kontroljson').show();
+            $("[name='ukoordinat']").show();
+        }
+        else if($('#geojson').is(':checked')){
+            jQuery("#inputgeom1").detach().prependTo('#inputgeom2');
+            $('#kontrolpeta').hide();
+            $("textarea[id*=geom]").attr('rows','4'); 
+            $('#geom').prop('readonly', false);
+            $('#kontroljson').show();
+            $("[name='ukoordinat']").hide();
+        }
+        else if($('#googlemaps').is(':checked')){
+            jQuery("#inputgeom1").detach().prependTo('#inputgeom');
+            $('#kontrolpeta').show();
+            $("textarea[id*=geom]").attr('rows','2'); 
+            $('#geom').prop('readonly', true);
+            $('#kontroljson').hide();
+        }
+    }
+    function tambahkoordinat() {
         let geom = document.getElementById("geom").value;
         let angka = geom.split(",").length;
         let urutan = angka;

@@ -18,6 +18,7 @@ class CreateJorongsTable extends Migration
             $table->string('name_of_jorong', 30);
             $table->multiPolygon('geom');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -25,6 +25,7 @@ class CreateDetailHealthServiceBuildingFacilitiesTable extends Migration
             $table->integer('quantity_of_facilities');
             $table->timestamps();
             $table->primary(['healthb_id', 'health_service_building_facilities']);
+            $table->softDeletes();
         });
     }
 

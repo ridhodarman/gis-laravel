@@ -23,6 +23,7 @@ class CreateWorshipBuildingsTable extends Migration
             $table->integer('all_imams')->nullable();
             $table->integer('all_teenagers')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

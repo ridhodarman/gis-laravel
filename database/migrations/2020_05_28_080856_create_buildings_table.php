@@ -22,10 +22,11 @@ class CreateBuildingsTable extends Migration
             $table->char('tap_water', 1)->nullable();
             $table->foreignId('building_model')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('type_of_construction')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->char('heirloom_status_of_the_land', 1)->nullable();
-            $table->char('heirloom_status_of_the_building', 1)->nullable();
+            $table->boolean('heirloom_status_of_the_land')->nullable();
+            $table->boolean('heirloom_status_of_the_building')->nullable();
             $table->multiPolygon('geom');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

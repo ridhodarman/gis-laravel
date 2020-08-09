@@ -17,6 +17,7 @@ class CreateEducationalBuildingFacilitiesTable extends Migration
             $table->id();
             $table->string('name_of_facility', 40)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

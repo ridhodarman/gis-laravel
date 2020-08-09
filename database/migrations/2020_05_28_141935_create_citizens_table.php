@@ -37,6 +37,7 @@ class CreateCitizensTable extends Migration
 
             $table->string('status_in_family', 15)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('house_buildings', function (Blueprint $table) {

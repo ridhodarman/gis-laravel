@@ -17,6 +17,7 @@ class CreateLevelOfEducationsTable extends Migration
             $table->id();
             $table->string('name_of_level', 40)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

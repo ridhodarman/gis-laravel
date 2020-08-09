@@ -17,6 +17,7 @@ class CreateTypeOfMsmesTable extends Migration
             $table->id();
             $table->string('name_of_type', 40)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,6 +18,7 @@ class CreateBuildingModelsTable extends Migration
             $table->string('name_of_model', 40)->unique();
             //$table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -24,6 +24,7 @@ class CreateHealthServiceBuildingsTable extends Migration
             $table->integer('parking_area')->nullable();
             $table->integer('land_area')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

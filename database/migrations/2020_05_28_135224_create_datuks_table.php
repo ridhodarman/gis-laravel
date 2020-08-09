@@ -18,6 +18,7 @@ class CreateDatuksTable extends Migration
             $table->string('datuk_name', 40)->unique();
             $table->foreignId('tribe_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

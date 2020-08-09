@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->string('job_name', 40)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -19,6 +19,7 @@ class CreateBuildingGallerysTable extends Migration
             $table->string('photo_url', 30);
             $table->timestamps();
             $table->primary(['building_id', 'photo_url']);
+            $table->softDeletes();
         });
     }
 

@@ -20,6 +20,7 @@ class CreateDetailMsmeBuildingFacilitiesTable extends Migration
             $table->integer('quantity_of_facilities');
             $table->timestamps();
             $table->primary(['msmeb_id', 'msme_building_facilities']);
+            $table->softDeletes();
         });
     }
 
