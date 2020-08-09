@@ -109,6 +109,7 @@
                             </div>
                             <div class="col-sm-12" style="padding-top: 1%;">
                                 <div id="map" style="width:100%; height:450px;"></div>
+                                <div id="mapcheck" style="width:100%; height:400px;"></div>
                             </div>
                             <div id="inputgeom"></div>
                             <div id="inputgeom1">
@@ -133,8 +134,8 @@
                                         </button>
                                     </div>
                                 </div>
-                                <br/>
                             </div>
+                            <button type="button" class="btn btn-outline btn-success" onclick="hitungluas()">calculate the area</button>
                         </div>
                     </div>
                 </div>
@@ -152,9 +153,8 @@
     function geom2() {
         if($('#googlemaps').is(':checked')){
             Swal.fire({
-            title: 'Sweet!',
-            text: 'Modal with a custom image.',
-            imageUrl: 'https://miro.medium.com/max/960/1*ST2GwMJxuWIAGMchig46SQ.gif',
+            text: 'please draw polygons on the map',
+            imageUrl: "{{ asset('assets/draw.gif') }}",
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -162,9 +162,8 @@
         }
         if($('#koordinat').is(':checked')){
             Swal.fire({
-            title: 'Sweet!',
-            text: 'Modal with a custom image.',
-            imageUrl: 'https://i.pinimg.com/originals/20/d8/73/20d8733b97d44108a7c4cc40564dff71.gif',
+            text: 'please enter the coordinates by pressing the add coordinates button',
+            imageUrl: "{{ asset('assets/koordinat.gif') }}",
             imageWidth: 400,
             imageHeight: 300,
             imageAlt: 'Custom image',
@@ -180,6 +179,7 @@
             $('#geom').prop('readonly', true);
             $('#kontroljson').show();
             $("[name='ukoordinat']").show();
+            $('#map').hide();
         }
         else if($('#geojson').is(':checked')){
             jQuery("#inputgeom1").detach().prependTo('#inputgeom2');
@@ -188,8 +188,12 @@
             $('#geom').prop('readonly', false);
             $('#kontroljson').show();
             $("[name='ukoordinat']").hide();
+            $('#map').hide();
         }
         else if($('#googlemaps').is(':checked')){
+            if (gmapslayer == false) {
+                initialize();
+            }
             jQuery("#inputgeom1").detach().prependTo('#inputgeom');
             $('#kontrolpeta').show();
             $("textarea[id*=geom]").attr('rows','2'); 
@@ -353,6 +357,10 @@
             )
         }
         })
+    }
+
+    function hitungluas() {
+        Swal.fire('Anyone can use a computer');
     }
 </script>
     <div class="panel-body card" style="padding-top: 2%; padding-left: 2%; padding-right: 2%" id="tabel-jeniskonstruksi">
