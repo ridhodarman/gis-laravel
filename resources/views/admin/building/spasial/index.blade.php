@@ -1,7 +1,7 @@
 @extends('admin.layouts.sidebar')
 
 @section('content')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1TwYksj1uQg1V_5yPUZqwqYYtUIvidrY&libraries=drawing"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1TwYksj1uQg1V_5yPUZqwqYYtUIvidrY&libraries=drawing,places&v=weekly"></script>
 <script type="text/javascript" src="{{ asset('script/map-tambah.js') }}"></script>
 <script src="{{ asset('assets/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('assets/sweetalert2/dist/sweetalert2.min.css') }}">
@@ -93,18 +93,28 @@
                                 <div id="inputgeom2"></div>
                             </div>
                             <div class="row" style="margin-left: 1%;" id="kontrolpeta">
-                                <div class="col-sm-6">
-                                    <input id="latlng" type="text" class="form-control" value="" placeholder="Latitude, Longitude">
-                                    <div id="notif"></div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <button class="btn btn-default" id="btnlatlng" type="button" title="Cari Koordinat"><i class="fa fa-search"></i></button>
-                                    &emsp;
-                                    <button class="btn btn-default" type="button" title="Hapus Marker" onclick="hapusmarkerdankoor()"><i
-                                            class="fa fa-ban"></i></button>
-                                    &emsp;
-                                    <button class="btn btn-default" id="delete-button" type="button" title="Remove shape"><i
-                                            class="fa fa-trash"></i></button>
+                                <div class="col-sm-12">
+                                    <div class="form-inline">
+                                        <div class="input-group mb-3">
+                                            <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+                                            <input id="latlng" type="text" class="form-control" placeholder="Latitude, Longitude">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-default" type="button" id="btnlatlng" title="search coordinate.."><b><i class="fa fa-search"></i></b></button>
+                                                <button class="btn btn-default" type="button" title="Hapus Marker" onclick="hapusmarkerdankoor()"><i
+                                                    class="fa fa-ban"></i></button>
+                                            </div>
+                                            &nbsp;
+                                            <input
+                                            id="pac-input"
+                                            class="form-control"
+                                            type="text"
+                                            placeholder="Search places..."
+                                            />
+                                        </div>
+                                        &emsp;
+                                        <button class="btn btn-default" id="delete-button" type="button" title="Remove shape" style="margin-top: -2%;"><i
+                                                class="fa fa-trash"></i></button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-12" style="padding-top: 1%;">
@@ -129,7 +139,7 @@
                                         <button type="button" class="btn btn-default btn-xs" name="ukoordinat">
                                             <i class="fas fa-paper-plane"></i> check the coordinate list
                                         </button>
-                                        <button type="button" class="btn btn-info btn-xs" title="visualize the geojson data results in the text area on the map">
+                                        <button type="button" class="btn btn-info btn-xs" title="visualize the geojson data results in the text area on the map" onclick="check_geojson()">
                                             <i class="fas fa-drafting-compass"></i> check GeoJson data on map
                                         </button>
                                     </div>
@@ -149,7 +159,7 @@
 </form>
 
 <script>
-    spasial();
+    spasial(); initAutocomplete();
     function geom2() {
         if($('#googlemaps').is(':checked')){
             Swal.fire({
@@ -199,6 +209,8 @@
             $("textarea[id*=geom]").attr('rows','2'); 
             $('#geom').prop('readonly', true);
             $('#kontroljson').hide();
+            $('#map').show();
+            $('#mapcheck').hide();
         }
     }
     function tambahkoordinat() {
@@ -350,6 +362,7 @@
         }).then((result) => {
         if (result.value) {
             $( "#delete-button" ).click();
+            document.getElementById("geom").value="";
             Swal.fire(
             'Deleted!',
             'Your GeoJson has been deleted.',
@@ -357,6 +370,39 @@
             )
         }
         })
+    }
+
+    function check_geojson(){
+        $('#map').hide();
+        $('#mapcheck').show();
+        const map = new google.maps.Map(
+            document.getElementById("mapcheck"),
+            {
+            zoom: 5,
+            center: { lat: 24.886, lng: -70.268 },
+            mapTypeId: "terrain"
+            }
+        );
+
+        // Define the LatLng coordinates for the polygon's path.
+        const triangleCoords = [
+            { lat: 25.774, lng: -80.19 },
+            { lat: 18.466, lng: -66.118 },
+            { lat: 32.321, lng: -64.757 },
+            { lat: 25.774, lng: -80.19 }
+        ];
+
+        // Construct the polygon.
+        const bermudaTriangle = new google.maps.Polygon({
+            paths: triangleCoords,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35
+        });
+        bermudaTriangle.setMap(map);
+        
     }
 
     function hitungluas() {
