@@ -3,6 +3,7 @@ var drawingManager;
 var selectedShape;
 var markers = [];
 let gmapslayer = false
+let i = 0;
 
 function initialize() {
   if ( ! $("#googlemaps").is(':checked') ) { 
@@ -20,6 +21,7 @@ function initialize() {
         disableDefaultUI: true,
         zoomControl: true,
         mapTypeControl: true,
+        fullscreenControl: true,
         gestureHandling: "greedy"
     });
 
@@ -332,65 +334,7 @@ function hapusmarkerdankoor() {
     document.getElementById("latlng").value = null;
 }
 
-function initAutocomplete() {
-  // Create the search box and link it to the UI element.
-  const input = document.getElementById("pac-input");
-  const searchBox = new google.maps.places.SearchBox(input);
-  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener("bounds_changed", () => {
-    searchBox.setBounds(map.getBounds());
-  });
-  let markers = [];
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
-    const places = searchBox.getPlaces();
-
-    if (places.length == 0) {
-      return;
-    }
-    // Clear out the old markers.
-    markers.forEach(marker => {
-      marker.setMap(null);
-    });
-    markers = [];
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-    places.forEach(place => {
-      if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      // Create a marker for each place.
-      markers.push(
-        new google.maps.Marker({
-          map,
-          icon,
-          title: place.name,
-          position: place.geometry.location
-        })
-      );
-
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
-}
-
-//batalkan submit dengan enter
+//batalkan submit tekan enter
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
@@ -399,3 +343,117 @@ $(document).ready(function() {
     }
   });
 });
+
+var autocompleteService, placesService, results, map;
+
+function initializeCari_alamat() {
+
+  results = document.getElementById('results');
+
+
+  // Bind listener for address search
+  google.maps.event.addDomListener(document.getElementById('address'), 'input', function() {
+    if(!document.getElementById('address').value) { 
+        return; //stop kalau isi inputan-nya tidak ada
+    }
+
+    results.style.display = 'block';
+    getPlacePredictions(document.getElementById('address').value);
+  });
+
+  // Show results when address field is focused (if not empty)
+  google.maps.event.addDomListener(document.getElementById('address'), 'focus', function() {
+
+    if (document.getElementById('address').value !== '') {
+
+      results.style.display = 'block';
+      getPlacePredictions(document.getElementById('address').value);
+      //$('#pac-input').hide();
+    }
+  });
+
+  // Hide results when click occurs out of the results and inputs
+  google.maps.event.addDomListener(document, 'click', function(e) {
+
+    if ((e.target.parentElement.className !== 'pac-container') && (e.target.parentElement.className !== 'pac-item') && (e.target.tagName !== 'INPUT')) {
+
+      results.style.display = 'none';
+    }
+  });
+
+  autocompleteService = new google.maps.places.AutocompleteService();
+  placesService = new google.maps.places.PlacesService(map);
+}
+
+// Get place predictions
+function getPlacePredictions(search) {
+
+  autocompleteService.getPlacePredictions({
+    input: search,
+    types: ['establishment', 'geocode']
+  }, callback);
+}
+
+// Get place details
+function getPlaceDetails(placeId) {
+
+  var request = {
+    placeId: placeId
+  };
+
+  placesService.getDetails(request, function(place, status) {
+
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+
+      var center = place.geometry.location;
+      markers[i] = new google.maps.Marker({
+        position: center,
+        map: map
+      });
+
+      map.setCenter(center);
+
+      // Hide autocomplete results
+      results.style.display = 'none';
+    }
+  });
+}
+
+// Place search callback
+function callback(predictions, status) {
+
+  // Empty results container
+  results.innerHTML = '';
+
+  // Place service status error
+  if (status != google.maps.places.PlacesServiceStatus.OK) {
+    results.innerHTML = '<div class="pac-item pac-item-error">Your search returned no result. Status: ' + status + '</div>';
+    return;
+  }
+
+  // Build output with custom addresses
+  results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My home address</div>';
+  results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My work address</div>';
+
+  // Build output for each prediction
+  for (var i = 0, prediction; prediction = predictions[i]; i++) {
+
+    // Insert output in results container
+    results.innerHTML += '<div class="pac-item" data-placeid="' + prediction.place_id + '" data-name="' + prediction.terms[0].value + '"><span class="pac-icon pac-icon-marker"></span>' + prediction.description + '</div>';
+  }
+
+  var items = document.getElementsByClassName("pac-item");
+
+  // Results items click
+  for (var i = 0, item; item = items[i]; i++) {
+
+    item.onclick = function() {
+
+      if (this.dataset.placeid) {
+        getPlaceDetails(this.dataset.placeid);
+      }
+    };
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initializeCari_alamat);

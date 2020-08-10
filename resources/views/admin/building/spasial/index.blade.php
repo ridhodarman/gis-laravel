@@ -104,12 +104,24 @@
                                                     class="fa fa-ban"></i></button>
                                             </div>
                                             &nbsp;
-                                            <input
-                                            id="pac-input"
-                                            class="form-control"
-                                            type="text"
-                                            placeholder="Search places..."
-                                            />
+                                            <input id="pac-input" class="form-control" type="text" placeholder="Search places..." />
+                                            <table>
+                                                <tr>
+                                                  <td>
+                                                    <label for="address">find a place:</label>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td>
+                                                    <input id="address" placeholder="enter the name of the place" type="text" tabindex="1" />
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="2">
+                                                    <div id="results" class="pac-container"></div>
+                                                  </td>
+                                                </tr>
+                                              </table>
                                         </div>
                                         &emsp;
                                         <button class="btn btn-default" id="delete-button" type="button" title="Remove shape" style="margin-top: -2%;"><i
@@ -159,7 +171,8 @@
 </form>
 
 <script>
-    spasial(); initAutocomplete();
+    spasial(); //initAutocomplete();
+    $('#pac-input').hide();
     function geom2() {
         if($('#googlemaps').is(':checked')){
             Swal.fire({
