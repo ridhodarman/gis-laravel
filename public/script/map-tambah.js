@@ -6,9 +6,8 @@ let gmapslayer = false
 let i = 0;
 
 function initialize() {
-  if ( ! $("#googlemaps").is(':checked') ) { 
-    return; //stop the execution of function
-  }
+    gmapslayer = true;
+    $('#pac-input').hide();
     new google.maps.places.Autocomplete(
           (document.getElementById('pac-input')),
           {types: ['geocode']}
@@ -332,6 +331,7 @@ function hapusmarkerdankoor() {
     setMapOnAll(null);
     markers = [];
     document.getElementById("latlng").value = null;
+    i=0;
 }
 
 //batalkan submit tekan enter
@@ -412,6 +412,7 @@ function getPlaceDetails(placeId) {
       });
 
       map.setCenter(center);
+      i++;
 
       // Hide autocomplete results
       results.style.display = 'none';
@@ -432,8 +433,8 @@ function callback(predictions, status) {
   }
 
   // Build output with custom addresses
-  results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My home address</div>';
-  results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My work address</div>';
+  //results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My home address</div>';
+  //results.innerHTML += '<div class="pac-item custom"><span class="pac-icon pac-icon-marker"></span>My work address</div>';
 
   // Build output for each prediction
   for (var i = 0, prediction; prediction = predictions[i]; i++) {
