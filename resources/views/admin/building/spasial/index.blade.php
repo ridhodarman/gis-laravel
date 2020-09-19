@@ -12,7 +12,7 @@
     </button>
 </div>
 
-<form role="form" action="act/tambah-b-ibadah.php" enctype="multipart/form-data" method="post">
+<form role="form" action="{{ route('bangunan') }}" enctype="multipart/form-data" method="post">
     <div class="modal fade bd-example-modal-lg modal-xl modal-dialog-scrollable" id="tambahibadah">
         <div class="modal-dialog modal-lg modal-xl">
             <div class="modal-content">
@@ -29,13 +29,13 @@
                                 <div class="form-group col-sm-6">
                                     <label><span style="color:red">*</span>ID Survey</label>
                                     <div id="ids"></div>
-                                    <input type="text" class="form-control" name="id" id="id"
-                                        onkeyup="this.value = this.value.toLocaleUpperCase();" onchange="cekid()"
+                                    <input type="text" class="form-control" name="building_id" id="id"
+                                        onkeyup="this.value = this.value.toLocaleUpperCase();"
                                         required>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Construction Type</label>
-                                    <select name="konstruksi" class="form-control" style="height: 43px">
+                                    <select name="type_of_construction" class="form-control" style="height: 43px">
                                         <option></option>
                                         <?php                
                                             $sql_j=pg_query("SELECT * FROM type_of_construction ORDER BY name_of_type");
@@ -48,22 +48,19 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Building Area (m<sup>2</sup>)</label><label id="lbangs"></label>
-                                    <input type="text" class="form-control" name="lbang" value=""
-                                        onkeypress="return hanyaAngka(event, '#lbangs')">
+                                    <input type="text" class="form-control" name="building_area" value="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Standing Year</label><label id="tahuns"></label>
-                                    <input type="text" class="form-control" name="tahun" value=""
-                                        onkeypress="return hanyaAngka(event, '#tahuns')">
+                                    <input type="text" class="form-control" name="standing_year" value="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Electricity Capacity (VA)</label><label id="listriks"></label>
-                                    <input type="text" class="form-control" name="listrik" value=""
-                                        onkeypress="return hanyaAngka(event, '#listriks')">
+                                    <input type="text" class="form-control" name="electricity_capacity" value="">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Building Model</label>
-                                    <select name="model" class="form-control" style="height: 43px">
+                                    <select name="building_model" class="form-control" style="height: 43px">
                                         <option></option>
                                         <?php                
                                             $sql_j=pg_query("SELECT * FROM building_model ORDER BY name_of_model");
@@ -77,24 +74,26 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control h-25" rows="2" name="alamat"></textarea>
+                                <textarea class="form-control h-25" rows="2" name="address"></textarea>
                             </div>
                             <div class="form-group">
                                 <label><strong>Standing on a land of heirlooms?</strong></label>
                                 <nav style="display: flex;">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" checked="true" id="antah" name="tanahpusako"
-                                            class="custom-control-input">
+                                        <input type="radio" checked="true" id="antah" class="custom-control-input"
+                                        name="heirloom_status_of_the_land">
                                         <label class="custom-control-label" for="antah" style="padding-left: 18px;">Not
                                             known</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="pusako" name="tanahpusako" class="custom-control-input">
+                                        <input type="radio" id="pusako" class="custom-control-input"
+                                        name="heirloom_status_of_the_land" value="true">
                                         <label class="custom-control-label" for="pusako"
                                             style="padding-left: 18px;">Yes</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="indak" name="tanahpusako" class="custom-control-input">
+                                        <input type="radio" id="indak" class="custom-control-input"
+                                        name="heirloom_status_of_the_land" value="false">
                                         <label class="custom-control-label" for="indak"
                                             style="padding-left: 18px;">No</label>
                                     </div>
@@ -105,19 +104,43 @@
                                 <label><strong>Is this a building with an heirloom status?</strong></label>
                                 <nav style="display: flex;">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" checked="true" id="ntah" name="bangunanpusako"
-                                            class="custom-control-input">
+                                        <input type="radio" checked="true" id="ntah" class="custom-control-input"
+                                        name="heirloom_status_of_the_building">
                                         <label class="custom-control-label" for="ntah" style="padding-left: 18px;">Not
                                             known</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="iyo" name="bangunanpusako" class="custom-control-input">
+                                        <input type="radio" id="iyo" class="custom-control-input"
+                                        name="heirloom_status_of_the_building" value="true">
                                         <label class="custom-control-label" for="iyo"
                                             style="padding-left: 18px;">Yes</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="ndak" name="bangunanpusako"
-                                            class="custom-control-input">
+                                        <input type="radio" id="ndak" class="custom-control-input"
+                                        name="heirloom_status_of_the_building" value="false">
+                                        <label class="custom-control-label" for="ndak"
+                                            style="padding-left: 18px;">No</label>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>have a source of tap water?</strong></label>
+                                <nav style="display: flex;">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" checked="true" id="ntah" class="custom-control-input"
+                                        name="tap_water">
+                                        <label class="custom-control-label" for="ntah" style="padding-left: 18px;">
+                                            Not known</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="iyo" class="custom-control-input"
+                                        name="tap_water" value="true">
+                                        <label class="custom-control-label" for="iyo"
+                                            style="padding-left: 18px;">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="ndak" class="custom-control-input"
+                                        name="tap_water" value="false">
                                         <label class="custom-control-label" for="ndak"
                                             style="padding-left: 18px;">No</label>
                                     </div>
@@ -479,7 +502,7 @@
             document.getElementById("mapcheck"),
             {
                 zoom: 17,
-                center: { lat: 24.886, lng: -70.268 },
+                center: { lat: -0.31248978140928513, lng: 100.34191559230665 },
                 mapTypeId: "satellite"
             }
         );
@@ -522,7 +545,21 @@
             fillOpacity: 0.7,
         });
         tampilkandigit.setMap(map);
+        
+        //center terakhir
         map.setCenter({lat: b, lng: a});
+
+        // //center tengah
+        // let y1 = array[0+1];
+        // let y2 = array[point-1];
+        // let x1 = array[0];
+        // let x2 = array[point-2];
+
+        // let x = x1 + ((x2 - x1) / 2);
+        // let y = y1 + ((y2 - y1) / 2);
+        // map.setCenter({ lat:  Number(y), lng:  Number(x) });
+
+        //alert(tampilkandigit.my_getBounds().getCenter())
         
         // const triangleCoords = [
         //     { lat: 25.774, lng: -80.19 },

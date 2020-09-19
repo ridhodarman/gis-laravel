@@ -19,7 +19,7 @@ class CreateBuildingsTable extends Migration
             $table->integer('standing_year')->nullable();
             $table->integer('electricity_capacity')->nullable();
             $table->text('address')->nullable();
-            $table->char('tap_water', 1)->nullable();
+            $table->boolean('tap_water')->nullable();
             $table->foreignId('building_model')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('type_of_construction')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('heirloom_status_of_the_land')->nullable();
