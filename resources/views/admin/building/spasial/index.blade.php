@@ -1,14 +1,23 @@
 @extends('admin.layouts.sidebar')
 
 @section('content')
+<div style="margin-top: -20px; float: right;">
+    <a href="{{ route('bangunan') }}">
+        <button class="btn btn-sm"> 
+            <i class="fa fa-angle-double-left"></i>
+            Back to previous page 
+        </button>
+    </a>
+</div>
+
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1TwYksj1uQg1V_5yPUZqwqYYtUIvidrY&libraries=drawing,places&v=weekly"></script>
 <script type="text/javascript" src="{{ asset('script/map-tambah.js') }}"></script>
 <script src="{{ asset('assets/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('assets/sweetalert2/dist/sweetalert2.min.css') }}">
-<div class="tombol-atas mt-3 mb-3 mr-5 ml-5" style="text-align: center;">
-    <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal" data-target="#tambahibadah">+
-        Ad New Building Data
+<div class="tombol-atas mt-5 mb-3 mr-5 ml-5" style="text-align: center;">
+    <button class="btn btn-default btn-lg" style="width: 100%;" data-toggle="modal" data-target="#tambahibadah">
+        + Add New Building Data
     </button>
 </div>
 

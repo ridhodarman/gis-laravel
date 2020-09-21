@@ -7,7 +7,7 @@
     <title>GIS Koto Gadang</title>
 
     @include('inc.head')
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="//maps.google.com/maps/api/js?key={{$api}}"></script>
     <script type="text/javascript" src="{{ asset('script/script.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_rumah.js') }}"></script>

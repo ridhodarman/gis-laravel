@@ -28,7 +28,8 @@ function loadpeta() {
        center: new google.maps.LatLng(-0.322189, 100.349190),
        zoom: 14,
        //gestureHandling: 'greedy',
-       mapTypeId: 'mystyle'
+       //mapTypeId: 'mystyle'
+       mapTypeId: 'satellite'
      });
      map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'Styled Map' }));
 }
