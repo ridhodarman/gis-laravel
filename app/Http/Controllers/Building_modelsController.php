@@ -47,7 +47,8 @@ class Building_modelsController extends Controller
             'name_of_model' => 'required|max:40|unique:building_models|not_regex:/`/i'
         ]);
         Building_model::create($request->all());
-        $pesan = "<b>".$request->name_of_model.'</b> added successfully';
+        $nama = str_replace('"',"", $request->name_of_type);
+        $pesan = "<b>".$nama."</b> added successfully";
         return redirect('/model')->with('status', $pesan);
     }
 
@@ -101,7 +102,8 @@ class Building_modelsController extends Controller
                             ->update([
                                 'name_of_model' => $request->new_name
                             ]);
-                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        $nama = str_replace('"',"", $request->new_name);
+                        $pesan = "the name of the building model has been changed to <b>".$nama."</b>";
                         return redirect('/model')->with('status', $pesan);
     }
 
@@ -113,8 +115,10 @@ class Building_modelsController extends Controller
      */
     public function destroy(Building_model $Building_model)
     {
-        Building_model::destroy($Building_model->id);
-        $pesan = "<b>".$Building_model->name_of_model.'</b> successfully deleted !';
+        $model = Building_model::find($Building_model->id);
+        $model->delete();
+        $nama = str_replace('"',"", $Building_model->name_of_model);
+        $pesan = "<b>".$nama."</b> successfully deleted !";
         return redirect('/model')->with('status-hapus', $pesan);
     }
 }

@@ -155,8 +155,9 @@
     <script type="text/javascript">
         function edit(id, model) {
             $('#edit').modal('show');
-            $('#judul-e').html(`Edit '${model}' `);
-            document.getElementById("nama-e").value = escapeHtml(model);
+            let model2 = escapeHtml(model);
+            $('#judul-e').html(`Edit " ${model2} " `);
+            document.getElementById("nama-e").value = model2;
             document.getElementById("id-e").value = id;
             $('#form-edit').attr('action', `model/${id}`);
         }

@@ -4,99 +4,40 @@
 
 @section('isi')
 <style>
-    * {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent
-    }
-
-    .button {
-        position: relative;
-        padding: 0;
+    body .button {
         width: 80%;
-        border: 4px solid #888888;
-        outline: none;
-        background-color: #f4f5f6;
-        border-radius: 40px;
-        box-shadow: -6px -20px 35px #ffffff, -6px -10px 15px #ffffff, -20px 0px 30px #ffffff, 6px 20px 25px rgba(0, 0, 0, 0.2);
-        transition: .13s ease-in-out;
-        cursor: pointer;
-    }
-
-    .button:active {
-        box-shadow: none;
-    }
-
-    .button:active .button__content {
-        box-shadow: none;
-    }
-
-    .button:active .button__content .button__text,
-    .button:active .button__content .button__icon {
-        transform: translate3d(0px, 0px, 0px);
-    }
-
-    .button__content {
+        height: 50%;
+        background: #f3f0f1;
         position: relative;
-        padding: 20px;
-        width: 100%;
-        height: 100%;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        box-shadow: inset 0px -8px 0px #dddddd, 0px -8px 0px #f4f5f6;
-        border-radius: 40px;
-        transition: .13s ease-in-out;
-        z-index: 1;
-    }
-
-    .button__icon {
-        margin-top: -27px;
-        transform: translate3d(0px, -4px, 0px);
-        grid-column: 4;
-        align-self: start;
-        justify-self: end;
-        width: 32px;
-        height: 32px;
-        transition: .13s ease-in-out;
-        font-size: 22px;
-        color: gray;
-        float: right;
-    }
-
-    .button__icon svg {
-        width: 18px;
-        height: 18px;
-        fill: #aaaaaa;
-    }
-
-    .button__text {
-        position: relative;
-        transform: translate3d(0px, -4px, 0px);
-        margin-top: -13px;
+        background: #f3f0f1;
+        margin-bottom: 25px;
+        border-radius: 32px;
         text-align: center;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+    }
+
+    body .button span {
+        line-height: 70px;
+        font-family: "Montserrat", sans-serif;
         font-size: 18px;
-        background-color: #888888;
-        color: transparent;
-        text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        background-clip: text;
-        transition: .13s ease-in-out;
+        font-weight: semibold;
     }
 
-    .credits {
-        margin-top: 24px;
+    body .button:nth-child(1) {
+        box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8), 6px 6px 10px rgba(0, 0, 0, 0.2);
+        color: #6f6cde;
     }
 
-    .credits__reference {
-        display: inline-block;
-        border-bottom: 1px solid transparent;
-        color: #0099ff;
-        text-decoration: none;
-        transition: ease-in .13s;
+    body .button:nth-child(1):hover {
+        opacity: 0.7;
+        box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8), 6px 6px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .credits__reference:hover {
-        border-bottom-color: #0099ff;
+    body .button:nth-child(1):active {
+        opacity: 1;
+        box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5), inset 8px 8px 16px rgba(0, 0, 0, 0.1);
+        color: #79e3b6;
     }
 </style>
 <div class="tab-pane fade show active card" id="bang" role="tabpanel" aria-labelledby="bang-tab">
@@ -109,17 +50,10 @@
                         </button>
                     </a> -->
             <a href="{{ route('spasial') }}" style="font-family: Arial, Helvetica, sans-serif;">
-                <button class="button">
-                    <div class="button__content">
-                        <p class="button__text">
-                            Manage spatial data and building attributes
-                        </p>
-                        <div class="button__icon">
-                            <i class="fas fa-globe-asia"></i>
-                        </div>
-                        </p>
-                    </div>
-                </button>
+                <div class="button"><span>
+                        <i class="fas fa-globe-asia"></i>
+                        Manage spatial data and building attributes
+                    </span></div>
             </a>
         </center>
         <div class="row">
