@@ -63,8 +63,8 @@
     }
 
     .button__icon svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         fill: #aaaaaa;
     }
 
@@ -73,7 +73,7 @@
         transform: translate3d(0px, -4px, 0px);
         margin-top: -13px;
         text-align: center;
-        font-size: 22px;
+        font-size: 18px;
         background-color: #888888;
         color: transparent;
         text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);

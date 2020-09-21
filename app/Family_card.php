@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Family_card extends Model
 {
+    use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable =   [
         'family_card_number',

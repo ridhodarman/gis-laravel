@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Msme_building extends Model
 {
+    use SoftDeletes;
     protected $dates = ['deleted_at'];
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Datuk extends Model
 {
+    use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = ['datuk_name'];
 }

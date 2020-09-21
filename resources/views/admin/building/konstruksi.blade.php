@@ -98,8 +98,7 @@
                         <div class="form-group">
                             <label>Name of Construction Type:</label>
                             <input type="hidden" class="form-control" name="id_e" id="id-e">
-                            <input type="text" name="new_name" id="nama-e" class="form-control"
-                                onkeyup="javascript:capitalize(this);">
+                            <input type="text" name="new_name" id="nama-e" class="form-control kapital">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -156,8 +155,9 @@
     <script type="text/javascript">
         function edit(id, jenis) {
             $('#edit').modal('show');
-            $('#judul-e').html(`Edit '${jenis}' `);
-            document.getElementById("nama-e").value = escapeHtml(jenis);
+            let jenis2 = escapeHtml(jenis);
+            $('#judul-e').html(`Edit " ${jenis2} " `);
+            document.getElementById("nama-e").value = jenis2;
             document.getElementById("id-e").value = id;
             $('#form-edit').attr('action', `konstruksi/${id}`);
         }

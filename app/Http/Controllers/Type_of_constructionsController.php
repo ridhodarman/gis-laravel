@@ -47,7 +47,8 @@ class Type_of_constructionsController extends Controller
             'name_of_type' => 'required|max:40|unique:type_of_constructions|not_regex:/`/i'
         ]);
         Type_of_construction::create($request->all());
-        $pesan = "<b>".$request->name_of_type.'</b> added successfully';
+        $nama = str_replace('"',"", $request->name_of_type);
+        $pesan = "<b>".$nama."</b> added successfully";
         return redirect('/konstruksi')->with('status', $pesan);
     }
 
@@ -101,7 +102,8 @@ class Type_of_constructionsController extends Controller
                             ->update([
                                 'name_of_type' => $request->new_name
                             ]);
-                        $pesan = "the data was successfully changed to <b>".$request->new_name.'</b>';
+                        $nama = str_replace('"',"", $request->new_name);
+                        $pesan = "the name of the construction type has been changed to <b>".$nama."</b>";
                         return redirect('/konstruksi')->with('status', $pesan);
     }
 
@@ -113,8 +115,10 @@ class Type_of_constructionsController extends Controller
      */
     public function destroy(Type_of_construction $Type_of_construction)
     {
-        Type_of_construction::destroy($Type_of_construction->id);
-        $pesan = "<b>".$Type_of_construction->name_of_type.'</b> successfully deleted !';
+        $konstruksi = Type_of_construction::find($Type_of_construction->id);
+        $konstruksi->delete();
+        $nama = str_replace('"',"", $Type_of_construction->name_of_type);
+        $pesan = "<b>".$nama."</b> successfully deleted !";
         return redirect('/konstruksi')->with('status-hapus', $pesan);
     }
 }

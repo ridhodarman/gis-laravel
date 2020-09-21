@@ -45,7 +45,7 @@
     <script src="assets/alertify/lib/alertify.min.js"></script>
 
     <style>
-        .tombol-atas {
+        /* .tombol-atas {
             width: 90%;
             border-color: #e8e8e8;
         }
@@ -58,10 +58,25 @@
 
         .tombol-sidebar:hover {
             opacity: 1;
+        } */
+
+        .kapital {
+            text-transform:capitalize;
         }
     </style>
 
 </head>
+
+<script>
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace("&amp;", `&`)
+            .replace("&lt;", `<`)
+            .replace("&gt;", `>`)
+            .replace("&quot;", `"`)
+            .replace("&#039;", `'`);
+    }
+</script>
 
 <body style="background-color:#fafafa;">
     <div id="preloader">
@@ -119,7 +134,6 @@
                     </a>
                 </li>
             </ul>
-
         </nav>
 
         <!-- Page Content  -->
@@ -145,6 +159,61 @@
                     © Ridho Darman | Jurusan Sistem Informasi Universitas Andalas 2019.
                 </p>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sukses">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <center>
+                            <div>
+                                <p style="font-size: 400%; color: green"><i class="fa fa-check"></i></p>
+                                <p id="pesan-sukses"></p>
+                            </div>
+                            <br/>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                        </center>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="warning">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-sm" style="width: 200%">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <center>
+                            <div>
+                                <p style="font-size: 400%; color: #edd83b"><i class="fas fa-exclamation-circle"></i></p>
+                                <p id="pesan-warning"></p>
+                            </div>
+                            <br/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sukses-hapus">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <center>
+                            <div>
+                                <p style="font-size: 400%; color: green"><i class="fas fa-calendar-check"></i></p>
+                                <p id="pesan-hapus"></p>
+                            </div>
+                            <br/>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                        </center>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
