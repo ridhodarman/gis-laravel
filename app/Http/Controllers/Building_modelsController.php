@@ -47,7 +47,7 @@ class Building_modelsController extends Controller
             'name_of_model' => 'required|max:40|unique:building_models|not_regex:/`/i'
         ]);
         Building_model::create($request->all());
-        $nama = str_replace('"',"", $request->name_of_type);
+        $nama = str_replace('"',"", $request->name_of_model);
         $pesan = "<b>".$nama."</b> added successfully";
         return redirect('/model')->with('status', $pesan);
     }

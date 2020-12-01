@@ -142,3 +142,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/tes', 'HomeController@tes');
+
+Route::livewire('/post', 'post.index')->layout('layouts.app2')->name('post.index');
+Route::livewire('/post/tambah', 'post.create')->layout('layouts.app2')->name('post.create');
+Route::livewire('/post/edit/{id}', 'post.edit')->layout('layouts.app2')->name('post.edit');
