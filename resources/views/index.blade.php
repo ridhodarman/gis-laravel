@@ -276,13 +276,11 @@
 
     <script>
         var map;
-
-        function initMap() {
+        $(window).bind("load", function () {
             loadpeta();
             semuadigitasi();
-        }
+        });
 
-        initMap();
     </script>
     <!-- offset area end -->
 

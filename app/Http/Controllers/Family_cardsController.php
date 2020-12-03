@@ -19,7 +19,6 @@ class Family_cardsController extends Controller
                             ->selectRaw('count(citizens.national_identity_number) as jumlah')
                             ->leftJoin('citizens', 'family_cards.family_card_number', '=', 'citizens.family_card_number')
                             ->groupBy('family_cards.family_card_number')
-                            ->orderBy('family_card_number')
                             ->get();
         //return $kk;
         $query = DB::table('house_buildings')->Select('house_building_id')->get();

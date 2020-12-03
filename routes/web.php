@@ -97,20 +97,24 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/bangunan', 'PagesController@bangunan')->name('bangunan');
-    //Route::get('/spasial', 'PagesController@spasial')->name('spasial');
-    Route::get('/spasial', function () { return view ('admin.building.spasial.index');})->name('spasial');
+    //Route::get('/bangunan', 'PagesController@bangunan')->name('bangunan');
+    Route::livewire('/bangunan', 'building.index')->layout('layouts.admin')->name('bangunan');
+    //Route::get('/spasial', function () { return view ('admin.building.spasial.index');})->name('spasial');
+    Route::livewire('/spasial', 'building.spatial')->layout('layouts.admin')->name('spasial');
     Route::get('/spasial-info', function () { return view ('admin.building.spasial.info');});
 
     Route::get('/kependudukan', function () { return view ('admin.kependudukan.index');});
-    Route::get('/penduduk', function () { return view ('admin.kependudukan.penduduk');});
+    //Route::get('/penduduk', function () { return view ('admin.kependudukan.penduduk');});
+    Route::livewire('/penduduk', 'population.citizens')->layout('layouts.admin')->name('penduduk');
 
-    Route::get('/konstruksi', 'Type_of_constructionsController@index');
+    //Route::get('/konstruksi', 'Type_of_constructionsController@index');
+    Route::livewire('/konstruksi', 'building.construction')->layout('layouts.admin')->name('konstruksi');
     Route::post('/konstruksi', 'Type_of_constructionsController@store');
     Route::patch('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@update');
     Route::delete('/konstruksi/{Type_of_construction}', 'Type_of_constructionsController@destroy');
 
-    Route::get('/model', 'Building_modelsController@index');
+    //Route::get('/model', 'Building_modelsController@index');
+    Route::livewire('/model', 'building.model')->layout('layouts.admin')->name('model');
     Route::post('/model', 'Building_modelsController@store');
     Route::patch('/model/{Building_model}', 'Building_modelsController@update');
     Route::delete('/model/{Building_model}', 'Building_modelsController@destroy');
@@ -135,8 +139,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/pekerjaan/{job}', 'JobsController@update');
     Route::delete('/pekerjaan/{job}', 'JobsController@destroy');
 
-    //Route::get('/keluarga', function () { return view ('admin.kependudukan.keluarga');});
-    Route::get('/keluarga', 'Family_cardsController@index');
+    //Route::get('/keluarga', 'Family_cardsController@index');
+    Route::livewire('/keluarga', 'population.family')->layout('layouts.admin')->name('keluarga');
     Route::post('/keluarga', 'Family_cardsController@store');
     Route::delete('/keluarga/{family_card}', 'Family_cardsController@destroy');
 });
