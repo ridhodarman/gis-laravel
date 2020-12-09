@@ -119,22 +119,26 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/model/{Building_model}', 'Building_modelsController@update');
     Route::delete('/model/{Building_model}', 'Building_modelsController@destroy');
 
-    Route::get('/suku', 'TribesController@index');
+    //Route::get('/suku', 'TribesController@index');
+    Route::livewire('/suku', 'datuk.tribes')->layout('layouts.admin')->name('suku');
     Route::post('/suku', 'TribesController@store');
     Route::patch('/suku/{tribe}', 'TribesController@update');
     Route::delete('/suku/{tribe}', 'TribesController@destroy');
 
-    Route::get('/datuk', 'DatuksController@index');
+    //Route::get('/datuk', 'DatuksController@index');
+    Route::livewire('/datuk', 'datuk.index')->layout('layouts.admin')->name('datuk');
     Route::post('/datuk', 'DatuksController@store');
     Route::patch('/datuk/{datuk}', 'DatuksController@update');
     Route::delete('/datuk/{datuk}', 'DatuksController@destroy');
 
-    Route::get('/pendidikan', 'EducationsController@index');
+    //Route::get('/pendidikan', 'EducationsController@index');
+    Route::livewire('/pendidikan', 'population.edu')->layout('layouts.admin')->name('pendidikan');
     Route::post('/pendidikan', 'EducationsController@store');
     Route::patch('/pendidikan/{education}', 'EducationsController@update');
     Route::delete('/pendidikan/{education}', 'EducationsController@destroy');
 
-    Route::get('/pekerjaan', 'JobsController@index');
+    //Route::get('/pekerjaan', 'JobsController@index');
+    Route::livewire('/pekerjaan', 'population.jobs')->layout('layouts.admin')->name('pekerjaan');
     Route::post('/pekerjaan', 'JobsController@store');
     Route::patch('/pekerjaan/{job}', 'JobsController@update');
     Route::delete('/pekerjaan/{job}', 'JobsController@destroy');
@@ -143,10 +147,12 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/keluarga', 'population.family')->layout('layouts.admin')->name('keluarga');
     Route::post('/keluarga', 'Family_cardsController@store');
     Route::delete('/keluarga/{family_card}', 'Family_cardsController@destroy');
+
+    Route::livewire('/admin', 'admin.index')->layout('layouts.admin')->name('admin');
+
+    Route::livewire('/post', 'post.index')->layout('layouts.app2')->name('post.index');
+    Route::livewire('/post/tambah', 'post.create')->layout('layouts.app2')->name('post.create');
+    Route::livewire('/post/edit/{id}', 'post.edit')->layout('layouts.app2')->name('post.edit');
 });
 
 Route::get('/tes', 'HomeController@tes');
-
-Route::livewire('/post', 'post.index')->layout('layouts.app2')->name('post.index');
-Route::livewire('/post/tambah', 'post.create')->layout('layouts.app2')->name('post.create');
-Route::livewire('/post/edit/{id}', 'post.edit')->layout('layouts.app2')->name('post.edit');

@@ -111,6 +111,10 @@
     @livewireStyles
   </head>
   <body style="background-color:#fafafa;">
+    <div id="atas" style="width: 100%; background-color: #f5f5f5; position: fixed; z-index: 1; height: 47px; visibility: hidden;">
+        &nbsp;
+        <br/>
+    </div>
     
     <div id="preloader" style="opacity: 0.2;">
         <div class="wrapper" style="z-index: 100; min-width: 500px;">
@@ -125,15 +129,13 @@
     <div id="loading-data" class="wrapper" style="z-index: 99; position: absolute; visibility: hidden;">
         <div class="lds-ring"><div></div><div></div><div></div></div>
     </div>
-
-
     <div class="wrapper2 d-flex align-items-stretch">
         <nav id="sidebar">
-            <div class="custom-menu">
+            <div class="custom-menu" id="tombol-sidebar" style="z-index: 2;">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
-
                 </button>
             </div>
+            <div style="position: fixed; height: 100%; z-index: 2; background-color: #32373D; overflow-y: auto;">
             <div class="img bg-wrap text-center py-4" style="background-image: url(assets/admin/images/bg_1.jpg);">
                 <div class="user-logo">
                     <div class="img" style="background-image: url(assets/admin/images/user.png);"></div>
@@ -162,20 +164,22 @@
                     </a>
                 </li>
                 <li id="datuk">
-                    <a href="datuk">
+                    <a href="{{ route('datuk') }}">
                         <i class="ti-pie-chart mr-3"></i><span style="font-size: 94%;">Manage Datuk & Tribe Data</span>
                     </a>
                 </li>
-                <li id="aksessuper">
-                    <a href="user" aria-expanded="true">
+                <li id="admin">
+                    <a href="{{ route('admin') }}" aria-expanded="true">
                         <i class="fas fa-users-cog mr-3"></i><span>Manage Admin Nagari</span>
                     </a>
                 </li>
             </ul>
+        </div>
         </nav>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5 mb-3">
+            
             @yield('content')
         </div>
         <style>
@@ -295,6 +299,20 @@
 <script>
     $( document ).on('turbolinks:load', function() {
         $(':button').prop('disabled', false);
-        document.getElementById("loading-data").style.visibility = "hidden"; 
-    })
+        document.getElementById("loading-data").style.visibility = "hidden";
+        $( "#tombol-sidebar" ).empty(); 
+        $("#tombol-sidebar").append(`
+            <div >
+                <button type="button" id="collapse2" class="btn btn-primary"></button>
+            </div>
+            `);
+        $( "#collapse2" ).on( "click", function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+    if ($(window).width() < 700) {
+        document.getElementById("atas").style.visibility = "visible"; 
+    }
+
 </script>
