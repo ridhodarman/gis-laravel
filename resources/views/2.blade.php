@@ -35,50 +35,10 @@
             // MENAMPILKAN SKALA
             L.control.scale({ imperial: false }).addTo(map);
             // ------------------- VECTOR ----------------------------
-            var layer_ADMINISTRASI = new L.GeoJSON.AJAX("layer/request_bali.php", { // sekarang perintahnya diawali dengan variabel
-                style: function (feature) {
-                    var fillColor, // ini style yang akan digunakan
-                        kode = feature.properties.kode_kab; // perwarnaan objek polygon berdasarkan kode kabupaten di dalam file geojson
-                    if (kode > 5171) fillColor = "#ffd700";
-                    else if (kode > 5108) fillColor = "#4ba754";
-                    else if (kode > 5107) fillColor = "#9b3339";
-                    else if (kode > 5106) fillColor = "#dd38e0";
-                    else if (kode > 5105) fillColor = "#908965";
-                    else if (kode > 5104) fillColor = "#3ab7e9";
-                    else if (kode > 5103) fillColor = "#c8cf06";
-                    else if (kode > 5102) fillColor = "#2f838c";
-                    else if (kode > 5101) fillColor = "#fede36";
-                    else fillColor = "#ff4040";  // no data
-                    return { color: "#999", dashArray: '3', weight: 2, fillColor: fillColor, fillOpacity: 1 }; // style border sertaa transparansi
-                },
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.id + "</center>"), // popup yang akan ditampilkan diambil dari filed kab_kot
-                        that = this; // perintah agar menghasilkan efek hover pada objek layer
-
-                    layer.on('mouseover', function (e) {
-                        this.setStyle({
-                            weight: 2,
-                            color: '#72152b',
-                            dashArray: '',
-                            fillOpacity: 0.8
-                        });
-
-                        if (!L.Browser.ie && !L.Browser.opera) {
-                            layer.bringToFront();
-                        }
-
-                        info.update(layer.feature.properties);
-                    });
-                    layer.on('mouseout', function (e) {
-                        layer_ADMINISTRASI.resetStyle(e.target); // isi dengan nama variabel dari layer
-                        info.update();
-                    });
-                }
-            }).addTo(map);
             var layer_GEOLOGI = new L.GeoJSON.AJAX("house_digit", { // layer geologi berada di dalam variabel layer_geologi
                 style: function (feature) {
                     var fillColor, // ini style yang akan digunakan
-                        kode = feature.properties.kode; // perwarnaan objek polygon berdasarkan field kode  di dalam file geojson
+                        kode = feature.properties.id; // perwarnaan objek polygon berdasarkan field kode  di dalam file geojson
                     if (kode != 17) fillColor = "#ffd700";
                     else if (kode > 16) fillColor = "#E3912B";
                     else if (kode > 15) fillColor = "#ED6933";
@@ -123,6 +83,47 @@
                     });
                 }
             }).addTo(map);
+            var layer_ADMINISTRASI = new L.GeoJSON.AJAX("ibadah/digit", { // sekarang perintahnya diawali dengan variabel
+                style: function (feature) {
+                    var fillColor, // ini style yang akan digunakan
+                        kode = feature.properties.id; // perwarnaan objek polygon berdasarkan kode kabupaten di dalam file geojson
+                    if (kode > 5171) fillColor = "#ffd700";
+                    else if (kode > 5108) fillColor = "#4ba754";
+                    else if (kode > 5107) fillColor = "#9b3339";
+                    else if (kode > 5106) fillColor = "#dd38e0";
+                    else if (kode > 5105) fillColor = "#908965";
+                    else if (kode > 5104) fillColor = "#3ab7e9";
+                    else if (kode > 5103) fillColor = "#c8cf06";
+                    else if (kode > 5102) fillColor = "#2f838c";
+                    else if (kode > 5101) fillColor = "#fede36";
+                    else fillColor = "#ff4040";  // no data
+                    return { color: "#999", dashArray: '3', weight: 2, fillColor: fillColor, fillOpacity: 1 }; // style border sertaa transparansi
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), // popup yang akan ditampilkan diambil dari filed kab_kot
+                        that = this; // perintah agar menghasilkan efek hover pada objek layer
+
+                    layer.on('mouseover', function (e) {
+                        this.setStyle({
+                            weight: 2,
+                            color: '#72152b',
+                            dashArray: '',
+                            fillOpacity: 0.8
+                        });
+
+                        if (!L.Browser.ie && !L.Browser.opera) {
+                            layer.bringToFront();
+                        }
+
+                        info.update(layer.feature.properties);
+                    });
+                    layer.on('mouseout', function (e) {
+                        layer_ADMINISTRASI.resetStyle(e.target); // isi dengan nama variabel dari layer
+                        info.update();
+                    });
+                }
+            }).addTo(map);
+            layer_ADMINISTRASI.bringToFront()
             // MENAMBAHKAN TOOL PENCARIAN
             var searchlayer = L.featureGroup([layer_ADMINISTRASI, layer_GEOLOGI]);
             L.Control.Search.include({
@@ -201,8 +202,15 @@
             var options = {
                 exclusiveGroups: ["PROVINSI BALI"]
             };
+
+            var mixed = {
+                "Geologi": layer_GEOLOGI,
+                "Administrasi": layer_ADMINISTRASI
+            };
+
             // MENAMPILKAN TOOLS UNTUK MEMILIH BASEMAP
-            L.control.groupedLayers(baseLayers, overlays, options).addTo(map);
+            //L.control.groupedLayers(baseLayers, options).addTo(map);
+            L.control.layers(baseLayers, mixed).addTo(map);
         </script>
     </div>
 </body>
