@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/welcome', function () {return view ('welcome');});
+Route::get('/2', function () {return view ('2');});
 
 Route::get('/logout2', function (){
     Auth::logout();
