@@ -112,8 +112,7 @@
   </head>
   <body style="background-color:#fafafa;">
     <div id="atas" style="width: 100%; background-color: #f5f5f5; position: fixed; z-index: 1; height: 47px; visibility: hidden;">
-        &nbsp;
-        <br/>
+             
     </div>
     
     <div id="preloader" style="opacity: 0.2;">
@@ -131,11 +130,11 @@
     </div>
     <div class="wrapper2 d-flex align-items-stretch">
         <nav id="sidebar">
-            <div class="custom-menu" id="tombol-sidebar" style="z-index: 2;">
+            <div id="isi-sidebar" style="position: fixed; height: 100%; z-index: 2; background-color: #32373D;">
+            <div class="custom-menu" id="tombol-sidebar">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                 </button>
             </div>
-            <div style="position: fixed; height: 100%; z-index: 2; background-color: #32373D; overflow-y: auto;">
             <div class="img bg-wrap text-center py-4" style="background-image: url(assets/admin/images/bg_1.jpg);">
                 <div class="user-logo">
                     <div class="img" style="background-image: url(assets/admin/images/user.png);"></div>
@@ -179,7 +178,21 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5 mb-3">
-            
+            <div style="z-index: 3; margin-top: -42px; position: fixed; right: 0; margin-right: 6px;">
+                <style>
+                    .kembali2 {
+                        opacity: 40%;
+                    }
+                    .kembali2:hover {
+                        opacity: 100%;
+                    }
+                </style>
+                <button id="tombol-sidebar2" class="btn" style="visibility: hidden;">
+                    <i id="ikon" class="fas fa-bars"></i>
+                    Menu
+                </button>
+                <button class="btn kembali2" id="kembali">back</button>
+            </div>
             @yield('content')
         </div>
         <style>
@@ -297,6 +310,7 @@
     </script>
 </div>
 <script>
+    let tinggi = 405;
     $( document ).on('turbolinks:load', function() {
         $(':button').prop('disabled', false);
         document.getElementById("loading-data").style.visibility = "hidden";
@@ -309,10 +323,30 @@
         $( "#collapse2" ).on( "click", function() {
             $('#sidebar').toggleClass('active');
         });
+
+        if ($(window).height() < tinggi) {
+            document.getElementById("tombol-sidebar2").style.visibility = "visible";
+            $("#isi-sidebar").css("overflow-y", "auto");
+            $("#isi-sidebar").css("scrollbar-width", "thin");
+            $("#isi-sidebar").css("scrollbar-color", "darkblue gray");
+            $( "#tombol-sidebar" ).empty(); 
+            $( "#tombol-sidebar2" ).on( "click", function() {
+                $('#sidebar').toggleClass('active');
+                if ($('#sidebar').hasClass('active')){
+                    $("#ikon").attr('class', 'fas fa-times');
+                }
+                else{
+                    $("#ikon").attr('class', 'fas fa-bars');
+                }
+            });
+        }
+        
     });
 
     if ($(window).width() < 700) {
         document.getElementById("atas").style.visibility = "visible"; 
+        $( "#kembali" ).removeClass( "kembali2" )
     }
 
+    
 </script>

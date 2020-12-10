@@ -3,9 +3,8 @@
 @section('isi')
 <div class="tab-pane fade show active" id="kerja" role="tabpanel" aria-labelledby="kerja">
     <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
-            data-target="#tambahkerja">+
-            Add job list</button>
+        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" onclick="$('#tambahkerja').modal('show');">
+            + Add job list</button>
     </div>
 
     <div class="modal fade" id="tambahkerja">

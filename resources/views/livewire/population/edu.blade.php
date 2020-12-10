@@ -3,9 +3,8 @@
 @section('isi')
 <div class="tab-pane fade show active" id="pendidikan" role="tabpanel" aria-labelledby="pendidikan">
     <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
-            data-target="#tambahpendidikan">+
-            Add a new level of education</button>
+        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" onclick="$('#tambahpendidikan').modal('show');">
+            + Add a new level of education</button>
     </div>
 
     <div class="modal fade" id="tambahpendidikan">

@@ -3,9 +3,8 @@
 @section('isi')
 <div class="tab-pane fade show active" id="datuk" role="tabpanel" aria-labelledby="datuk">
     <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
-            data-target="#tambahdatuk">+
-            Add new datuk</button>
+        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" onclick="$('#tambahdatuk').modal('show');">
+            + Add new datuk</button>
     </div>
 
     <div class="modal fade" id="tambahdatuk">

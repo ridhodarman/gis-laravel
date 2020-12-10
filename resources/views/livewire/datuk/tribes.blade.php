@@ -3,9 +3,8 @@
 @section('isi')
 <div class="tab-pane fade show active" id="suku" role="tabpanel" aria-labelledby="suku">
     <div style="text-align: center; padding-top: 3%; padding-bottom:3%">
-        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" data-toggle="modal"
-            data-target="#tambahsuku">+
-            Add a new tribe</button>
+        <button class="btn btn-default btn-lg" style="width: 90%; background-color: #fafafa" onclick="$('#tambahsuku').modal('show');">
+            + Add a new tribe</button>
     </div>
 
     <div class="modal fade" id="tambahsuku">
