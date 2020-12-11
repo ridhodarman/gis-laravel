@@ -85,8 +85,7 @@ class Health_service_buildingsController extends Controller
     }
 
     public function digit(){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry"))
+        $query = Health_service_building::selectRaw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry")
                     ->addSelect('health_service_building_id', 'name_of_health_service_building')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
@@ -110,9 +109,8 @@ class Health_service_buildingsController extends Controller
     }
 
     public function semua(){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
                     ->orderBy('health_service_buildings.name_of_health_service_building')
@@ -121,9 +119,8 @@ class Health_service_buildingsController extends Controller
     }
 
     public function cari_nama($nama){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
                     ->orWhere('health_service_buildings.name_of_health_service_building', 'ilike', array("%".$nama."%"))
@@ -133,9 +130,8 @@ class Health_service_buildingsController extends Controller
     }
 
     public function cari_jenis($jenis){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
                     ->where('health_service_buildings.type_of_health_service', '=', '?')
@@ -148,10 +144,9 @@ class Health_service_buildingsController extends Controller
     public function cari_radius($lat, $lng, $rad){
         $lat = (double) $lat;
         $lng = (double) $lng;
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
+        $query = Health_service_building::selectRaw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude,
-                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
+                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
                     ->whereRaw("ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1),geom::geometry) <= ?")
@@ -163,9 +158,9 @@ class Health_service_buildingsController extends Controller
     
     public function cari_jorong($jorong){
         $query = DB::table(DB::raw('health_service_buildings AS W, jorongs AS J, buildings AS B')) 
-                    ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
+                    ->selectRaw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
-                                    W.health_service_building_id, W.name_of_health_service_building"))
+                                    W.health_service_building_id, W.name_of_health_service_building")
                     ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
                                 AND J.jorong_id = ? 
                                 AND B.building_id=W.health_service_building_id")
@@ -177,9 +172,8 @@ class Health_service_buildingsController extends Controller
 
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
                     ->join('detail_health_service_building_facilities', 
                             'health_service_buildings.health_service_building_id', 
@@ -197,9 +191,8 @@ class Health_service_buildingsController extends Controller
     }
 
     public function cari_model($model){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id AS id', 'health_service_buildings.name_of_health_service_building AS name')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
                     ->where('buildings.model_id', '=', '?')
@@ -210,9 +203,8 @@ class Health_service_buildingsController extends Controller
     }
 
     public function info($id){
-        $query = DB::table('health_service_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building', 
                                 'building_galleries.photo_url')
                     ->leftJoin('building_galleries', 'health_service_buildings.health_service_building_id', 

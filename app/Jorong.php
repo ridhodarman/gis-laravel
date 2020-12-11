@@ -9,4 +9,5 @@ class Jorong extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+    protected $casts = ['geom' => 'array',];
 }

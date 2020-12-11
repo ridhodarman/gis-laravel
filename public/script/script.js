@@ -474,7 +474,7 @@ function viewdigitnagari() {
 
 function digitasijorong() {
     $.ajax({
-        url: server + "inc/jorong.php",
+        url: server + "jorong/digit",
         dataType: "json",
         cache: false,
         success: function(arrays) {

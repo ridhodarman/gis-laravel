@@ -87,7 +87,7 @@ class Msme_buildingsController extends Controller
     }
 
     public function digit(){
-        $query = Msme_building::select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geom"))
+        $query = Msme_building::selectRaw("ST_AsGeoJSON(buildings.geom::geometry) AS geom")
                     ->addSelect('msme_building_id', 'name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
@@ -111,8 +111,8 @@ class Msme_buildingsController extends Controller
     }
 
     public function semua(){
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->orderBy('msme_buildings.name_of_msme_building')
@@ -121,8 +121,8 @@ class Msme_buildingsController extends Controller
     }
 
     public function cari_nama($nama){
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->orWhere('msme_buildings.name_of_msme_building', 'ilike', array("%".$nama."%"))
@@ -132,8 +132,8 @@ class Msme_buildingsController extends Controller
     }
 
     public function cari_jenis($jenis){
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->where('msme_buildings.type_of_msme', '=', '?')
@@ -146,9 +146,9 @@ class Msme_buildingsController extends Controller
     public function cari_radius($lat, $lng, $rad){
         $lat = (double) $lat;
         $lng = (double) $lng;
-        $query = Msme_building::select(DB::raw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
+        $query = Msme_building::selectRaw("ST_X(ST_CENTROID(buildings.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude,
-                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak"))
+                                    ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1), buildings.geom::geometry) AS jarak")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->whereRaw("ST_DISTANCE_SPHERE(ST_GeomFromText('POINT($lng $lat)',-1),geom::geometry) <= ?")
@@ -161,8 +161,8 @@ class Msme_buildingsController extends Controller
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
         $total = count($fasilitas);
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building')
                     ->join('detail_msme_building_facilities', 
                             'msme_buildings.msme_building_id', 
@@ -181,8 +181,8 @@ class Msme_buildingsController extends Controller
     }
 
     public function cari_model($model){
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id AS id', 'msme_buildings.name_of_msme_building AS name')
                     ->join('buildings', 'msme_buildings.msme_building_id', '=', 'buildings.building_id')
                     ->where('buildings.building_model', '=', '?')
@@ -193,8 +193,8 @@ class Msme_buildingsController extends Controller
     }
 
     public function info($id){
-        $query = Msme_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Msme_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('msme_buildings.msme_building_id', 'msme_buildings.name_of_msme_building', 
                                 'building_galleries.photo_url')
                     ->leftJoin('building_galleries', 'msme_buildings.msme_building_id', 
@@ -210,9 +210,9 @@ class Msme_buildingsController extends Controller
     
     public function cari_jorong($jorong){
         $query = DB::table(DB::raw('msme_buildings AS W, jorongs AS J, buildings AS B')) 
-                    ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
+                    ->selectRaw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
-                                    W.msme_building_id, W.name_of_msme_building"))
+                                    W.msme_building_id, W.name_of_msme_building")
                     ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
                                 AND J.jorong_id = ? 
                                 AND B.building_id=W.msme_building_id")

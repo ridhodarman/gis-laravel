@@ -85,7 +85,7 @@ class Office_buildingsController extends Controller
     }
 
     public function digit(){
-        $query = Office_building::select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry"))
+        $query = Office_building::selectRaw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry")
                     ->addSelect('office_building_id', 'name_of_office_building')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
@@ -109,8 +109,8 @@ class Office_buildingsController extends Controller
     }
 
     public function semua(){
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id', 'office_buildings.name_of_office_building')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
                     ->orderBy('office_buildings.name_of_office_building')
@@ -119,8 +119,8 @@ class Office_buildingsController extends Controller
     }
 
     public function cari_nama($nama){
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id', 'office_buildings.name_of_office_building')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
                     ->orWhere('office_buildings.name_of_office_building', 'ilike', array("%".$nama."%"))
@@ -130,8 +130,8 @@ class Office_buildingsController extends Controller
     }
 
     public function cari_jenis($jenis){
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id', 'office_buildings.name_of_office_building')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
                     ->where('office_buildings.type_of_office', '=', '?')
@@ -143,8 +143,8 @@ class Office_buildingsController extends Controller
 
     public function cari_tahun($tahun){
         $tahun2 = explode(",", $tahun);
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                            ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                            ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id', 'office_buildings.name_of_office_building')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
                     ->whereBetween('standing_year', $tahun2)
@@ -154,8 +154,8 @@ class Office_buildingsController extends Controller
     }
 
     public function cari_model($model){
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id AS id', 'office_buildings.name_of_office_building AS name')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
                     ->where('buildings.model_id', '=', '?')
@@ -166,8 +166,8 @@ class Office_buildingsController extends Controller
     }
 
     public function info($id){
-        $query = Office_building::select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+        $query = Office_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id', 'office_buildings.name_of_office_building', 
                                 'building_galleries.photo_url')
                     ->leftJoin('building_galleries', 'office_buildings.office_building_id', 

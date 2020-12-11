@@ -86,7 +86,7 @@ class Educational_buildingsController extends Controller
 
     public function digit(){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry"))
+                    ->selectRaw("ST_AsGeoJSON(buildings.geom::geometry) AS geometry")
                     ->addSelect('educational_building_id', 'name_of_educational_building')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id');
         $sql = $query->get();
@@ -111,8 +111,8 @@ class Educational_buildingsController extends Controller
 
     public function semua(){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->orderBy('educational_buildings.name_of_educational_building')
@@ -122,8 +122,8 @@ class Educational_buildingsController extends Controller
 
     public function cari_nama($nama){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->orWhere('educational_buildings.name_of_educational_building', 'ilike', array("%".$nama."%"))
@@ -134,8 +134,8 @@ class Educational_buildingsController extends Controller
 
     public function cari_tingkat($tingkat){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->where('educational_buildings.level_of_education', '=', '?')
@@ -147,8 +147,8 @@ class Educational_buildingsController extends Controller
 
     public function cari_jenis($jenis){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->where('educational_buildings.school_type', '=', '?')
@@ -160,9 +160,9 @@ class Educational_buildingsController extends Controller
     
     public function cari_jorong($jorong){
         $query = DB::table(DB::raw('educational_buildings AS W, jorongs AS J, buildings AS B')) 
-                    ->select(DB::raw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
+                    ->selectRaw("ST_X(ST_Centroid(B.geom::geometry)) AS longitude, 
                                     ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
-                                    W.educational_building_id, W.name_of_educational_building"))
+                                    W.educational_building_id, W.name_of_educational_building")
                     ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
                                 AND J.jorong_id = ? 
                                 AND B.building_id=W.educational_building_id")
@@ -175,8 +175,8 @@ class Educational_buildingsController extends Controller
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building')
                     ->join('detail_educational_building_facilities', 
                             'educational_buildings.educational_building_id', 
@@ -195,8 +195,8 @@ class Educational_buildingsController extends Controller
 
     public function cari_model($model){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id AS id', 'educational_buildings.name_of_educational_building AS name')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
                     ->where('buildings.model_id', '=', '?')
@@ -208,8 +208,8 @@ class Educational_buildingsController extends Controller
 
     public function info($id){
         $query = DB::table('educational_buildings')
-                    ->select(DB::raw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
-                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude"))
+                    ->selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
+                                        ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id', 'educational_buildings.name_of_educational_building', 
                                 'building_galleries.photo_url')
                     ->leftJoin('building_galleries', 'educational_buildings.educational_building_id', 

@@ -54,19 +54,8 @@ function cari_kesehatan(rows) {
 }
 
 function tampilsemuakesehatan() {
-  $.ajax({
-    url: 'kesehatan/semua',
-    data: "",
-    dataType: 'json',
-    success: function (rows) {
-      cari_kesehatan(rows);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+  let url = 'kesehatan/semua'
+  datakesehatan(url);
 }
 
 function carinamakesehatan() { 

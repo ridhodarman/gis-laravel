@@ -93,6 +93,9 @@ Route::get('/kesehatan/fasilitas/{fasilitas}', 'Health_service_buildingsControll
 Route::get('/kesehatan/model/{model}', 'Health_service_buildingsController@cari_model');
 Route::get('/kesehatan/info/{id}', 'Health_service_buildingsController@info');
 Route::get('/kesehatan/detail/{id}', 'Health_service_buildingsController@detail');
+
+Route::get('/jorong/digit', 'JorongsController@digit');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

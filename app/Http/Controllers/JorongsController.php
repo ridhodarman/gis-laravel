@@ -82,4 +82,28 @@ class JorongsController extends Controller
     {
         //
     }
+
+    public function digit(){
+        //$query = Jorong::Select('ST_AsGeoJSON(jorongs.geom::geometry) AS geom', 
+        $query = Jorong::selectRaw('ST_AsGeoJSON(jorongs.geom::geometry) AS geom')
+                        ->addSelect('jorong_id', 'name_of_jorong')->get();
+        //return $query;
+        $geojson = array(
+            'type'      => 'FeatureCollection',
+            'features'  => array()
+        );
+        foreach ($query as $data) {
+            $feature = array(
+                "type" => 'Feature',
+                'geometry' => $data->geom,
+                'jenis' => "Jorong",
+                'properties' => array(
+                    'id' => $data->jorong_id,
+                    'nama' => $data->name_of_jorong
+                )
+            );
+            array_push($geojson['features'], $feature);
+        }
+        return $geojson;
+    }
 }
