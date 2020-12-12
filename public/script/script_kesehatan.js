@@ -189,13 +189,6 @@ function detailkesehatan_infow(id) { //menampilkan informas
 }
 
 function carifasilitas_kesehatan(){
-
-  $('#hasilcari1').show();
-  $('#hasilcari').empty();
-  hapusInfo();
-  clearroute2();
-  hapusRadius();
-  hapusMarkerTerdekat();
   let arrayFas=[];
   for(i=0; i<$("input[name=fas_kesehatan]:checked").length;i++){
     arrayFas.push($("input[name=fas_kesehatan]:checked")[i].value);
@@ -205,49 +198,9 @@ function carifasilitas_kesehatan(){
     $('#peringatan').modal('show');
     $('#ket-p').append('Choose Facility !');
   }else{
-    $.ajax({ url: server+'/kesehatan/fasilitas/'+arrayFas, data: "", dataType: 'json', success: function(rows){
-      console.log(server+'/kesehatan/fasilitas/'+arrayFas);
-      $('#found').empty();
-      $('#hasilcari').empty();
-      if(rows==null)
-            {
-              $('#kosong').modal('show');
-              $('#hasilcari').append('<td colspan="2">no result</td>');
-            }
-      else {
-        let a = 0;
-        for (let i in rows) 
-            {   
-              let row     = rows[i];
-              let id   = row.health_service_building_id;
-              let nama   = row.name_of_health_service_building;
-              let latitude  = row.latitude ;
-              let longitude = row.longitude ;
-              centerBaru = new google.maps.LatLng(latitude, longitude);
-              marker = new google.maps.Marker
-            ({
-              position: centerBaru,
-              icon:'assets/ico/kesehatan.png',
-              map: map,
-              animation: google.maps.Animation.DROP,
-            });
-              markersDua.push(marker);
-              map.setCenter(centerBaru);
-              klikInfoWindowkesehatan(id)
-              map.setZoom(15);
-              tampilkanhasilcari();
-              $('#hasilcari').append("<tr><td>" + nama + "</td><td style='text-align: center'><button class='btn btn-theme04 btn-xs' onclick='detailkesehatan_infow(\"" + id + "\");' title='tampilkan info'><i class='fa fa-search-plus'></i></button></td></tr>");
-              a = a + 1;
-          }
-          $('#found').append("Found: " + a)
-          $('#hidecari').show();
-      }
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      $('#gagal').modal('show');
-      $('#notifikasi').empty();$('#notifikasi').append(xhr.status);
-      $('#notifikasi').append(thrownError);
-    }
-  });
+    //console.log(`umkm/fasilitas=${arrayFas}`);
+    let url = `kesehatan/fasilitas/${arrayFas}`;
+    datakesehatan(url);
+    $('#fas-kesehatan').modal('hide');
   }
 }

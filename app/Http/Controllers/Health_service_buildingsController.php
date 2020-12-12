@@ -162,16 +162,17 @@ class Health_service_buildingsController extends Controller
                                     ST_Y(ST_CENTROID(B.geom::geometry)) AS latitude, 
                                     W.health_service_building_id, W.name_of_health_service_building")
                     ->whereRaw("ST_CONTAINS(J.geom::geometry, B.geom::geometry) 
-                                AND J.jorong_id = ? 
                                 AND B.building_id=W.health_service_building_id")
-                    ->orderByRaw('W.name_of_health_service_building')
+                    ->where('jorong_id', '=', '?')
                     ->setBindings([$jorong])
+                    ->orderByRaw('W.name_of_health_service_building')
                     ->get();
         return $query;
     }
 
     public function cari_fasilitas($fas){
         $fasilitas = explode(",", $fas); 
+        $total = count($fasilitas);
         $query = Health_service_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id', 'health_service_buildings.name_of_health_service_building')
@@ -185,6 +186,7 @@ class Health_service_buildingsController extends Controller
                                 'health_service_buildings.name_of_health_service_building',
                                 'buildings.geom'
                     )
+                    ->havingRaw('COUNT(*) = '. $total)
                     ->orderBy('health_service_buildings.name_of_health_service_building')
                     ->get();
         return $query;
@@ -219,8 +221,7 @@ class Health_service_buildingsController extends Controller
     }
 
     public function detail($id){
-        $query = DB::table('health_service_buildings')
-                    ->addSelect('health_service_buildings.*', 'name_of_health_service_building','building_area', 'land_area',
+        $query = Health_service_building::Select('health_service_buildings.*', 'name_of_health_service_building','building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_health_services.name_of_type AS jenis', 
                                 'type_of_constructions.name_of_type AS constr')
