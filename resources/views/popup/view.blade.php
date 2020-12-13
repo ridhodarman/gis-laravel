@@ -127,7 +127,7 @@ $server='foto/bangunan/';
                                         </td>
                                     </tr>
                                     @endforeach
-                                    @php } 
+                                @php } 
                             if($type=="office") { @endphp
                                     @foreach ($info as $i)
                                     <h6>ID:

@@ -199,7 +199,7 @@ class Educational_buildingsController extends Controller
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('educational_buildings.educational_building_id AS id', 'educational_buildings.name_of_educational_building AS name')
                     ->join('buildings', 'educational_buildings.educational_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.model_id', '=', '?')
+                    ->where('buildings.building_model', '=', '?')
                     ->orderBy('educational_buildings.name_of_educational_building')
                     ->setBindings([$model])
                     ->get();

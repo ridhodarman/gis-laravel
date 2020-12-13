@@ -197,7 +197,7 @@ class Health_service_buildingsController extends Controller
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('health_service_buildings.health_service_building_id AS id', 'health_service_buildings.name_of_health_service_building AS name')
                     ->join('buildings', 'health_service_buildings.health_service_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.model_id', '=', '?')
+                    ->where('buildings.building_model', '=', '?')
                     ->orderBy('health_service_buildings.name_of_health_service_building')
                     ->setBindings([$model])
                     ->get();

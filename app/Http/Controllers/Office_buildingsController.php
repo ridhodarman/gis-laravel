@@ -158,7 +158,7 @@ class Office_buildingsController extends Controller
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('office_buildings.office_building_id AS id', 'office_buildings.name_of_office_building AS name')
                     ->join('buildings', 'office_buildings.office_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.model_id', '=', '?')
+                    ->where('buildings.building_model', '=', '?')
                     ->orderBy('office_buildings.name_of_office_building')
                     ->setBindings([$model])
                     ->get();

@@ -245,7 +245,7 @@ class Worship_buildingsController extends Controller
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('worship_buildings.worship_building_id AS id', 'worship_buildings.name_of_worship_building AS name')
                     ->join('buildings', 'worship_buildings.worship_building_id', '=', 'buildings.building_id')
-                    ->where('buildings.model_id', '=', '?')
+                    ->where('buildings.building_model', '=', '?')
                     ->orderBy('worship_buildings.name_of_worship_building')
                     ->setBindings([$model])
                     ->get();

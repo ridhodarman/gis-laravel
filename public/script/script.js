@@ -1055,7 +1055,7 @@ function carimodel() {
     tampilkanhasilcari();
     if (document.getElementById("model_ibadah").checked == 1) {
         $.ajax({
-            url: `ibadah_cari_model/${model}`,
+            url: `ibadah/model/${model}`,
             data: "",
             dataType: "json",
             success: function(rows) {
@@ -1091,7 +1091,7 @@ function carimodel() {
 
     if (document.getElementById("model_kantor").checked == 1) {
         $.ajax({
-            url: `kantor_cari_model/${model}`,
+            url: `kantor/model/${model}`,
             data: "",
             dataType: "json",
             success: function(rows) {
@@ -1108,7 +1108,7 @@ function carimodel() {
 
     if (document.getElementById("model_pendk").checked == 1) {
         $.ajax({
-            url: `pendidikan_cari_model/${model}`,
+            url: `pendidikan/model/${model}`,
             data: "",
             dataType: "json",
             success: function(rows) {
