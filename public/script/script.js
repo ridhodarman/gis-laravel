@@ -1125,7 +1125,7 @@ function carimodel() {
 
     if (document.getElementById("model_kes").checked == 1) {
         $.ajax({
-            url: `kesehatan_cari_model/${model}`,
+            url: `kesehatan/model/${model}`,
             data: "",
             dataType: "json",
             success: function(rows) {

@@ -9,4 +9,5 @@ class Health_service_building extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+    public $incrementing = false;
 }

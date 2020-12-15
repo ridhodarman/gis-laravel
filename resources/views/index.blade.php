@@ -144,6 +144,7 @@
                                 <span></span>
                                 <span></span>
                             </div>
+                            <button class="btn"><a href="2">OSM</a></button>
                         </div>
                         <!-- profile info & task notification -->
                         <div class="col-md-8 col-sm-4 clearfix">
@@ -175,7 +176,7 @@
                                                 Setting</span></div>
                                         <div class="icon-container" style="font-size: 90%; font-weight: normal"><span
                                                 class="icon-name">
-                                                <a href="{{ route('logout') }}" style="color:black"
+                                                <a href="{{ route('logout') }}" style="color:black; width: 100%;"
                                                     onMouseOver="this.style.color='#2374f7'"
                                                     onMouseOut="this.style.color='black'" onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
@@ -203,7 +204,7 @@
                 $("#tampilan-header").clone().prependTo("#belakang");
 
                 function pengaturan() {
-                    window.location.href = "pages/setting/akun.php";
+                    window.location.href = `{{route('changePassword')}}`;
                 }
 
                 function keloladata() {

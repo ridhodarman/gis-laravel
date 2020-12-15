@@ -142,13 +142,18 @@
                     <a href="{{ route('index') }}" target="_blank" class="tombol-sidebar">
                         <span class="badge btn-primary"><i class="fas fa-solar-panel"></i> User Page</span>
                     </a>
-                    <a href="#" class="tombol-sidebar">
+                    <a href="{{route('changePassword')}}" class="tombol-sidebar">
                         <span class="badge btn-warning"><i class="fas fa-user-cog"></i> Setting</span>
                     </a>
-                    <a href="#" class="tombol-sidebar">
+                    <a class="tombol-sidebar"  href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
                         <span class="badge badge-secondary"><i class="fas fa-sign-out-alt"></i> Logout</span>
                     </a>
                 </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                    style="display: none;">
+                    @csrf
+                </form>
             </div>
             <ul class="list-unstyled components mb-5">
                 <li id="databangunan">

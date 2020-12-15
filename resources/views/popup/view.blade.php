@@ -13,16 +13,16 @@ foreach ($photo as $p){
 $img="";
 $server='foto/bangunan/';
         $img=$img. '<div data-carousel-3d>';
-        if ($n==0) { 
+        if ( count($photo) <1 ) { 
             $img=$img. '
                     <div style="min-width: 320px; min-height: 213px; max-height: 700px; max-height: 500px; text-align-last: center;  vertical-align: middle; display: table-cell;">
-                        <img src="foto/ibadah.png" />
+                        <img src="foto/sekolah.png" />
                         <a class="icon-container" style="background-color: #d8dbff" href="#">
                             <span class="ti-na"></span><span class="icon-name">No Image Available</span>
                         </a>
                     </div>
                     <div style="min-width: 320px; min-height: 213px; max-height: 700px; max-height: 500px; text-align-last: center;  vertical-align: middle; display: table-cell;">
-                        <img src="foto/ibadah.png" />
+                        <img src="foto/sekolah.png" />
                         <a class="icon-container" style="background-color: #d8dbff" href="#">
                             <span class="ti-na"></span><span class="icon-name">No Image Available</span>
                         </a>
