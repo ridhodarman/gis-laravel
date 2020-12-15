@@ -461,7 +461,7 @@ function digitasikesehatan() {
 
 function viewdigitnagari() {
     batasnagari = new google.maps.Data();
-    batasnagari.loadGeoJson(server + "inc/batasnagari.php");
+    batasnagari.loadGeoJson(server + "nagari/digit");
     batasnagari.setStyle(function(feature) {
         return {
             strokeWeight: ketebalan,
