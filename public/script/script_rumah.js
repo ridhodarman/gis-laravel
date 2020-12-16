@@ -22,9 +22,11 @@ function datarumah(url) {
 
 function cari_rumah(rows)
 {   
-  if(rows.length==null)
+  //alert(rows.length)
+  if(rows.length==0)
     {
-       $('#kosong').modal('show');
+      //alert("kosong")
+      $('#kosong').modal('show');
       }
   let a=0;
   $('#found').empty();
@@ -64,7 +66,7 @@ function cari_idrumah() {
     $('#ket-p').append('enter survey ID !');
   }
   else {
-    let url = `rumah_cari_id/${idrumah}`;
+    let url = `rumah/id/${idrumah}`;
     datarumah(url);
   }
 }
@@ -77,7 +79,7 @@ function cari_pemilik() {
     $('#ket-p').append('enter owner name !');
   }
   else {
-    let url = `rumah_cari_namapemilik/${pemilik}`;
+    let url = `rumah/namapemilik/${pemilik}`;
     datarumah(url);
   }
 }
@@ -90,7 +92,7 @@ function cari_nikpemilik() {
     $('#ket-p').append('enter National ID Number of owner !');
   }
   else {
-    let url = `rumah_cari_nikpemilik/${nikpemilik}`;
+    let url = `rumah/nikpemilik/${nikpemilik}`;
     datarumah(url);
   }
 }
@@ -103,7 +105,7 @@ function cari_penghuni() {
     $('#ket-p').append('enter householder name !');
   }
   else {
-    let url = `rumah_cari_namapenghuni/${penghuni}`;
+    let url = `rumah/namapenghuni/${penghuni}`;
     datarumah(url);
   }
 }
@@ -116,7 +118,7 @@ function cari_nikpenghuni() {
     $('#ket-p').append('enter National ID Number of householder !');
   }
   else {
-    let url = `rumah_cari_nikpenghuni/${nikpenghuni}`;
+    let url = `rumah/nikpenghuni/${nikpenghuni}`;
     datarumah(url);
   }
 }
@@ -129,20 +131,20 @@ function cari_kk() {
     $('#ket-p').append('enter family card number !');
   }
   else {
-    let url = `rumah_cari_kkpenghuni/${kkpenghuni}`;
+    let url = `rumah/kkpenghuni/${kk}`;
     datarumah(url);
   }
 }
 
 function cari_suku() { 
   let suku = document.getElementById("suku").value;
-  let url = `rumah_cari_sukupenghuni/${suku}`;
+  let url = `rumah/sukupemilik/${suku}`;
   datarumah(url);
 }
 
 function carikons_rumah() { 
   let jenis_k = document.getElementById("jeniskons_rumah").value;
-  let url = `rumah_cari_konstruksi/${jenis_k}`;
+  let url = `rumah/konstruksi/${jenis_k}`;
   datarumah(url);
 }
 
@@ -150,7 +152,7 @@ function caritahun_rumah() {
   let tahun = [];
   tahun[0] = document.getElementById("rumah_awaltahun").value;
   tahun[1] = document.getElementById("rumah_akhirtahun").value;
-  let url = `rumah_cari_tahun/${tahun}`;
+  let url = `rumah/tahun/${tahun}`;
   datarumah(url);
 }
 
@@ -158,17 +160,17 @@ function carilistrik_rumah() {
   let listrik = [];
   listrik[0] = document.getElementById("rumah_awallistrik").value;
   listrik[1] = document.getElementById("rumah_akhirlistrik").value;
-  let url = `rumah_cari_listrik/${listrik}`;
+  let url = `rumah/listrik/${listrik}`;
   datarumah(url);
 }
 
 function rumahkosong(){ 
-  let url = `rumah_cari_status/0`;
+  let url = `rumah/status/0`;
   datarumah(url);
 }
 
 function rumahberpenghuni(){ 
-  let url = `rumah_cari_status/1`;
+  let url = `rumah/status/1`;
   datarumah(url);
 }
 

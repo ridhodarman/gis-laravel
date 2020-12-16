@@ -269,7 +269,7 @@ class Worship_buildingsController extends Controller
     }
 
     public function detail($id){
-        $query = Worship_building::addSelect('worship_buildings.*', 'name_of_worship_building', 'building_area', 'land_area',
+        $query = Worship_building::Select('worship_buildings.*', 'name_of_worship_building', 'building_area', 'land_area',
                                 'parking_area', 'standing_year', 'electricity_capacity', 
                                 'name_of_model', 'address', 'type_of_worships.name_of_type AS jenis', 
                                 'type_of_constructions.name_of_type AS constr')

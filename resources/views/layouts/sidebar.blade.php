@@ -102,13 +102,9 @@ select {
                                     <li>
                                     <div class="input-group mb-3">
                                         <select aria-label="Text input with dropdown button" id="suku">
-                                            <?php                
-                                                $sql_s=pg_query("SELECT * FROM tribe ORDER BY name_of_tribe");
-                                                while($row = pg_fetch_assoc($sql_s))
-                                                {
-                                                    echo"<option value=".$row['tribe_id'].">".$row['name_of_tribe']."</option>";
-                                                }
-                                            ?>
+                                            @foreach ($suku as $s)
+                                                <option value="{{$s->id}}">{{$s->name_of_tribe}}</option>
+                                            @endforeach
                                         </select>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="cari_suku()"><i class="fa fa-search"></i></button>

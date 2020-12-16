@@ -488,7 +488,7 @@
         $("#jenis-bang").empty()
         $("#jenis-bang").append("<i class='ti-home'></i> House Building Info")
         $('#info-bang').modal('show');
-        $('#konten-bang').load("info-rumah.php?id=" + id);
+        $('#konten-bang').load(`rumah/detail/${id}`);
     }
 
     function load_popup() {

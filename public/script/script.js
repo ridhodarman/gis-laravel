@@ -85,7 +85,7 @@ function loadpeta() {
 
 function digitasirumah() {
     $.ajax({
-        url: server + "/house_digit",
+        url: server + "/rumah/digit",
         dataType: "json",
         cache: false,
         success: function(arrays) {
@@ -95,7 +95,7 @@ function digitasirumah() {
                 var jenis = data.jenis;
                 var link = `<button class='btn btn-info btn-xs' title='View Details' onclick="detailrumah('${data.properties.id}')"><i class="fa fa-info-circle"></i></button>`;
                 var p1 = `ID:  ${data.properties.id}`;
-                var p3 = `${link} <font color='black'>${p1} (${jenis})</font>`;
+                var p3 = `${link} <font color='black'>${p1}<br/>${jenis}</font>`;
 
                 var idTitik = 0;
                 var hitungTitik = [];
@@ -1073,7 +1073,7 @@ function carimodel() {
 
     if (document.getElementById("model_rumah").checked == 1) {
         $.ajax({
-            url: `rumah_cari_model/${model}`,
+            url: `rumah/model/${model}`,
             data: "",
             dataType: "json",
             success: function(rows) {

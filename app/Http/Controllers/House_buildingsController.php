@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\House_building;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Family_card;
 
 class House_buildingsController extends Controller
 {
@@ -148,10 +149,10 @@ class House_buildingsController extends Controller
         $query = House_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('house_buildings.house_building_id', 
-                                'citizen.name AS result')
+                                'citizens.name AS result')
                     ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
-                    ->join('citizen', 'house_buildings.owner_id', '=', 'citizen.national_identity_number')
-                    ->orWhere('citizen.name', 'ilike', array("%".$nama."%"))
+                    ->join('citizens', 'house_buildings.owner_id', '=', 'citizens.national_identity_number')
+                    ->orWhere('citizens.name', 'ilike', array("%".$nama."%"))
                     ->get();
         return $query;
     }
@@ -171,11 +172,11 @@ class House_buildingsController extends Controller
         $query = House_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('house_buildings.house_building_id', 
-                                'citizen.name AS result')
+                                'citizens.name AS result')
                     ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
-                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
-                    ->join('citizen', 'family_card.family_card_number', '=', 'citizen.family_card_number')
-                    ->orWhere('citizen.name', 'ilike', array("%".$nama."%"))
+                    ->join('family_cards', 'house_buildings.house_building_id', '=', 'family_cards.house_building_id')
+                    ->join('citizens', 'family_cards.family_card_number', '=', 'citizens.family_card_number')
+                    ->orWhere('citizens.name', 'ilike', array("%".$nama."%"))
                     ->get();
         return $query;
     }
@@ -184,11 +185,11 @@ class House_buildingsController extends Controller
         $query = House_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('house_buildings.house_building_id', 
-                                'citizen.national_identity_number AS result')
+                                'citizens.national_identity_number AS result')
                     ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
-                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
-                    ->join('citizen', 'family_card.family_card_number', '=', 'citizen.family_card_number')
-                    ->orWhere('citizen.national_identity_number', 'ilike', array("%".$nik."%"))
+                    ->join('family_cards', 'house_buildings.house_building_id', '=', 'family_cards.house_building_id')
+                    ->join('citizens', 'family_cards.family_card_number', '=', 'citizens.family_card_number')
+                    ->orWhere('citizens.national_identity_number', 'ilike', array("%".$nik."%"))
                     ->get();
         return $query;
     }
@@ -197,24 +198,24 @@ class House_buildingsController extends Controller
         $query = House_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('house_buildings.house_building_id', 
-                                'family_card.family_card_number AS result')
+                                'family_cards.family_card_number AS result')
                     ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
-                    ->join('family_card', 'house_buildings.house_building_id', '=', 'family_card.house_building_id')
-                    ->orWhere('family_card.family_card_number', 'ilike', array("%".$kk."%"))
+                    ->join('family_cards', 'house_buildings.house_building_id', '=', 'family_cards.house_building_id')
+                    ->orWhere('family_cards.family_card_number', 'ilike', array("%".$kk."%"))
                     ->get();
         return $query;
     }
 
-    public function cari_sukupenghuni($suku){
+    public function cari_suku($suku){
         $query = House_building::selectRaw("ST_X(ST_Centroid(buildings.geom::geometry)) AS longitude, 
                                         ST_Y(ST_CENTROID(buildings.geom::geometry)) AS latitude")
                     ->addSelect('house_buildings.house_building_id', 
                                 'house_buildings.house_building_id AS result')
                     ->join('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
-                    ->join('citizen', 'house_buildings.owner_id', '=', 'citizen.national_identity_number')
-                    ->join('datuk', 'citizen.datuk_id', '=', 'datuk.datuk_id')
-                    ->join('tribe', 'datuk.tribe_id', '=', 'tribe.tribe_id')
-                    ->orWhere('tribe.tribe_id', '=', array($suku))
+                    ->join('citizens', 'house_buildings.owner_id', '=', 'citizens.national_identity_number')
+                    ->join('datuks', 'citizens.datuk_id', '=', 'datuks.id')
+                    ->join('tribes', 'datuks.tribe_id', '=', 'tribes.id')
+                    ->orWhere('tribes.id', '=', array($suku))
                     ->get();
         return $query;
     }
@@ -267,5 +268,30 @@ class House_buildingsController extends Controller
                     ->orWhere('house_buildings.building_status', '=', array($s))
                     ->get();
         return $query;
+    }
+
+    public function detail($id){
+        $query = House_building::Select('house_buildings.*', 'building_area', 'land_area', 'standing_year', 
+                                'electricity_capacity', 
+                                'name_of_model', 'address', 'type_of_constructions.name_of_type AS constr')
+                    ->leftJoin('buildings', 'house_buildings.house_building_id', '=', 'buildings.building_id')
+                    ->leftJoin('type_of_constructions', 'buildings.type_of_construction', '=', 'type_of_constructions.id')
+                    ->leftJoin('building_models', 'buildings.building_model', '=', 'building_models.id')
+                    ->where('house_buildings.house_building_id', '=', '?')
+                    ->setBindings([$id])
+                    ->get();
+
+        $query2 = DB::table('building_galleries')
+                    ->Select('photo_url', 'updated_at')
+                    ->where('building_id', '=', '?')
+                    ->setBindings([$id])
+                    ->get();
+
+        $query3 = Family_card::Select('family_card_number')
+                    ->where('house_building_id', '=', '?')
+                    ->setBindings([$id])
+                    ->get();
+
+        return view('popup.rumah', ['info' => $query, 'photo' => $query2, 'kk' => $query3]);
     }
 }

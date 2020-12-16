@@ -22,20 +22,21 @@ Route::get('/logout2', function (){
 });
 
 Route::get('/', 'PagesController@index')->name('index');
-Route::get('/house_digit', 'House_buildingsController@digit');
-Route::get('/rumah_cari_id/{id}', 'House_buildingsController@cari_id');
-Route::get('/rumah_cari_model/{model}', 'House_buildingsController@cari_model');
+Route::get('/rumah/digit', 'House_buildingsController@digit');
+Route::get('/rumah/id/{id}', 'House_buildingsController@cari_id');
+Route::get('/rumah/model/{model}', 'House_buildingsController@cari_model');
 Route::get('/rumah_info/{id}', 'House_buildingsController@info');
-Route::get('/rumah_cari_namapemilik/{nama}', 'House_buildingsController@cari_namapemilik');
-Route::get('/rumah_cari_nikpemilik/{nik}', 'House_buildingsController@cari_nikpemilik');
-Route::get('/rumah_cari_namapenghuni/{nama}', 'House_buildingsController@cari_namapenghuni');
-Route::get('/rumah_cari_nikpenghuni/{nik}', 'House_buildingsController@cari_nikpenghuni');
-Route::get('/rumah_cari_kkpenghuni/{kk}', 'House_buildingsController@cari_kkpenghuni');
-Route::get('/rumah_cari_sukupenghuni/{suku}', 'House_buildingsController@cari_sukupenghuni');
-Route::get('/rumah_cari_konstruksi/{k}', 'House_buildingsController@cari_konstruksi');
-Route::get('/rumah_cari_tahun/{tahun}', 'House_buildingsController@cari_tahun');
-Route::get('/rumah_cari_listrik/{listrik}', 'House_buildingsController@cari_listrik');
-Route::get('/rumah_cari_status/{s}', 'House_buildingsController@cari_status');
+Route::get('/rumah/namapemilik/{nama}', 'House_buildingsController@cari_namapemilik');
+Route::get('/rumah/nikpemilik/{nik}', 'House_buildingsController@cari_nikpemilik');
+Route::get('/rumah/namapenghuni/{nama}', 'House_buildingsController@cari_namapenghuni');
+Route::get('/rumah/nikpenghuni/{nik}', 'House_buildingsController@cari_nikpenghuni');
+Route::get('/rumah/kkpenghuni/{kk}', 'House_buildingsController@cari_kkpenghuni');
+Route::get('/rumah/sukupemilik/{suku}', 'House_buildingsController@cari_suku');
+Route::get('/rumah/konstruksi/{k}', 'House_buildingsController@cari_konstruksi');
+Route::get('/rumah/tahun/{tahun}', 'House_buildingsController@cari_tahun');
+Route::get('/rumah/listrik/{listrik}', 'House_buildingsController@cari_listrik');
+Route::get('/rumah/status/{s}', 'House_buildingsController@cari_status');
+Route::get('/rumah/detail/{id}', 'House_buildingsController@detail');
 
 Route::get('/ibadah/digit', 'Worship_buildingsController@digit');
 Route::get('/ibadah_semua', 'Worship_buildingsController@semua');
