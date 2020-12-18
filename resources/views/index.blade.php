@@ -16,6 +16,7 @@
     <script type="text/javascript" src="{{ asset('script/script_kantor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_pendidikan.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_kesehatan.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('script/fungsi_gmaps.js') }}"></script>
 </head>
 <style type="text/css">
     #legend {

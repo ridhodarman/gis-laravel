@@ -465,13 +465,13 @@
             };
             // membuat pilihan untuk menampilkan layer
             var overlays = {
-                "PROVINSI BALI": {
-                    "Administrasi": layer_ibadah,
-                    "Geologi": layer_rumah
+                "NAGARI": {
+                    "Administrasi": layer_nagari,
+                    "Geologi": layer_sawah
                 }
             };
             var options = {
-                exclusiveGroups: ["PROVINSI BALI"]
+                exclusiveGroups: ["NAGARI"]
             };
 
             var mixed = {
@@ -484,10 +484,16 @@
                 "Nagari Border": layer_nagari,
                 "Jorong Area": layer_jorong,
                 "Street": layer_jalan,
-                "River": layer_sungai
+                "River": layer_sungai,
+                "Rice Fields": layer_sawah
             };
+            // MENAMPILKAN TOOLS UNTUK MEMILIH BASEMAP
+            //L.control.groupedLayers(baseLayers, options).addTo(map);
+            L.control.layers(baseLayers, mixed).addTo(map);
 
             $(window).bind("load", function () {
+                layer_jorong.bringToFront();
+                layer_sawah.bringToFront();
                 layer_sungai.bringToFront();
                 layer_jalan.bringToFront();
                 layer_nagari.bringToFront();
@@ -499,10 +505,6 @@
                 layer_ibadah.bringToFront();
                 $("#ajax-wait2").fadeOut();
             });
-
-            // MENAMPILKAN TOOLS UNTUK MEMILIH BASEMAP
-            //L.control.groupedLayers(baseLayers, options).addTo(map);
-            L.control.layers(baseLayers, mixed).addTo(map);
         </script>
     </div>
 </body>
