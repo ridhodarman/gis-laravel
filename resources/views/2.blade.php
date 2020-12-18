@@ -69,11 +69,11 @@
                         //     layer.bringToFront();
                         // }
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_rumah.resetStyle(e.target); // isi dengan nama variabel dari layer
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -83,7 +83,15 @@
                     return { color: "#999", dashArray: '2', weight: 1.5, fillColor: "#a579ab", fillOpacity: 0.6 }; // style border sertaa transparansi
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), // popup yang akan ditampilkan diambil dari filed kab_kot
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' 
+                                            onclick="detailumkm('${feature.properties.id}')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), // popup yang akan ditampilkan diambil dari filed 
                         that = this; // perintah agar menghasilkan efek hover pada objek layer
 
                     layer.on('mouseover', function (e) {
@@ -94,11 +102,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_umkm.resetStyle(e.target); // isi dengan nama variabel dari layer
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -108,7 +116,15 @@
                     return { color: "#999", dashArray: '2', weight: 1.5, fillColor: "#4b5057", fillOpacity: 0.6 }; 
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), 
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' 
+                                            onclick="detailpendidikan('${feature.properties.id}')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
                         that = this; 
 
                     layer.on('mouseover', function (e) {
@@ -119,11 +135,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_pendidikan.resetStyle(e.target); 
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -133,7 +149,15 @@
                     return { color: "#999", dashArray: '2', weight: 1.5, fillColor: "#3f45ab", fillOpacity: 0.6 }; 
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), 
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' 
+                                            onclick="detailkantor('${feature.properties.id}')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
                         that = this; 
 
                     layer.on('mouseover', function (e) {
@@ -144,11 +168,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_kantor.resetStyle(e.target); 
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -158,7 +182,15 @@
                     return { color: "#999", dashArray: '2', weight: 1.5, fillColor: "#ff002b", fillOpacity: 0.4 }; 
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), 
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' 
+                                            onclick="detailkesehatan('${feature.properties.id}')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
                         that = this; 
 
                     layer.on('mouseover', function (e) {
@@ -169,11 +201,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_kesehatan.resetStyle(e.target); 
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -183,7 +215,15 @@
                     return { color: "#999", dashArray: '2', weight: 1.5, fillColor: "#7fc779", fillOpacity: 0.6 }; 
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindPopup("<center>" + feature.properties.nama + "</center>"), 
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' 
+                                            onclick="detailibadah('${feature.properties.id}')">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
                         that = this; 
 
                     layer.on('mouseover', function (e) {
@@ -194,11 +234,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_ibadah.resetStyle(e.target); 
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);
@@ -224,11 +264,11 @@
                     //         dashArray: '',
                     //         fillOpacity: 0.1
                     //     });
-                    //     info.update(layer.feature.properties);
+                    //     //info.update(layer.feature.properties);
                     // });
                     // layer.on('mouseout', function (e) {
                     //     layer_jorong.resetStyle(e.target); 
-                    //     info.update();
+                    //     //info.update();
                     // });
                 }
             }).addTo(map);
@@ -249,11 +289,11 @@
                             fillOpacity: 0.8
                         });
 
-                        info.update(layer.feature.properties);
+                        //info.update(layer.feature.properties);
                     });
                     layer.on('mouseout', function (e) {
                         layer_nagari.resetStyle(e.target); 
-                        info.update();
+                        //info.update();
                     });
                 }
             }).addTo(map);

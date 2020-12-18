@@ -16,9 +16,6 @@
     <script type="text/javascript" src="{{ asset('script/script_kantor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_pendidikan.js') }}"></script>
     <script type="text/javascript" src="{{ asset('script/script_kesehatan.js') }}"></script>
-    <script type="text/javascript">
-        tunggu = true;
-    </script>
 </head>
 <style type="text/css">
     #legend {
@@ -144,7 +141,7 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <button class="btn"><a href="2">OSM</a></button>
+                            <a href="2"><button class="btn">OSM</button></a>
                         </div>
                         <!-- profile info & task notification -->
                         <div class="col-md-8 col-sm-4 clearfix">
@@ -280,6 +277,9 @@
         $(window).bind("load", function () {
             loadpeta();
             semuadigitasi();
+            $(window).load(function(){
+                $("#ajax-wait2").fadeOut();
+            });
         });
 
     </script>
@@ -514,10 +514,6 @@
     }).ajaxComplete(function () {
         $("#ajax-wait2").fadeOut();
     });
-    if (tunggu == true) {
-        $("#ajax-wait2").fadeOut();
-        tunggu = false;
-    }
 
     function search() {
         window.location.href = "pencarian.php";
