@@ -98,6 +98,9 @@ Route::get('/kesehatan/detail/{id}', 'Health_service_buildingsController@detail'
 
 Route::get('/jorong/digit', 'JorongsController@digit');
 Route::get('/nagari/digit', 'NagarisController@digit');
+Route::get('/jalan/digit', 'StreetsController@digit');
+Route::get('/sungai/digit', 'RiversController@digit');
+Route::get('/sawah/digit', 'Rice_fieldsController@digit');
 
 Auth::routes();
 

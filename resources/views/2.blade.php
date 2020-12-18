@@ -196,7 +196,7 @@
                     layer.on('mouseover', function (e) {
                         this.setStyle({
                             weight: 1.5,
-                            color: '#ff0000',
+                            color: '#d93125',
                             dashArray: '',
                             fillOpacity: 0.8
                         });
@@ -271,7 +271,7 @@
                     //     //info.update();
                     // });
                 }
-            }).addTo(map);
+            });
 
             var layer_nagari = new L.GeoJSON.AJAX("nagari/digit", { 
                 style: function (feature) {
@@ -293,6 +293,102 @@
                     });
                     layer.on('mouseout', function (e) {
                         layer_nagari.resetStyle(e.target); 
+                        //info.update();
+                    });
+                }
+            }).addTo(map);
+
+            var layer_jalan = new L.GeoJSON.AJAX("jalan/digit", { 
+                style: function (feature) {
+                    return { color: "#eb6e65", dashArray: '0', weight: 2, fillColor: "#7fc779", fillOpacity: 0 }; 
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' >
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
+                        that = this; 
+
+                    layer.on('mouseover', function (e) {
+                        this.setStyle({
+                            weight: 10,
+                            color: '#ff867d',
+                            dashArray: '',
+                            fillOpacity: 0
+                        });
+
+                        //info.update(layer.feature.properties);
+                    });
+                    layer.on('mouseout', function (e) {
+                        layer_jalan.resetStyle(e.target); 
+                        //info.update();
+                    });
+                }
+            }).addTo(map);
+
+            var layer_sungai = new L.GeoJSON.AJAX("sungai/digit", { 
+                style: function (feature) {
+                    return { color: "#7accf0", dashArray: '0', weight: 2, fillColor: "#7fc779", fillOpacity: 0 }; 
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' >
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
+                        that = this; 
+
+                    layer.on('mouseover', function (e) {
+                        this.setStyle({
+                            weight: 10,
+                            color: '#80d8ff',
+                            dashArray: '',
+                            fillOpacity: 0
+                        });
+
+                        //info.update(layer.feature.properties);
+                    });
+                    layer.on('mouseout', function (e) {
+                        layer_sungai.resetStyle(e.target); 
+                        //info.update();
+                    });
+                }
+            }).addTo(map);
+
+            var layer_sawah = new L.GeoJSON.AJAX("sawah/digit", { 
+                style: function (feature) {
+                    return { color: "#56662a", dashArray: '1', weight: 0.3, fillColor: "#d1ff52", fillOpacity: 0.4 }; 
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(`<center>
+                                        <strong>${feature.properties.nama}</strong>
+                                        <br/> ${feature.properties.id} (${feature.jenis})
+                                        <br/>
+                                        <button class='btn btn-info btn-xs' title='View Details' >
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                        </center>`), 
+                        that = this; 
+
+                    layer.on('mouseover', function (e) {
+                        this.setStyle({
+                            weight: 1,
+                            color: '#4a5233',
+                            dashArray: '',
+                            fillOpacity: 0.6
+                        });
+
+                        //info.update(layer.feature.properties);
+                    });
+                    layer.on('mouseout', function (e) {
+                        layer_sawah.resetStyle(e.target); 
                         //info.update();
                     });
                 }
@@ -363,7 +459,8 @@
             L.control.defaultExtent().addTo(map);
             // PILIHAN BASEMAP YANG AKAN DITAMPILKAN
             var baseLayers = {
-                'Esri.WorldTopoMap': L.tileLayer.provider('Esri.WorldTopoMap',{maxNativeZoom:17,maxZoom:23}).addTo(map),
+                'Maps.Stamen-TonerLite': L.tileLayer.provider('Stamen.TonerLite',{maxNativeZoom:17,maxZoom:23}).addTo(map),
+                'Esri.WorldTopoMap': L.tileLayer.provider('Esri.WorldTopoMap',{maxNativeZoom:17,maxZoom:20}),
                 'Esri WorldImagery': L.tileLayer.provider('Esri.WorldImagery', {maxNativeZoom:17,maxZoom:18})
             };
             // membuat pilihan untuk menampilkan layer
@@ -385,10 +482,15 @@
                 "MSME": layer_umkm,
                 "Worship Place": layer_ibadah,
                 "Nagari Border": layer_nagari,
-                "Jorong Area": layer_jorong
+                "Jorong Area": layer_jorong,
+                "Street": layer_jalan,
+                "River": layer_sungai
             };
 
             $(window).bind("load", function () {
+                layer_sungai.bringToFront();
+                layer_jalan.bringToFront();
+                layer_nagari.bringToFront();
                 layer_rumah.bringToFront();
                 layer_pendidikan.bringToFront();
                 layer_kantor.bringToFront();
