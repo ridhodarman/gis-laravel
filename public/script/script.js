@@ -1,6 +1,10 @@
 var batasnagari;
 var warnanagari = "red";
-var ketebalan = 2.0;
+var ketebalan_batas = 2.0;
+let warnajalan = "#eb6e65";
+let ketebalan_jalan = 1.5;
+let warnasungai = "#7accf0";
+let ketebalan_sungai = 2;
 var njorong = 0;
 var digitjorong = [];
 var nrumah = 0;
@@ -15,6 +19,8 @@ var npendidikan = 0;
 var digitpendidikan = [];
 var nkesehatan = 0;
 var digitkesehatan = [];
+var nsawah = 0;
+var digitsawah = [];
 var map;
 var server = "";
 
@@ -117,7 +123,7 @@ function digitasirumah() {
                     //fillColor: '#B22222',
                     fillColor: "brown",
                     fillOpacity: 0.5,
-                    zIndex: 1,
+                    zIndex: 2,
                     content: p3
                 });
                 digitrumah[nrumah].setMap(map);
@@ -178,7 +184,7 @@ function digitasiumkm() {
                     strokeWeight: 0.5,
                     fillColor: "#8A2BE2",
                     fillOpacity: 0.35,
-                    zIndex: 2,
+                    zIndex: 3,
                     content: p3
                 });
                 digitumkm[numkm].setMap(map);
@@ -240,7 +246,7 @@ function digitasit4ibadah() {
                     strokeWeight: 0.5,
                     fillColor: "green",
                     fillOpacity: 0.5,
-                    zIndex: 2,
+                    zIndex: 6,
                     content: p3
                 });
                 digitibadah[nibadah].setMap(map);
@@ -301,7 +307,7 @@ function digitasikantor() {
                     strokeWeight: 0.5,
                     fillColor: "darkblue",
                     fillOpacity: 0.5,
-                    zIndex: 2,
+                    zIndex: 5,
                     content: p3
                 });
                 digitkantor[nkantor].setMap(map);
@@ -367,7 +373,7 @@ function digitasipendidikan() {
                     strokeWeight: 0.5,
                     fillColor: "#4a5059",
                     fillOpacity: 0.7,
-                    zIndex: 2,
+                    zIndex: 4,
                     content: p3
                 });
                 digitpendidikan[npendidikan].setMap(map);
@@ -430,13 +436,12 @@ function digitasikesehatan() {
                     strokeWeight: 0.5,
                     fillColor: "red",
                     fillOpacity: 0.5,
-                    zIndex: 2,
+                    zIndex: 5,
                     content: p3
                 });
                 digitkesehatan[nkesehatan].setMap(map);
-                digitkesehatan[nkesehatan].addListener("click", function(
-                    event
-                ) {
+                digitkesehatan[nkesehatan].addListener("click", function(event) 
+                {
                     var lat = event.latLng.lat();
                     var lng = event.latLng.lng();
                     var info = {
@@ -459,12 +464,12 @@ function digitasikesehatan() {
     });
 }
 
-function viewdigitnagari() {
+function batasnagari() {
     batasnagari = new google.maps.Data();
     batasnagari.loadGeoJson(server + "nagari/digit");
     batasnagari.setStyle(function(feature) {
         return {
-            strokeWeight: ketebalan,
+            strokeWeight: ketebalan_batas,
             strokeColor: warnanagari,
             clickable: false
         };
@@ -527,11 +532,99 @@ function digitasijorong() {
     });
 }
 
+function datajalan() {
+    datajalan = new google.maps.Data();
+    datajalan.loadGeoJson(server + "jalan/digit");
+    datajalan.setStyle(function(feature) {
+        return {
+            strokeWeight: ketebalan_jalan,
+            strokeColor: warnajalan,
+            clickable: true
+        };
+    });
+    datajalan.setMap(map);
+}
+
+function datasungai() {
+    datasungai = new google.maps.Data();
+    datasungai.loadGeoJson(server + "sungai/digit");
+    datasungai.setStyle(function(feature) {
+        return {
+            strokeWeight: ketebalan_sungai,
+            strokeColor: warnasungai,
+            clickable: true
+        };
+    });
+    datasungai.setMap(map);
+}
+
+function digitasisawah() {
+    $.ajax({
+        url: server + "sawah/digit",
+        dataType: "json",
+        cache: false,
+        success: function(arrays) {
+            for (i = 0; i < arrays.features.length; i++) {
+                var data = arrays.features[i];
+                var arrayGeometries = data.geometry.coordinates;
+                var jenis = data.jenis;
+                var link = `<button class='btn btn-info btn-xs' title='View Details' ><i class="fa fa-info-circle"></i></button>`;
+                var p1 = " ID: " + data.properties.id;
+                var p2 = "<p>" + data.properties.nama + "</p>";
+                var p3 = `${link} <font color='black'>${jenis} ${p2}</font>`;
+
+                var idTitik = 0;
+                var hitungTitik = [];
+                while (idTitik < arrayGeometries[0][0].length) {
+                    var aa = arrayGeometries[0][0][idTitik][0];
+                    var bb = arrayGeometries[0][0][idTitik][1];
+                    hitungTitik[idTitik] = {
+                        lat: bb,
+                        lng: aa
+                    };
+                    idTitik += 1;
+                }
+
+                digitsawah[nsawah] = new google.maps.Polygon({
+                    paths: hitungTitik,
+                    strokeColor: "#d1ff52",
+                    strokeOpacity: 1,
+                    strokeWeight: 0.5,
+                    fillColor: "#4a5233",
+                    fillOpacity: 0.5,
+                    zIndex: 1,
+                    content: p3
+                });
+                digitsawah[nsawah].setMap(map);
+                digitsawah[nsawah].addListener("click", function(event) 
+                {
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
+                    var info = {
+                        lat: lat,
+                        lng: lng
+                    };
+                    infoWindow.setContent(this.content);
+                    infoWindow.setPosition(info);
+                    infoWindow.open(map);
+                });
+                nsawah = nsawah + 1;
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status + ": " + thrownError);
+        }
+    });
+    var infoWindow = new google.maps.InfoWindow({
+        map: map
+    });
+}
+
 function layernagari() {
     if (document.getElementById("nagari").checked == 1) {
         batasnagari.setStyle(function(feature) {
             return {
-                strokeWeight: ketebalan,
+                strokeWeight: ketebalan_batas,
                 strokeColor: warnanagari
             };
         });
@@ -702,6 +795,66 @@ function layerkesehatan() {
     }
 }
 
+function layerjalan() {
+    if (document.getElementById("jalan").checked == 1) {
+        datajalan.setStyle(function(feature) {
+            return {
+                strokeWeight: ketebalan_jalan,
+                strokeColor: warnajalan
+            };
+        });
+        cek();
+    } else {
+        datajalan.setStyle(function(feature) {
+            return {
+                strokeWeight: 0
+            };
+        });
+        document.getElementById("semua").checked = 0;
+    }
+}
+
+function layersungai() {
+    if (document.getElementById("sungai").checked == 1) {
+        datasungai.setStyle(function(feature) {
+            return {
+                strokeWeight: ketebalan_sungai,
+                strokeColor: warnasungai
+            };
+        });
+        cek();
+    } else {
+        datasungai.setStyle(function(feature) {
+            return {
+                strokeWeight: 0
+            };
+        });
+        document.getElementById("semua").checked = 0;
+    }
+}
+
+function layersawah() {
+    if (document.getElementById("sawah").checked == 1) {
+        var n = 0;
+        while (n < nsawah) {
+            digitsawah[n].setOptions({
+                visible: true
+            });
+            n = n + 1;
+        }
+        cek();
+    } else {
+        var n = 0;
+        while (n < nsawah) {
+            digitsawah[n].setOptions({
+                visible: false
+            });
+            n = n + 1;
+        }
+        document.getElementById("semua").checked = 0;
+    }
+}
+
 function ceklis() {
     var x = document.getElementsByName("layerpeta");
     if (document.getElementById("semua").checked == 1) {
@@ -723,6 +876,9 @@ function ceklis() {
     layeribadah();
     layerpendidikan();
     layerkesehatan();
+    layerjalan();
+    layersungai();
+    layersawah();
 }
 
 function cek() {
@@ -741,13 +897,16 @@ function cek() {
 
 function semuadigitasi() {
     digitasijorong();
-    viewdigitnagari();
+    batasnagari();
     digitasirumah();
     digitasiumkm();
     digitasikantor();
     digitasit4ibadah();
     digitasipendidikan();
     digitasikesehatan();
+    datajalan();
+    datasungai();
+    digitasisawah();
 
     document.getElementById("semua").checked = 1;
     var x = document.getElementsByName("layerpeta");

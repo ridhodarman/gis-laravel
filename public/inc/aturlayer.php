@@ -67,6 +67,27 @@
             </div>
         </div>
 
+        <div class="col-md-3">
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="jalan" name="layerpeta" onchange="layerjalan()">
+                <label class="custom-control-label" for="jalan"><b style="color: #353535">Streets</b></label>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="sungai" name="layerpeta" onchange="layersungai()">
+                <label class="custom-control-label" for="sungai"><b style="color: #353535">River</b></label>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" id="sawah" name="layerpeta" onchange="layersawah()">
+                <label class="custom-control-label" for="sawah"><b style="color: #353535">Rice Fields</b></label>
+            </div>
+        </div>
+
     </div>
 
 </div>

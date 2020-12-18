@@ -300,7 +300,7 @@
 
             var layer_jalan = new L.GeoJSON.AJAX("jalan/digit", { 
                 style: function (feature) {
-                    return { color: "#eb6e65", dashArray: '0', weight: 2, fillColor: "#7fc779", fillOpacity: 0 }; 
+                    return { color: "#eb6e65", dashArray: '0', weight: 2, fillColor: "#ffffff", fillOpacity: 0 }; 
                 },
                 onEachFeature: function (feature, layer) {
                     layer.bindPopup(`<center>
